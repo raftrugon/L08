@@ -37,8 +37,8 @@ public class Authority implements GrantedAuthority {
 
 	// Values -----------------------------------------------------------------
 
-	public static final String	ADMIN		= "ADMIN";
-	public static final String	CUSTOMER	= "CUSTOMER";
+	public static final String	ADMIN	= "ADMIN";
+	public static final String	USER	= "USER";
 
 	// Attributes -------------------------------------------------------------
 
@@ -46,10 +46,10 @@ public class Authority implements GrantedAuthority {
 
 
 	@NotBlank
-	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.CUSTOMER + "$")
+	@Pattern(regexp = "^" + Authority.ADMIN + "|" + Authority.USER + "$")
 	@Override
 	public String getAuthority() {
-		return this.authority;
+		return authority;
 	}
 
 	public void setAuthority(final String authority) {
@@ -67,7 +67,7 @@ public class Authority implements GrantedAuthority {
 		result.add(authority);
 
 		authority = new Authority();
-		authority.setAuthority(Authority.CUSTOMER);
+		authority.setAuthority(Authority.USER);
 		result.add(authority);
 
 		return result;
@@ -77,7 +77,7 @@ public class Authority implements GrantedAuthority {
 
 	@Override
 	public int hashCode() {
-		return this.getAuthority().hashCode();
+		return getAuthority().hashCode();
 	}
 
 	@Override
@@ -91,14 +91,14 @@ public class Authority implements GrantedAuthority {
 		else if (!this.getClass().isInstance(other))
 			result = false;
 		else
-			result = (this.getAuthority().equals(((Authority) other).getAuthority()));
+			result = (getAuthority().equals(((Authority) other).getAuthority()));
 
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return this.authority;
+		return authority;
 	}
 
 }
