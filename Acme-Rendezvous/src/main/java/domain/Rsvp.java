@@ -2,9 +2,12 @@
 package domain;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -20,11 +23,11 @@ public class Rsvp extends DomainEntity {
 
 
 	private Collection<String>	comments;
-	private Collection<String>	questions;
-	private Collection<String>	answers;
+	private HashMap<String,String>	questionsAndAnswers;
 
 
 	@NotNull
+	@ElementCollection
 	public Collection<String> getComments() {
 		return comments;
 	}
@@ -34,22 +37,15 @@ public class Rsvp extends DomainEntity {
 	}
 
 	@NotNull
-	public Collection<String> getQuestions() {
-		return questions;
+	@ElementCollection
+	public Map<String,String> getQuestionsAndAnswers() {
+		return questionsAndAnswers;
 	}
 
-	public void setQuestions(Collection<String> questions) {
-		this.questions = questions;
+	public void setQuestionsAndAnswers(HashMap<String,String> questionsAndAnswers) {
+		this.questionsAndAnswers = questionsAndAnswers;
 	}
-
-	@NotNull
-	public Collection<String> getAnswers() {
-		return answers;
-	}
-
-	public void setAnswers(Collection<String> answers) {
-		this.answers = answers;
-	}
+	
 
 
 	//Relationships -------------------
@@ -79,5 +75,7 @@ public class Rsvp extends DomainEntity {
 	public void setRendezvous(Rendezvous rendezvous) {
 		this.rendezvous = rendezvous;
 	}
+
+
 
 }

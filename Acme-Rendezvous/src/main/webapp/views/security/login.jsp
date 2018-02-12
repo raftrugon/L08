@@ -16,28 +16,41 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="j_spring_security_check" modelAttribute="credentials">
+<script type="text/javascript" src="scripts/md5.min.js"></script>
 
+<div class="col-sm-4 col-sm-offset-4">
+<form:form id="loginForm" action="j_spring_security_check" modelAttribute="credentials" >
+	<div class="form-group">
 	<form:label path="username">
 		<spring:message code="security.username" />
 	</form:label>
-	<form:input path="username" />	
+	<form:input id="usernameInput" path="username" class="form-control"/>	
 	<form:errors class="error" path="username" />
 	<br />
-
+	</div>
+	<div class="form-group">
 	<form:label path="password">
 		<spring:message code="security.password" />
 	</form:label>
-	<form:password path="password" />	
+	<form:password path="password" class="form-control"/>	
 	<form:errors class="error" path="password" />
 	<br />
-	
-	<jstl:if test="${showError == true}">
+	</div>
+	<jstl:if test="${badCredentials == true}">
 		<div class="error">
-			<spring:message code="security.login.failed" />
+			<spring:message code="security.login.badcredentials" />
 		</div>
 	</jstl:if>
 	
-	<input type="submit" value="<spring:message code="security.login" />" />
+	<jstl:if test="${otherError == true}">
+		<div class="error">
+			<spring:message code="security.login.failed" /> <jstl:out value="${adminEmail}"/>
+		</div>
+	</jstl:if>
+	
+	<input type="submit" class="btn btn-success btn-group-justified" value="<spring:message code="security.login" />" />
+		
+	
 	
 </form:form>
+</div>
