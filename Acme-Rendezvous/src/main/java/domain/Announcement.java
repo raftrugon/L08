@@ -57,18 +57,5 @@ public class Announcement extends DomainEntity {
 
 
 	//Relationships -------------------
-	private Rendezvous	rendezvous;
-
-
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public Rendezvous getRendezvous() {
-		return rendezvous;
-	}
-
-	public void setRendezvous(Rendezvous rendezvous) {
-		this.rendezvous = rendezvous;
-	}
 
 }

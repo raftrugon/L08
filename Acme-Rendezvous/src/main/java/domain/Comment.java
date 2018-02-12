@@ -98,9 +98,8 @@ public class Comment extends DomainEntity {
 		this.user = user;
 	}
 
-	@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Rendezvous getRendezvous() {
 		return rendezvous;
 	}

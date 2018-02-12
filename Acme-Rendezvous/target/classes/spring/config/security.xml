@@ -40,7 +40,10 @@
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
-	
+		
+		<security:intercept-url pattern="/user/**" access="hasRole('USER')" />
+		
+		<security:intercept-url pattern="/rendezvous/**" access="permitAll"/>
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 

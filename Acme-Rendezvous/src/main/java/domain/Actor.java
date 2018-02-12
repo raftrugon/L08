@@ -27,7 +27,7 @@ public abstract class Actor extends DomainEntity {
 
 
 	private String	name;
-	private String	surname;
+	private String	surnames;
 	private String	address;
 	private String	phoneNumber;
 	private String	email;
@@ -43,12 +43,12 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@NotBlank
-	public String getSurname() {
-		return surname;
+	public String getSurnames() {
+		return surnames;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setSurnames(String surnames) {
+		this.surnames = surnames;
 	}
 
 	public String getAddress() {

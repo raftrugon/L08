@@ -36,20 +36,9 @@ public class User extends Actor {
 
 	//Relationships -----------------------
 
-	private Collection<Comment>		comments;
 	private Collection<Rsvp>		rsvps;
 	private Collection<Rendezvous>	rendezvouses;
 
-
-	@NotNull
-	@OneToMany(mappedBy = "user")
-	public Collection<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Collection<Comment> comments) {
-		this.comments = comments;
-	}
 
 	@NotNull
 	@OneToMany(mappedBy = "user")

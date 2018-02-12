@@ -10,4 +10,7 @@ import domain.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
+	@Query("select a from Admin a where a.userAccount.id = ?1")
+	Admin findByUserAccount(int id);
+
 }

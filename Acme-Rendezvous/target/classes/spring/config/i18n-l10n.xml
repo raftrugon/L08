@@ -24,7 +24,7 @@
 		<value>/views/welcome/messages</value>
 		
 		<value>/views/admin/messages</value>
-		<value>/views/profile/messages</value>
+		<value>/views/rendezvous/messages</value>
 	</util:list>
 
 </beans>

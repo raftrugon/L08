@@ -11,11 +11,14 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -34,7 +37,7 @@ public class Rendezvous extends DomainEntity {
 	private Double				longitude;
 	private Boolean				finalMode;
 	private Boolean				deleted;
-	private Boolean				adulOnly;
+	private Boolean				adultOnly;
 	private Collection<String>	questions;
 
 
@@ -56,6 +59,9 @@ public class Rendezvous extends DomainEntity {
 		this.description = description;
 	}
 
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getOrganisationMoment() {
 		return organisationMoment;
 	}
@@ -108,12 +114,12 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	@NotNull
-	public Boolean getAdulOnly() {
-		return adulOnly;
+	public Boolean getAdultOnly() {
+		return adultOnly;
 	}
 
-	public void setAdulOnly(Boolean adulOnly) {
-		this.adulOnly = adulOnly;
+	public void setAdultOnly(Boolean adultOnly) {
+		this.adultOnly = adultOnly;
 	}
 
 	@NotNull
@@ -131,6 +137,7 @@ public class Rendezvous extends DomainEntity {
 	private Collection<Comment>			comments;
 	private Collection<Rsvp>			rsvps;
 	private Collection<Announcement>	announcements;
+	private Collection<Rendezvous>		rendezvouses;
 
 
 	@Valid
@@ -165,12 +172,22 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rendezvous")
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Announcement> getAnnouncements() {
 		return announcements;
 	}
 
 	public void setAnnouncements(Collection<Announcement> announcements) {
 		this.announcements = announcements;
+	}
+
+	@NotNull
+	@OneToMany
+	public Collection<Rendezvous> getRendezvouses() {
+		return rendezvouses;
+	}
+
+	public void setRendezvouses(Collection<Rendezvous> rendezvouses) {
+		this.rendezvouses = rendezvouses;
 	}
 }

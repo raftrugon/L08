@@ -22,19 +22,7 @@ public class Rsvp extends DomainEntity {
 	}
 
 
-	private Collection<String>	comments;
-	private HashMap<String,String>	questionsAndAnswers;
-
-
-	@NotNull
-	@ElementCollection
-	public Collection<String> getComments() {
-		return comments;
-	}
-
-	public void setComments(Collection<String> comments) {
-		this.comments = comments;
-	}
+	private Map<String,String>	questionsAndAnswers;
 
 	@NotNull
 	@ElementCollection
@@ -42,7 +30,7 @@ public class Rsvp extends DomainEntity {
 		return questionsAndAnswers;
 	}
 
-	public void setQuestionsAndAnswers(HashMap<String,String> questionsAndAnswers) {
+	public void setQuestionsAndAnswers(Map<String,String> questionsAndAnswers) {
 		this.questionsAndAnswers = questionsAndAnswers;
 	}
 	

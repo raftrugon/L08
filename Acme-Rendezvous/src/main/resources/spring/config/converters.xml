@@ -18,10 +18,18 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+		<bean class="converters.AdminToStringConverter"/>
+		<bean class="converters.AnnouncementToStringConverter"/>
+		<bean class="converters.CommentToStringConverter"/>
+		<bean class="converters.RendezvousToStringConverter"/>
+		<bean class="converters.RsvpToStringConverter"/>
+		<bean class="converters.StringToAdminConverter"/>
+		<bean class="converters.StringToAnnouncementConverter"/>
+		<bean class="converters.StringToCommentConverter"/>
+		<bean class="converters.StringToRendezvousConverter"/>
+		<bean class="converters.StringToRsvpConverter"/>
+		<bean class="converters.StringToUserConverter"/>
+		<bean class="converters.UserToStringConverter"/>
 	</util:list>
 	
 </beans>

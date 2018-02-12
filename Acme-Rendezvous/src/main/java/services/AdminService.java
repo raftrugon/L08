@@ -7,7 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AdminRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Admin;
+import domain.User;
 
 @Service
 @Transactional
@@ -47,5 +50,19 @@ public class AdminService {
 	
 	//Other Business Methods --------------------------------
 	
-	
+	public Admin findByUserAccount(UserAccount userAccount) {
+		Assert.notNull(userAccount);
+		Admin res;
+		res = adminRepository.findByUserAccount(userAccount.getId());
+		return res;
+	}
+
+	public Admin findByPrincipal() {
+		Admin res;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		res = findByUserAccount(userAccount);
+		return res;
+	}
 }
