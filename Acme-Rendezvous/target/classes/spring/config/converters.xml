@@ -20,16 +20,20 @@
 	<util:list id="converters">
 		<bean class="converters.AdminToStringConverter"/>
 		<bean class="converters.AnnouncementToStringConverter"/>
+		<bean class="converters.AuthorityToStringConverter"/>
 		<bean class="converters.CommentToStringConverter"/>
 		<bean class="converters.RendezvousToStringConverter"/>
 		<bean class="converters.RsvpToStringConverter"/>
 		<bean class="converters.StringToAdminConverter"/>
 		<bean class="converters.StringToAnnouncementConverter"/>
+		<bean class="converters.StringToAuthorityConverter"/>
 		<bean class="converters.StringToCommentConverter"/>
 		<bean class="converters.StringToRendezvousConverter"/>
 		<bean class="converters.StringToRsvpConverter"/>
 		<bean class="converters.StringToUserConverter"/>
+		<bean class="converters.StringToUserAccountConverter"/>
 		<bean class="converters.UserToStringConverter"/>
+		<bean class="converters.UserAccountToStringConverter"/>
 	</util:list>
 	
 </beans>
