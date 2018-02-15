@@ -35,7 +35,20 @@ public class RendezvousController extends AbstractController {
 	public RendezvousController() {
 		super();
 	}
-
+	
+	@RequestMapping("/display")
+	public ModelAndView display(@RequestParam(required=true) final int rendezvousId){
+		ModelAndView result;
+		try{
+			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
+			result = new ModelAndView("rendezvous/display");
+			result.addObject("rendezvous",rendezvous);
+		}catch(Throwable oops){
+			result = new ModelAndView("rendezvous/list");
+			result.addObject("message","master.page.errors.entityNotFound");
+		}
+		return result;
+	}
 	@RequestMapping("/list")
 	public ModelAndView list() {
 		ModelAndView result;

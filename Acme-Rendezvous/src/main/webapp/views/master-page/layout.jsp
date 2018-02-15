@@ -70,16 +70,20 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
-		<div class="page-header" style="padding-left:10px">
-			<h1><tiles:insertAttribute name="title" /></h1>
-		</div>
-		<div id="mainContainer" class="container-fluid">
-		<tiles:insertAttribute name="body" />	
-		<jstl:if test="${message != null}">
-			<br />
-			<span class="message"><spring:message code="${message}" /></span>
-		</jstl:if>	
-		</div>
+	
+	<div class="page-header" style="padding-left:10px">
+		<h1><tiles:insertAttribute name="title" /></h1>
+	</div>
+	
+	<div id="mainContainer" class="container-fluid">
+	<jstl:if test="${message != null}">
+	<div class="alert alert-danger">
+	<strong><spring:message code="master.page.errors.header"/>!</strong> <spring:message code="${message}"/>
+	</div>
+	</jstl:if>	
+	<tiles:insertAttribute name="body" />	
+	</div>
+	
 	<div class="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>
