@@ -71,7 +71,7 @@
 		<tiles:insertAttribute name="header" />
 	</div>
 	
-	<div class="page-header" style="padding-left:10px">
+	<div class="page-header" style="padding-left:10px;margin-top:60px;">
 		<h1><tiles:insertAttribute name="title" /></h1>
 	</div>
 	

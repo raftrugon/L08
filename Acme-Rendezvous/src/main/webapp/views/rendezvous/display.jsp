@@ -5,9 +5,24 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
-<div class=center-text>
+<div class="col-md-2">
+	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
+	<table class="displaytag">
+	<thead>
+		<tr><th><a href="/user.display?userId<jstl:out value='${rendezvous.user.id}'/>"><jstl:out value='${rendezvous.user.name} ${rendezvous.user.surnames}'/></a></th></tr>
+	</thead>
+	<tbody>
+		<tr><td><jstl:out value="${rendezvous.user.address}"/></td></tr>
+		<tr><td><jstl:out value="${rendezvous.user.phoneNumber}"/></td></tr>
+		<tr><td><jstl:out value="${rendezvous.user.email}"/></td></tr>
+		<tr><td><jstl:out value="${formatedBirthDate}"/></td></tr>
+	</tbody>
+	</table>
+</div>
+<div class="center-text col-md-8">
 	<!-- Shared Variables -->
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 <display:table pagesize="1" class= "displaytag" keepStatus="true" name="rendezvous" requestURI="${requestUri}" id="row">

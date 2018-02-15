@@ -13,10 +13,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<div style="height:250px;background-image:url('${bannerUrl}');background-repeat:repeat-x;background-size:auto 250px">
-	
-</div>
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="containter-fluid">
 		<div class="navbar-header">
@@ -25,7 +21,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>                        
 	      </button>
-			<a class="navbar-brand" href="#">Tanzanika</a>
+			<a class="navbar-brand" href="#">Acme-Rendezvous</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 		<ul class="nav navbar-nav">			
