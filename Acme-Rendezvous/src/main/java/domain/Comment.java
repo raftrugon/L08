@@ -20,15 +20,10 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class Comment extends DomainEntity {
 
-	public Comment() {
-		super();
-	}
-
-
+	// Attributes -------------------------------------------------------------
 	private Date	creationMoment;
 	private String	text;
 	private String	picture;
-
 
 	@Past
 	@NotNull
@@ -59,7 +54,7 @@ public class Comment extends DomainEntity {
 	}
 
 
-	//Relationships ----------------------------------
+	// Relationships ----------------------------------------------------------
 
 	private Collection<Comment>	replies;
 	private Comment				replyingTo;

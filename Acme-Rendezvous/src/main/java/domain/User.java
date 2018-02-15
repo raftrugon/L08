@@ -15,11 +15,7 @@ import javax.validation.constraints.Past;
 @Access(AccessType.PROPERTY)
 public class User extends Actor {
 
-	public User() {
-		super();
-	}
-
-
+	// Attributes -------------------------------------------------------------
 	private Date	birthDate;
 
 
@@ -34,7 +30,7 @@ public class User extends Actor {
 	}
 
 
-	//Relationships -----------------------
+	// Relationships ----------------------------------------------------------
 
 	private Collection<Rsvp>		rsvps;
 	private Collection<Rendezvous>	rendezvouses;

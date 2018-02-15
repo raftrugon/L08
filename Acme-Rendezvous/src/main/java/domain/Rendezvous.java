@@ -24,11 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Rendezvous extends DomainEntity {
 
-	public Rendezvous() {
-		super();
-	}
-
-
+	// Attributes -------------------------------------------------------------
 	private String				name;
 	private String				description;
 	private Date				organisationMoment;
@@ -132,7 +128,7 @@ public class Rendezvous extends DomainEntity {
 		this.questions = questions;
 	}
 
-
+	// Relationships ----------------------------------------------------------
 	private User						user;
 	private Collection<Comment>			comments;
 	private Collection<Rsvp>			rsvps;
