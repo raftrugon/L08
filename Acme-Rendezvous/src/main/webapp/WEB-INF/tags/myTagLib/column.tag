@@ -15,7 +15,7 @@
 <%@ attribute name="linkName"  rtexprvalue="true"  required="false" type="java.lang.String"  description="URL display name" %>
 <%@ attribute name="photoUrl"  rtexprvalue="true"  required="false" type="java.lang.String"  description="URL to display photo" %>
 <%@ attribute name="value"  rtexprvalue="true"  required="false" type="java.lang.String"  description="value to display" %>
-<%@ attribute name="map"  rtexprvalue="false"  required="false" type="java.lang.String"  description="True if attribute is a map" %>
+<%@ attribute name="map"  rtexprvalue="true"  required="false" type="java.lang.String"  description="True if attribute is a map" %>
 
 <jstl:choose>
 <jstl:when test="${photoUrl ne null }">
