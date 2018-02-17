@@ -34,7 +34,7 @@ public class CommentService {
 	
 	// Simple CRUD methods ----------------------------------------------------
 
-	public Comment createWithRendezvous(Rendezvous rendezvous) {
+	public Comment createComment(Rendezvous rendezvous) {
 		Comment res = new Comment();
 		User u = userService.findByPrincipal();
 		
@@ -49,20 +49,21 @@ public class CommentService {
 		return res;
 	}
 	
-	public Comment createReply(Comment comment){
+	public Comment createReply(int commentId){
 		Comment res = new Comment();
 		User u = userService.findByPrincipal();
+		Comment aux = commentRepository.findOne(commentId);
 		
 
-		Assert.notNull(comment);
+		Assert.notNull(aux);
 		Assert.notNull(u);
-		Assert.isNull(comment.getReplyingTo());
-		Assert.isTrue(rendezvousService.getRSVPRendezvousesForUser(u).contains(comment.getRendezvous()));
+		Assert.isNull(aux.getReplyingTo());
+		Assert.isTrue(rendezvousService.getRSVPRendezvousesForUser(u).contains(aux.getRendezvous()));
 		
 		res.setRendezvous(null);
 		res.setReplies(null);
 		res.setCreationMoment(new Date());
-		res.setReplyingTo(comment);
+		res.setReplyingTo(aux);
 		res.setUser(u);
 		
 		return res;
@@ -79,10 +80,11 @@ public class CommentService {
 		User u = userService.findByPrincipal();
 		Assert.notNull(comment);
 		Assert.notNull(u);
-		Assert.isTrue(rendezvousService.getRSVPRendezvousesForUser(u).contains(comment.getRendezvous()));
+		if(comment.getReplyingTo().equals(null))
+			Assert.isTrue(rendezvousService.getRSVPRendezvousesForUser(u).contains(comment.getRendezvous()));
 		return commentRepository.save(comment);
 	}
-
+	
 	public void deleteByAdmin(final Comment comment) {
 		Admin a = adminService.findByPrincipal();
 		Assert.notNull(a);
