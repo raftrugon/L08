@@ -30,6 +30,6 @@
 		<lib:column name="phoneNumber"/>
 		<lib:column name="email"/>
 		<lib:column name="birthDate" format="{0,date,dd/MM/yy HH:mm}"/>
-	
+
 	</display:table>
 </div>

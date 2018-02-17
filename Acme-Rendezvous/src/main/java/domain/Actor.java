@@ -21,11 +21,7 @@ import security.UserAccount;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Actor extends DomainEntity {
 
-	public Actor() {
-		super();
-	}
-
-
+	// Attributes -------------------------------------------------------------
 	private String	name;
 	private String	surnames;
 	private String	address;
@@ -77,7 +73,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 
-	//Relationships -----------------------
+	// Relationships ----------------------------------------------------------
 
 	private UserAccount	userAccount;
 

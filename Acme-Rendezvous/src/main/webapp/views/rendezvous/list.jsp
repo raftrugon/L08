@@ -18,6 +18,6 @@
 	<lib:column name="picture" photoUrl="${row.picture}"/>
 	<lib:column name="coordinates" value="[${row.longitude},${row.latitude}]"/>
 	<lib:column name="user" link="#" linkName="${row.user.name} ${row.user.surnames}"/>
-
+	
 </display:table>
 	</div>

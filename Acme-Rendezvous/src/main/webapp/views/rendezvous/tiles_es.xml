@@ -26,4 +26,9 @@
 		<put-attribute name="body" value="/views/rendezvous/display.jsp" />
 	</definition>
 	
+	<definition name="rendezvous/listQuestions" extends="master.page">	
+		<put-attribute name="title" value="Lista de preguntas" />
+		<put-attribute name="body" value="/views/rendezvous/listQuestions.jsp" />
+	</definition>
+	
 </tiles-definitions>

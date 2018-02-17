@@ -1,8 +1,6 @@
 
 package domain;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Access;
@@ -17,11 +15,7 @@ import javax.validation.constraints.NotNull;
 @Access(AccessType.PROPERTY)
 public class Rsvp extends DomainEntity {
 
-	public Rsvp() {
-		super();
-	}
-
-
+	// Attributes -------------------------------------------------------------
 	private Map<String,String>	questionsAndAnswers;
 
 	@NotNull
@@ -36,7 +30,7 @@ public class Rsvp extends DomainEntity {
 	
 
 
-	//Relationships -------------------
+	// Relationships ----------------------------------------------------------
 
 	private User		user;
 	private Rendezvous	rendezvous;
