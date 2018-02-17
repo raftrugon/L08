@@ -39,9 +39,11 @@
 
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
+<link rel="stylesheet" href="styles/other.css" type="text/css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
@@ -71,11 +73,11 @@
 		<tiles:insertAttribute name="header" />
 	</div>
 	
-	<div class="page-header" style="padding-left:10px;margin-top:60px;">
+	<%-- <div class="page-header" style="padding-left:10px;margin-top:60px;"> 
 		<h1><tiles:insertAttribute name="title" /></h1>
-	</div>
+	</div> --%>
 	
-	<div id="mainContainer" class="container-fluid">
+	<div id="mainContainer" class="container-fluid" style="margin-top:70px;">
 	<jstl:if test="${message != null}">
 	<div class="alert alert-danger">
 	<strong><spring:message code="master.page.errors.header"/>!</strong> <spring:message code="${message}"/>

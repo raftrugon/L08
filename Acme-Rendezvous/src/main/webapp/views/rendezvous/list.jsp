@@ -12,7 +12,7 @@
 	<!-- Shared Variables -->
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<!-- Attributes -->
-  	<lib:column name="name"/>
+  	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row.id}" linkName="${row.name}"/>
 	<lib:column name="description"/>
 	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
 	<lib:column name="picture" photoUrl="${row.picture}"/>

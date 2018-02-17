@@ -46,6 +46,7 @@
 		<security:intercept-url pattern="/user/**" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/rendezvous/**" access="permitAll"/>
+		<security:intercept-url pattern="/ajax/**" access="permitAll"/>
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 
