@@ -8,8 +8,14 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -21,11 +27,13 @@ public class User extends Actor {
 
 	@NotNull
 	@Past
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy") //Acorde al input date de input.tag
 	public Date getBirthDate() {
-		return birthDate;
+		return this.birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(final Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -39,20 +47,20 @@ public class User extends Actor {
 	@NotNull
 	@OneToMany(mappedBy = "user")
 	public Collection<Rsvp> getRsvps() {
-		return rsvps;
+		return this.rsvps;
 	}
 
-	public void setRsvps(Collection<Rsvp> rsvps) {
+	public void setRsvps(final Collection<Rsvp> rsvps) {
 		this.rsvps = rsvps;
 	}
 
 	@NotNull
 	@OneToMany(mappedBy = "user")
 	public Collection<Rendezvous> getRendezvouses() {
-		return rendezvouses;
+		return this.rendezvouses;
 	}
 
-	public void setRendezvouses(Collection<Rendezvous> rendezvouses) {
+	public void setRendezvouses(final Collection<Rendezvous> rendezvouses) {
 		this.rendezvouses = rendezvouses;
 	}
 
