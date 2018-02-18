@@ -28,6 +28,7 @@
 		<value>/views/rsvp/messages</value>
 		<value>/views/user/messages</value>
 		<value>/views/admin/messages</value>
+		<value>/views/comment/messages</value>
 		<value>/views/announcement/messages</value>
 		
 		

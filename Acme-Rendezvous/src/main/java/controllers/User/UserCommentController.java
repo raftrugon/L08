@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
+import utilities.internal.SchemaPrinter;
 import controllers.AbstractController;
 import domain.Comment;
 
@@ -36,6 +37,7 @@ public class UserCommentController extends AbstractController {
 		ModelAndView result;
 		try {
 			Comment comment = commentService.createComment(rendezvousId);
+			SchemaPrinter.print(comment);
 			result = newEditModelAndView(comment);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:list.do");

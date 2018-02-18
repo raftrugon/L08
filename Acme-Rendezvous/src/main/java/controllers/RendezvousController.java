@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.AnnouncementService;
 import services.RendezvousService;
 import services.UserService;
+import utilities.internal.SchemaPrinter;
+import domain.Announcement;
 import domain.Rendezvous;
 
 @Controller
@@ -38,17 +40,18 @@ public class RendezvousController extends AbstractController {
 	public ModelAndView display(@RequestParam(required=true) final int rendezvousId, RedirectAttributes redir){
 		ModelAndView result;
 		Boolean rsvpd = false;
+		Announcement newAnnouncement = null;
 		try{
 			rsvpd = userService.isRsvpd(rendezvousId);
-		}catch(Throwable oops){
-			rsvpd = false;
-		}
+			newAnnouncement = announcementService.create(rendezvousId);
+		}catch(Throwable oops){}
 		try{
 			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 			result = new ModelAndView("rendezvous/display");
 			result.addObject("rendezvous",rendezvous);
 			result.addObject("rsvpd",rsvpd);
-			result.addObject("announcement", announcementService.create(rendezvousId));
+			if(newAnnouncement != null)
+				result.addObject("announcement",newAnnouncement);
 		}catch(Throwable oops){
 			result = new ModelAndView("redirect: list.do");
 			redir.addFlashAttribute("message","master.page.errors.entityNotFound");

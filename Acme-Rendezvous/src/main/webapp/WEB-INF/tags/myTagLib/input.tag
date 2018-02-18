@@ -18,6 +18,7 @@
 <%@ attribute name="step"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Steps" %> 
 <%@ attribute name="addon"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Input text addon" %> 
 <%@ attribute name="rows"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Rows for textarea" %> 
+<%@ attribute name="noLabel"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Disable label" %> 
 
 
 
@@ -33,9 +34,11 @@
 </jstl:when>
 <jstl:when test="${type eq 'text' and addon eq null }">
 	<div class="form-group">
-	<form:label class="control-label" path="${name}">
-		<spring:message code="${model}.${name}" />:
-	</form:label>
+	<jstl:if test="${noLabel eq null}">
+		<form:label class="control-label" path="${name}">
+			<spring:message code="${model}.${name}" />:
+		</form:label>
+	</jstl:if>
 	<form:input class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>

@@ -14,5 +14,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByUserAccount(int id);
 	
 	@Query("select count (r) from Rsvp r where r.rendezvous.id = ?1 and r.user = ?2")
-	int isRsvpd(int rendezvousId, User user);
+	int isRsvpd(int rendezvousId, User findByPrincipal);
+
 }

@@ -43,7 +43,6 @@ public class AnnouncementService {
 		User u = userService.findByPrincipal();
 		Assert.notNull(u);
 		Assert.isTrue(u == r.getUser());
-		
 		res.setCreationMoment(new Date(System.currentTimeMillis()-1000));
 		res.setRendezvous(r);
 		return res;

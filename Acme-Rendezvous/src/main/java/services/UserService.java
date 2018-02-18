@@ -105,7 +105,7 @@ public class UserService {
 	
 	public Boolean isRsvpd(int rendezvousId){
 		Assert.isTrue(rendezvousId != 0);
-		return userRepository.isRsvpd(rendezvousId, findByPrincipal()) == 1;
+		return (userRepository.isRsvpd(rendezvousId, findByPrincipal()) == 1);
 	}
 
 	//RegisterUserForm ----> User

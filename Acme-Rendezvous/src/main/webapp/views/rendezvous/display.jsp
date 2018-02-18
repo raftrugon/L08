@@ -15,17 +15,19 @@
 
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
-		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement">		
+	<div class="panel panel-default" style="width:95%;text-align:center">
+		<div class="well" style="margin-bottom:10px;text-align:center"><strong><i class="fas fa-bullhorn"></i> <spring:message code="rendezvous.announcement.new"/></strong></div>
+		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px;width:95%;">		
 			<jstl:set var="model" value="announcement" scope="request"/>
 			<lib:input type="hidden" name="id,version,creationMoment,rendezvous"/>
-			<lib:input type="text" name="title"/>
+			<spring:message code='announcement.title' var="titlePlaceholder"/>
+			<lib:input type="text" name="title" placeholder="${titlePlaceholder}" noLabel="true"/>
 			<lib:input type="textarea" name="description" rows="4"/>
 			<lib:button id="0" noDelete="true" />
 		</form:form>
+	</div>
 	</jstl:if>
-</security:authorize>
-	</br>
-	
+</security:authorize>	
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	<table class="displaytag" style="margin-top:0 !important;">
@@ -71,8 +73,8 @@
 
 <!-- Comments & Announcements -->
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#accordion">Commentsasd</a></li>
-  <li><a data-toggle="tab" href="#announcementTab">Announcementsads</a></li>
+  <li class="active"><a data-toggle="tab" href="#accordion"><spring:message code="rendezvous.comments.tab"/></a></li>
+  <li><a data-toggle="tab" href="#announcementTab"><spring:message code="rendezvous.announcements.tab"/></a></li>
 </ul>
 <div class="tab-content">
 	<div class="container col-md-12 panel-group tab-pane fade in active" id="accordion" style="margin-top:20px;">
@@ -99,8 +101,8 @@
 		</div> 
 	<jstl:if test="${not empty comment.replies}">
 		<div class="panel commentpanel" style="text-align:center" data-toggle="collapse" data-parent="#accordion" href="#collapse${comment.id}">
-			<span style="white-space:nowrap;">View replies<i class="fas fa-chevron-down"></i></span>
-			<span style="white-space:nowrap;display:none">Hide replies<i class="fas fa-chevron-up"></i></span>
+			<span style="white-space:nowrap;"><spring:message code="rendezvous.viewReplies"/> <i class="fas fa-chevron-down"></i></span>
+			<span style="white-space:nowrap;display:none"><spring:message code="rendezvous.hideReplies"/> <i class="fas fa-chevron-up"></i></span>
 		</div>
 		<div id="collapse${comment.id}" class="panel-collapse collapse">
 			<jstl:forEach items="${comment.replies}" var="reply">
@@ -122,7 +124,7 @@
 	</jstl:if>
 	<div class="panel-footer">
 		<jstl:if test="${rsvpd eq true}">
-			<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.write'/>" />
+			<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.reply'/>" />
 		</jstl:if>
 	</div>
 	</div>
@@ -130,21 +132,21 @@
 	</div>
 	<div id="announcementTab" class="tab-pane fade">
 		<div class="timeline">
-			<jstl:forEach items="${rendezvous.announcements}" var="announcement" varStatus="x">
+			<jstl:forEach items="${rendezvous.announcements}" var="announcementItem" varStatus="x">
 			<jstl:choose>
 			<jstl:when test="${x.count mod 2 eq 1}">
 				<div class="container left timelinecontainer">
 				    <div class="content timelinecontent">
-				      <h2><jstl:out value="${announcement.title}"/></h2>
-				      <p><jstl:out value="${announcement.description}"/></p>
+				      <h2><jstl:out value="${announcementItem.title}"/></h2>
+				      <p><jstl:out value="${announcementItem.description}"/></p>
 				    </div>
 				 </div>
 			</jstl:when>
 			<jstl:otherwise>
 				<div class="container right timelinecontainer">
 				    <div class="content timelinecontent">
-				      <h2><jstl:out value="${announcement.title}"/></h2>
-				      <p><jstl:out value="${announcement.description}"/></p>
+				      <h2><jstl:out value="${announcementItem.title}"/></h2>
+				      <p><jstl:out value="${announcementItem.description}"/></p>
 				    </div>
 				 </div>
 			</jstl:otherwise>
