@@ -99,7 +99,6 @@
 		<form:hidden path="${hiddenFields[i]}"/>
 	</jstl:forEach>
 </jstl:when>
-<<<<<<< HEAD
 <jstl:when test="${type eq 'checkBox' }">
 	<div class="form-group">
 	<form:label class="control-label" path="${name}">
@@ -107,13 +106,13 @@
 	</form:label>
 	<form:checkbox class="form-control" path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
-=======
+	</div>
+</jstl:when>
 <jstl:when test="${type eq 'textarea'}">
 	<div class="form-group">
 			<spring:message code='${model}.${name}' var="placeholder"/>
 			<form:textarea readonly="${readonly}" path="${name}" style="resize:none" class="form-control" rows="${rows}" placeholder="${placeholder}" ></form:textarea>
 			<form:errors cssClass="error" path="${name}" />	
->>>>>>> 2ff44623227a3219fed5d7e470f4e3664fe99d83
 	</div>
 </jstl:when>
 </jstl:choose>
