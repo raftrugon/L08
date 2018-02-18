@@ -12,6 +12,22 @@
 
 <!--  LEFT  -->
 <div class="col-md-2">
+
+	<form class="form-horizontal" action="${requestUri}" method="get">
+	<div class="form-group">
+		<spring:message code="rendezvous.announcement.title"/> :
+		<input class="form-control" type="text" name="newAnnouncementTitle" />
+	</div>
+	<div class="form-group">
+		<spring:message code="rendezvous.announcement.description"/>  	
+		<textarea class="form-control" type="text" name="newAnnouncementDescription"></textarea>
+	</div>
+	<div class="btn-group">
+		<input class="btn btn-primary" type="submit" name="save"
+			value="<spring:message code="rendezvous.announcement.save"/>" />
+	</div>
+	</form>
+	</br>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	<table class="displaytag" style="margin-top:0 !important;">
 	<thead>

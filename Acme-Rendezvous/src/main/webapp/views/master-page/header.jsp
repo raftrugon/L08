@@ -26,18 +26,11 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 		<ul class="nav navbar-nav">			
 				
-			
-
-					
-		<security:authorize access="hasRole('ADMIN')">
-				<li><a  href="admin/dashboard.do"><spring:message code="master.page.dashboard"/></a></li> 
+		
+		
+			<security:authorize access="hasRole('ADMIN')">
+				<button onClick="javascript:window.location.href = 'admin/dashboard.do'" class="btn btn-danger navbar-btn"><spring:message code="master.page.dashboard" /></button>
 			</security:authorize>
-			
-		
-		
-			<%-- <security:authorize access="role('ADMIN')">
-				<button onClick="javascript:window.location.href = 'admin/panel.do'" class="btn btn-danger navbar-btn"><spring:message code="master.page.admin" /></button>
-			</security:authorize> --%>
 			
 		<%-- <security:authorize access="all()"> 
 		<form class="navbar-form navbar-left" action="trip/list.do">
