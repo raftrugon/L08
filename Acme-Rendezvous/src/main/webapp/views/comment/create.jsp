@@ -18,7 +18,7 @@
 </form:form>
 
 <script>
-	$('#saveButton').click(function(e){
+	$('#saveButtoncomment').click(function(e){
 		var comment = {};
 		$('#comment').find('input[type=text],input[type=hidden],textarea').each(function(){
 			comment[$(this).attr('name')] = $(this).val();

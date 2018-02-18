@@ -34,10 +34,17 @@ public class RendezvousController extends AbstractController {
 	@RequestMapping("/display")
 	public ModelAndView display(@RequestParam(required=true) final int rendezvousId, RedirectAttributes redir){
 		ModelAndView result;
+		Boolean rsvpd = false;
+		try{
+			rsvpd = userService.isRsvpd(rendezvousId);
+		}catch(Throwable oops){
+			rsvpd = false;
+		}
 		try{
 			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 			result = new ModelAndView("rendezvous/display");
 			result.addObject("rendezvous",rendezvous);
+			result.addObject("rsvpd",rsvpd);
 		}catch(Throwable oops){
 			result = new ModelAndView("redirect: list.do");
 			redir.addFlashAttribute("message","master.page.errors.entityNotFound");
