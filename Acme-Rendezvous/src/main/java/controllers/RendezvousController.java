@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.AnnouncementService;
 import services.RendezvousService;
 import services.UserService;
 import domain.Rendezvous;
@@ -24,6 +25,8 @@ public class RendezvousController extends AbstractController {
 	private RendezvousService	rendezvousService;
 	@Autowired
 	private UserService			userService;
+	@Autowired
+	private AnnouncementService			announcementService;
 
 
 	//Constructor
@@ -38,6 +41,7 @@ public class RendezvousController extends AbstractController {
 			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 			result = new ModelAndView("rendezvous/display");
 			result.addObject("rendezvous",rendezvous);
+			result.addObject("announcement", announcementService.create(rendezvousId));
 		}catch(Throwable oops){
 			result = new ModelAndView("redirect: list.do");
 			redir.addFlashAttribute("message","master.page.errors.entityNotFound");

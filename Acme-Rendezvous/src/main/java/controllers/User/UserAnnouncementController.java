@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import services.AnnouncementService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Announcement;
+import domain.Comment;
 import domain.Rendezvous;
 import domain.User;
 
@@ -47,34 +49,23 @@ public class UserAnnouncementController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam(required = true) int rendezvousId) {
-		ModelAndView result;
-		try {
-			Announcement announcement = announcementService.create(rendezvousId);
-			result = newEditModelAndView(announcement);
-		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
-		}
-		return result;
-	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Announcement announcement, final BindingResult binding) {
-		ModelAndView result;
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(@ModelAttribute @Valid final Announcement announcement, final BindingResult binding) {
+		String result;
 		if (binding.hasErrors())
-			result = newEditModelAndView(announcement);
+			result = binding.getAllErrors().toString();
 		else
 			try {
 				announcementService.save(announcement);
-				result = new ModelAndView("redirect:list.do");
+				result = "1";
 			} catch (Throwable oops) {
-				result = newEditModelAndView(announcement);
-				result.addObject("message", "announcement.commitError");
+				oops.printStackTrace();
+				result = "2";
 			}
 		return result;
 	}
-
+	
 	protected ModelAndView newEditModelAndView(final Announcement announcement) {
 		ModelAndView result;
 		result = new ModelAndView("announcement/edit");
