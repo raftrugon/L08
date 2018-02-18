@@ -27,6 +27,7 @@
 		<value>/views/rendezvous/messages</value>
 		<value>/views/rsvp/messages</value>
 		<value>/views/user/messages</value>
+		<value>/views/comment/messages</value>
 	</util:list>
 
 </beans>
