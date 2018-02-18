@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,94 +40,96 @@ public class Rendezvous extends DomainEntity {
 
 	@NotBlank
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	@NotBlank
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
+	@Future
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getOrganisationMoment() {
-		return organisationMoment;
+		return this.organisationMoment;
 	}
 
-	public void setOrganisationMoment(Date organisationMoment) {
+	public void setOrganisationMoment(final Date organisationMoment) {
 		this.organisationMoment = organisationMoment;
 	}
 
 	@URL
 	public String getPicture() {
-		return picture;
+		return this.picture;
 	}
 
-	public void setPicture(String picture) {
+	public void setPicture(final String picture) {
 		this.picture = picture;
 	}
 
 	public Double getLatitude() {
-		return latitude;
+		return this.latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(final Double latitude) {
 		this.latitude = latitude;
 	}
 
 	public Double getLongitude() {
-		return longitude;
+		return this.longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(final Double longitude) {
 		this.longitude = longitude;
 	}
 
 	@NotNull
 	public Boolean getFinalMode() {
-		return finalMode;
+		return this.finalMode;
 	}
 
-	public void setFinalMode(Boolean finalMode) {
+	public void setFinalMode(final Boolean finalMode) {
 		this.finalMode = finalMode;
 	}
 
 	@NotNull
 	public Boolean getDeleted() {
-		return deleted;
+		return this.deleted;
 	}
 
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(final Boolean deleted) {
 		this.deleted = deleted;
 	}
 
 	@NotNull
 	public Boolean getAdultOnly() {
-		return adultOnly;
+		return this.adultOnly;
 	}
 
-	public void setAdultOnly(Boolean adultOnly) {
+	public void setAdultOnly(final Boolean adultOnly) {
 		this.adultOnly = adultOnly;
 	}
 
 	@NotNull
 	@ElementCollection
 	public Collection<String> getQuestions() {
-		return questions;
+		return this.questions;
 	}
 
-	public void setQuestions(Collection<String> questions) {
+	public void setQuestions(final Collection<String> questions) {
 		this.questions = questions;
 	}
+
 
 	// Relationships ----------------------------------------------------------
 	private User						user;
@@ -140,50 +143,50 @@ public class Rendezvous extends DomainEntity {
 	@NotNull
 	@ManyToOne(optional = false)
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 
 	@NotNull
 	@OneToMany(mappedBy = "rendezvous")
 	public Collection<Comment> getComments() {
-		return comments;
+		return this.comments;
 	}
 
-	public void setComments(Collection<Comment> comments) {
+	public void setComments(final Collection<Comment> comments) {
 		this.comments = comments;
 	}
 
 	@NotNull
 	@OneToMany(mappedBy = "rendezvous")
 	public Collection<Rsvp> getRsvps() {
-		return rsvps;
+		return this.rsvps;
 	}
 
-	public void setRsvps(Collection<Rsvp> rsvps) {
+	public void setRsvps(final Collection<Rsvp> rsvps) {
 		this.rsvps = rsvps;
 	}
 
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Announcement> getAnnouncements() {
-		return announcements;
+		return this.announcements;
 	}
 
-	public void setAnnouncements(Collection<Announcement> announcements) {
+	public void setAnnouncements(final Collection<Announcement> announcements) {
 		this.announcements = announcements;
 	}
 
 	@NotNull
 	@OneToMany
 	public Collection<Rendezvous> getRendezvouses() {
-		return rendezvouses;
+		return this.rendezvouses;
 	}
 
-	public void setRendezvouses(Collection<Rendezvous> rendezvouses) {
+	public void setRendezvouses(final Collection<Rendezvous> rendezvouses) {
 		this.rendezvouses = rendezvouses;
 	}
 }

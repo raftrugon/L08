@@ -4,10 +4,9 @@ package controllers.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +17,7 @@ import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Rendezvous;
+import forms.UserRendezvousCreateForm;
 
 @Controller
 @RequestMapping("/user/rendezvous")
@@ -26,7 +26,7 @@ public class UserRendezvousController extends AbstractController {
 	@Autowired
 	private RendezvousService	rendezvousService;
 	@Autowired
-	private UserService	userService;
+	private UserService			userService;
 
 
 	//Constructor
@@ -37,7 +37,7 @@ public class UserRendezvousController extends AbstractController {
 	@RequestMapping("/created-list")
 	public ModelAndView listCreated() {
 		ModelAndView result;
-		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(userService.findByPrincipal().getRendezvouses());
+		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(this.userService.findByPrincipal().getRendezvouses());
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouss", rendezvouss);
 		result.addObject("requestUri", "user/rendezvous/created-list.do");
@@ -47,32 +47,32 @@ public class UserRendezvousController extends AbstractController {
 	@RequestMapping("/rsvp-list")
 	public ModelAndView listRSVP() {
 		ModelAndView result;
-		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(rendezvousService.getRSVPRendezvousesForUser(userService.findByPrincipal()));
+		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(this.rendezvousService.getRSVPRendezvousesForUser(this.userService.findByPrincipal()));
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouss", rendezvouss);
 		result.addObject("requestUri", "user/rendezvous/rsvp-list.do");
 		return result;
 	}
-	
+
 	@RequestMapping("/questions-list")
-	public ModelAndView listQuestions(@RequestParam int rendezvousId) {
+	public ModelAndView listQuestions(@RequestParam final int rendezvousId) {
 		ModelAndView result;
-		
-		Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
-		
+
+		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+
 		result = new ModelAndView("rendezvous/listQuestions");
 		result.addObject("questions", rendezvous.getQuestions());
 		result.addObject("rendezvous", rendezvous);
-		result.addObject("requestUri", "user/rendezvous/questions-list.do?rendezvousId="+rendezvousId);
+		result.addObject("requestUri", "user/rendezvous/questions-list.do?rendezvousId=" + rendezvousId);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
-			Rendezvous rendezvous = rendezvousService.create();
-			result = newEditModelAndView(rendezvous);
+			UserRendezvousCreateForm rendezvous = new UserRendezvousCreateForm();
+			result = this.newEditModelAndView(rendezvous);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
 		}
@@ -81,48 +81,60 @@ public class UserRendezvousController extends AbstractController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam(required = true) final int rendezvousId) {
-		Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
-		if (rendezvous.getUser().equals(userService.findByPrincipal()))
-			return newEditModelAndView(rendezvous);
-		else
-			return new ModelAndView("redirect:list.do");
+		ModelAndView result;
+
+		try {
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+			UserRendezvousCreateForm rendezvousForm = new UserRendezvousCreateForm(rendezvous);
+			Assert.isTrue(rendezvous.getUser().equals(this.userService.findByPrincipal()));
+			result = this.newEditModelAndView(rendezvousForm);
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
+		return result;
 	}
 
+	//---------------------- POST ----------------------
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView save(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 		ModelAndView result;
-		if (binding.hasErrors())
-			result = newEditModelAndView(rendezvous);
-		else
+		Rendezvous rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
+
+		if (binding.hasErrors()) {
+			System.out.println(binding.toString());
+			result = this.newEditModelAndView(rendezvousForm);
+		} else
 			try {
-				rendezvousService.save(rendezvous);
-				result = new ModelAndView("redirect:list.do");
+				Rendezvous saved = this.rendezvousService.save(rendezvous);
+				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
 			} catch (Throwable oops) {
-				result = newEditModelAndView(rendezvous);
+				result = this.newEditModelAndView(rendezvousForm);
 				result.addObject("message", "rendezvous.commitError");
 			}
 		return result;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView delete(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 		ModelAndView result;
 		if (binding.hasErrors())
-			result = newEditModelAndView(rendezvous);
+			result = this.newEditModelAndView(rendezvousForm);
 		else
 			try {
-				rendezvousService.deleteByUser(rendezvous);
-				result = new ModelAndView("redirect:list.do");
+				this.rendezvousService.deleteByUser(rendezvousForm.getRendezvousId());
+				result = new ModelAndView("redirect:../../rendezvous/list.do");
 			} catch (Throwable oops) {
-				result = newEditModelAndView(rendezvous);
+				result = this.newEditModelAndView(rendezvousForm);
 				result.addObject("message", "rendezvous.commitError");
 			}
 		return result;
 	}
-	protected ModelAndView newEditModelAndView(final Rendezvous rendezvous) {
+
+	protected ModelAndView newEditModelAndView(final UserRendezvousCreateForm rendezvousForm) {
 		ModelAndView result;
-		result = new ModelAndView("rendezvous/edit");
-		result.addObject("rendezvous", rendezvous);
+		result = new ModelAndView("user/rendezvous/edit");
+		result.addObject("rendezvous", rendezvousForm);
 		result.addObject("actionUri", "user/rendezvous/save.do");
 		return result;
 	}

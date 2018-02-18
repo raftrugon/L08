@@ -63,8 +63,6 @@ public class UserController extends AbstractController {
 		return result;
 	}
 
-
-
 	//Create Edit GET
 	@RequestMapping(value = "/register/user", method = RequestMethod.GET)
 	public ModelAndView create() {
@@ -78,19 +76,19 @@ public class UserController extends AbstractController {
 		return result;
 	}
 
-	/*@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam(required = true) final int userId) {
-		User user = this.userService.findOne(userId);
-		return this.newEditModelAndView(user);
-	}*/
+	/*
+	 * @RequestMapping(value = "/edit", method = RequestMethod.GET)
+	 * public ModelAndView edit(@RequestParam(required = true) final int userId) {
+	 * User user = this.userService.findOne(userId);
+	 * return this.newEditModelAndView(user);
+	 * }
+	 */
 
 	//Save Delete POST
 	@RequestMapping(value = "/register/user", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final RegisterUserForm userForm, final BindingResult binding) {
 		ModelAndView result;
-		User user;
-
-		user = this.userService.reconstruct(userForm, binding);
+		User user = this.userService.reconstruct(userForm, binding);
 
 		if (binding.hasErrors()) {
 			System.out.println(binding.toString());
@@ -106,22 +104,23 @@ public class UserController extends AbstractController {
 		return result;
 	}
 
-	/*@RequestMapping(value = "/save", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final User user, final BindingResult binding) {
-		ModelAndView result;
-		if (binding.hasErrors())
-			result = this.newEditModelAndView(user);
-		else
-			try {
-				this.userService.delete(user);
-				result = new ModelAndView("redirect:list.do");
-			} catch (Throwable oops) {
-				result = this.newEditModelAndView(user);
-				result.addObject("message", "user.commitError");
-			}
-		return result;
-	}*/
-
+	/*
+	 * @RequestMapping(value = "/save", method = RequestMethod.POST, params = "delete")
+	 * public ModelAndView delete(@Valid final User user, final BindingResult binding) {
+	 * ModelAndView result;
+	 * if (binding.hasErrors())
+	 * result = this.newEditModelAndView(user);
+	 * else
+	 * try {
+	 * this.userService.delete(user);
+	 * result = new ModelAndView("redirect:list.do");
+	 * } catch (Throwable oops) {
+	 * result = this.newEditModelAndView(user);
+	 * result.addObject("message", "user.commitError");
+	 * }
+	 * return result;
+	 * }
+	 */
 
 	//EditModelAndView
 	protected ModelAndView newEditModelAndView(final RegisterUserForm userForm) {
@@ -141,5 +140,3 @@ public class UserController extends AbstractController {
 		return result;
 	}
 }
-
-

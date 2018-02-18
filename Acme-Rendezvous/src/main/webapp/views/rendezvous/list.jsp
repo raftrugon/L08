@@ -17,7 +17,7 @@
 	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
 	<lib:column name="picture" photoUrl="${row.picture}"/>
 	<lib:column name="coordinates" value="[${row.longitude},${row.latitude}]"/>
-	<lib:column name="user" link="#" linkName="${row.user.name} ${row.user.surnames}"/>
+	<lib:column name="user" link="user-display.do?userId=${row.user.id}" linkName="${row.user.name} ${row.user.surnames}"/>
 	
 </display:table>
 	</div>
