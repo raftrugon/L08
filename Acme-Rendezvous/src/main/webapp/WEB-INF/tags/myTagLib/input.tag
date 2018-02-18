@@ -106,6 +106,7 @@
 	</form:label>
 	<form:checkbox class="form-control" path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
+	</div>
 </jstl:when>
 <jstl:when test="${type eq 'textarea'}">
 	<div class="form-group">
