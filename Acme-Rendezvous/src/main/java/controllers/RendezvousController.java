@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.RendezvousService;
 import services.UserService;
@@ -31,15 +32,15 @@ public class RendezvousController extends AbstractController {
 	}
 	
 	@RequestMapping("/display")
-	public ModelAndView display(@RequestParam(required=true) final int rendezvousId){
+	public ModelAndView display(@RequestParam(required=true) final int rendezvousId, RedirectAttributes redir){
 		ModelAndView result;
 		try{
 			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 			result = new ModelAndView("rendezvous/display");
 			result.addObject("rendezvous",rendezvous);
 		}catch(Throwable oops){
-			result = new ModelAndView("rendezvous/list");
-			result.addObject("message","master.page.errors.entityNotFound");
+			result = new ModelAndView("redirect: list.do");
+			redir.addFlashAttribute("message","master.page.errors.entityNotFound");
 		}
 		return result;
 	}

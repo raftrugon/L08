@@ -36,15 +36,6 @@
 		<a href="${link}">${linkName}</a>
 	</display:column>
 </jstl:when>
-<jstl:when test="${map ne null}">
-	<spring:message code="${model}.${name}" var="Header" />
-	<display:column title="${Header}" sortable="${sortable}">
-	<jstl:forEach var="item" items="${name}">
-	Key: <jstl:out value="${item}"/>
-	Value: <jstl:out value="${item}"/>
-	</jstl:forEach>
-	</display:column>
-</jstl:when>
 <jstl:otherwise>
 	<spring:message code="${model}.${name}" var="Header" />
 	<display:column property="${name}" title="${Header}" sortable="${sortable}" style="${style}" format="${format}"/>

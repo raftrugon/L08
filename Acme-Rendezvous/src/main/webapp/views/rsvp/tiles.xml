@@ -21,4 +21,6 @@
 		<put-attribute name="body" value="/views/rsvp/list.jsp" />
 	</definition>
 	
+	<definition name="rsvp/qa" template="/views/rsvp/qa.jsp"/>
+	
 </tiles-definitions>
