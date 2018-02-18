@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -88,5 +89,38 @@ public class RendezvousService {
 		return rendezvousRepository.getRSVPRendezvousesForUser(user);
 	}
 	
+	public Double[] getRendezvousStats(){
+		return rendezvousRepository.getRendezvousStats();
+	}
+	
+	public Double getRatioOfUsersWhoHaveCreatedRendezvouses() {
+		return rendezvousRepository.getRatioOfUsersWhoHaveCreatedRendezvouses();
+	}
+	
+	//Average and stdev of users per rendezvous
+	
+	//Average and stdev of rendezvouses that are RSVPd per user
+	
+	public Collection<Rendezvous> getTop10RendezvousByRSVPs() {
+		return rendezvousRepository.getTop10RendezvousByRSVPs();
+	}
+	
+	public Double[] getRendezvousAnnouncementStats() {
+		return rendezvousRepository.getRendezvousAnnouncementStats();
+	}
+	
+	public Collection<Rendezvous> getRendezvousesWithNumberOfAnnouncementsOver75PerCentAvg() {
+		return rendezvousRepository.getRendezvousesWithNumberOfAnnouncementsOver75PerCentAvg();
+	}
+	
+	public Collection<Rendezvous> getRendezvousesLinkedToMoreThan10PerCentAVGNumberOfRendezvouses() {
+		return rendezvousRepository.getRendezvousesLinkedToMoreThan10PerCentAVGNumberOfRendezvouses();
+	}
+	
+	public Double[] getRendezvousQuestionStats() {
+		return rendezvousRepository.getRendezvousQuestionStats();
+	}
+	
+	//Avg and stdev of answers to questions per rendezvous
 	
 }

@@ -94,5 +94,7 @@ public class CommentService {
 	
 	//Other Business Methods --------------------------------
 	
-	
+	public Double[] getCommentRepliesStats() {
+		return commentRepository.getCommentRepliesStats();
+	}
 }

@@ -10,4 +10,6 @@ import domain.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
+	@Query("select coalesce(avg(c.replies.size),0), coalesce(stddev(c.replies.size),0) from Comment c")
+	Double[] getCommentRepliesStats();
 }
