@@ -31,4 +31,9 @@
 		<put-attribute name="body" value="/views/rendezvous/listQuestions.jsp" />
 	</definition>
 	
+	<definition name="user/rendezvous/edit" extends="master.page">	
+		<put-attribute name="title" value="Crear Reunión" />
+		<put-attribute name="body" value="/views/rendezvous/create.jsp" />
+	</definition>
+	
 </tiles-definitions>
