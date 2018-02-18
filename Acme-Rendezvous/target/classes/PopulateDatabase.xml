@@ -177,30 +177,35 @@
 		<property name="title" value="Se recomienda llevar comida" />
 		<property name="creationMoment" value="12/26/2017 22:22" />
 		<property name="description" value="Vamos a estar fuera todo el día, para evitar problemas con el calor se recomienda." />
+		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 	
 	<bean id="announcement2" class="domain.Announcement">
 		<property name="title" value="Me presento" />
 		<property name="creationMoment" value="11/26/2017 12:22" />
 		<property name="description" value="Me llamo Pepe y si me lo permitis os daré una guía histórica gratuita." />
+		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 	
 	<bean id="announcement3" class="domain.Announcement">
 		<property name="title" value="Puede que llueva" />
 		<property name="creationMoment" value="12/22/2017 12:22" />
 		<property name="description" value="Les recomiendo que lleven paragüas y capa de agua por si acaso." />
+		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 	
 	<bean id="announcement4" class="domain.Announcement">
 		<property name="title" value="Propongo una idea" />
 		<property name="creationMoment" value="10/16/2017 12:22" />
 		<property name="description" value="Frecuento mucho la zona y puedo crear una ruta de bares." />
+		<property name="rendezvous" ref="rendezvous3" />
 	</bean>  
 	
 	<bean id="announcement5" class="domain.Announcement">
 		<property name="title" value="Para los más rockeros" />
 		<property name="creationMoment" value="11/15/2017" />
 		<property name="description" value="Conozco un par de bares de ambiente rock que pueden plantear un plan bastante alternativo." />
+		<property name="rendezvous" ref="rendezvous3" />
 	</bean>
   
 	

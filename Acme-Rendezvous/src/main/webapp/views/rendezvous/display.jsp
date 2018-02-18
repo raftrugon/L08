@@ -12,6 +12,22 @@
 
 <!--  LEFT  -->
 <div class="col-md-2">
+
+	<form class="form-horizontal" action="${requestUri}" method="get">
+	<div class="form-group">
+		<spring:message code="rendezvous.announcement.title"/> :
+		<input class="form-control" type="text" name="newAnnouncementTitle" />
+	</div>
+	<div class="form-group">
+		<spring:message code="rendezvous.announcement.description"/>  	
+		<textarea class="form-control" type="text" name="newAnnouncementDescription"></textarea>
+	</div>
+	<div class="btn-group">
+		<input class="btn btn-primary" type="submit" name="save"
+			value="<spring:message code="rendezvous.announcement.save"/>" />
+	</div>
+	</form>
+	</br>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	<table class="displaytag" style="margin-top:0 !important;">
 	<thead>
@@ -54,77 +70,63 @@
 	</jstl:if>
 </div>
 <!-- Comments -->
-
-<div class="container col-md-12 panel-group" id="accordion" style="margin-top:20px;">
-		<div class="form-group">
-			<textarea style="resize:none" class="form-control" rows="4" placeholder="<spring:message code='rendezvous.comment.write.placeholder'/>" ></textarea>
-		</div>
-		<div class="form-group">
-			<div class="input-group">
-				<span class="input-group-addon"><i class="fas fa-paperclip"></i> <spring:message code="rendezvous.comment.attachment"/></span>
-				<input type="text" class="form-control" placeholder="http://www.url.com"/>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#accordion">Commentsasd</a></li>
+  <li><a data-toggle="tab" href="#announcementTab">Announcementsads</a></li>
+</ul>
+<div class="tab-content">
+	<div class="container col-md-12 panel-group tab-pane fade in active" id="accordion" style="margin-top:20px;">
+	<div id="newCommentDiv"></div>
+	
+	<jstl:forEach items="${rendezvous.comments}" var="comment">
+	<div class="media panel panel-default">
+		<div class="panel-heading"> 
+			<div class="media-left">
+			  <img src="images/avatar.png" class="media-object" style="width:45px">
 			</div>
+			<div class="media-body">
+				<h4 class="media-heading">${comment.user.name} ${comment.user.surnames}<small><i>
+				<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${comment.creationMoment}" /></i></small></h4>
+				<p>${comment.text}</p>
+			</div>
+			<div class="media-right" style="text-align:right">
+				<img src="${comment.picture}" style="max-height:150px">
+			</div>
+		</div> 
+	<jstl:if test="${not empty comment.replies}">
+		<div class="panel commentpanel" style="text-align:center" data-toggle="collapse" data-parent="#accordion" href="#collapse${comment.id}">
+			<span style="white-space:nowrap;">View replies<i class="fas fa-chevron-down"></i></span>
+			<span style="white-space:nowrap;display:none">Hide replies<i class="fas fa-chevron-up"></i></span>
 		</div>
-		<div class="form-group">
-			<input type="button" class="btn btn-block btn-success" value="<spring:message code='rendezvous.comment.write'/>" />
+		<div id="collapse${comment.id}" class="panel-collapse collapse">
+			<jstl:forEach items="${comment.replies}" var="reply">
+				<div class="media" style="padding-left:45px;margin-top:5px;">
+					<div class="media-left">
+						<img src="images/avatar.png" class="media-object" style="width:45px">
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">${reply.user.name} ${reply.user.surnames}<small><i>
+						<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${reply.creationMoment}" /></i></small></h4>
+						<p>${reply.text}</p>
+					</div>
+					<div class="media-right">
+						<img src="${reply.picture}" style="max-height:150px;margin-right:15px;margin-bottom:10px;">
+					</div>
+				</div>	
+			</jstl:forEach>
 		</div>
+	</jstl:if>
+	<div class="panel-footer">
+		<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.write'/>" />
 	</div>
-<jstl:forEach items="${rendezvous.comments}" var="comment">
-<div class="media panel panel-default">
-	<div class="panel-heading commentpanel" data-toggle="collapse" data-parent="#accordion" href="#collapse${comment.id}"> 
-		<div class="media-left">
-		  <img src="images/avatar.png" class="media-object" style="width:45px">
-		</div>
-		<div class="media-body">
-			<h4 class="media-heading">${comment.user.name} ${comment.user.surnames}<small><i>
-			<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${comment.creationMoment}" /></i></small></h4>
-			<p>${comment.text}</p>
-		</div>
-		<div class="media-right">
-			<img src="${comment.picture}" style="max-height:150px">
-		</div>
-	</div> 
-<jstl:if test="${comment.replies ne null}">
-	<div id="collapse${comment.id}" class="panel-collapse collapse">
-		<jstl:forEach items="${comment.replies}" var="reply">
-			<div class="media" style="padding-left:45px;margin-top:5px;">
-				<div class="media-left">
-					<img src="images/avatar.png" class="media-object" style="width:45px">
-				</div>
-				<div class="media-body">
-					<h4 class="media-heading">${reply.user.name} ${reply.user.surnames}<small><i>
-					<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${reply.creationMoment}" /></i></small></h4>
-					<p>${reply.text}</p>
-					<jstl:if test="${reply.picture ne null}">
-						<input type="button" class="btn btn-primary" id="${reply.id}" value='<spring:message code="rendezvous.picture.show"/>'/>
-						<script>
-							$(document).ready(function(){
-							    $('#<jstl:out value="${reply.id}"/>').popover({
-							    	html: true,
-							        trigger: 'hover',
-							    	content: '<img src="${reply.picture}" style="width:100%">'
-							    });   
-							});
-						</script>
-					</jstl:if>
-				</div>
-			</div>	
-		</jstl:forEach>
 	</div>
-</jstl:if>
-<div class="panel-footer">
-	<div class="input-group">
-		<input type="text" class="form-control" placeholder="<spring:message code='rendezvous.comment.reply.placeholder'/>" />
-		<div class="input-group-btn">
-			<input type="button" class="btn btn-success" value="<spring:message code='rendezvous.comment.reply'/>" />
-		</div>
+	</jstl:forEach>
+	</div>
+	<div id="annoucementTab" class="tab-pane fade">
+	
 	</div>
 </div>
 </div>
-</jstl:forEach>
-</div>
-
-
 <!--  RIGHT  -->
 <div class="col-md-2">
 <div id="map" style="height:300px;width=100%"></div>
@@ -150,7 +152,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><spring:message code="rendezvous.qaHeader"/></h4>
+        <h4 id="modalTitle" class="modal-title"></h4>
       </div>
       <div id="modalBody" class="modal-body">
       </div>
@@ -166,10 +168,27 @@
 	$("[data-toggle=modal]").click(function(e){
 		$.get("ajax/qa.do?rsvpId=" + $(this).attr('id'), function(data){
 			$('#modalBody').html(data);
+			$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
 		});
 	});
 	$(document).ready(function(){
 		initMap();
+		$.get("user/comment/createComment.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
+			$('#newCommentDiv').html(data);
+		});
+		$('.newReplyBtn').click(function(e){
+			e.preventDefault();
+			$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
+				$('#modalBody').html(data);
+			});
+			$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+			$('#qaModal').modal('show');
+		});
+		$('.commentpanel').click(function(e){
+			$(this).children('span').each(function(){
+				$(this).toggle();
+			});
+		});
 	});
 </script>
 <script>
@@ -187,29 +206,5 @@
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
-    </script>
-    <script>
-    //Script to make the textarea auto resize
-    $(function() {
-    	  var txt = $('#autoTextarea'),
-    	    hiddenDiv = $(document.createElement('div')),
-    	    content = null;
-
-    	  txt.addClass('txtstuff');
-    	  hiddenDiv.addClass('hiddenTextarea common');
-
-    	  $('body').append(hiddenDiv);
-
-    	  txt.on('keyup', function () {
-
-    	    content = $(this).val();
-
-    	    content = content.replace(/\n/g, '<br>');
-    	    hiddenDiv.html(content + '<br> <br class="lbr">');
-
-    	    $(this).css('height', hiddenDiv.height());
-
-    	  });
-    	});
     </script>
     

@@ -40,8 +40,7 @@
 	
 	</jstl:choose>	
 	</display:column>
-	
-	
+
 	<jstl:forEach items="${row}" var="x" varStatus="count">
 		<jstl:choose>
 			<jstl:when test="${count.index==0 }">
@@ -61,6 +60,14 @@
     <display:setProperty name="paging.banner.no_items_found" value=""/>
 
 </display:table>
+</br>
+	
+	<div class="well well-sm" style="width:95%">
+		<strong>
+		<spring:message code="admin.ratio"/></strong> <jstl:out value="${ratioOfUsersWhoCreatedRendezvouses}"></jstl:out>
+		
+	</div>
+	
 
 <display:table pagesize="10" class="displaytag" keepStatus="true" name="top10RnedezVouses" id="row1">
 	 <display:caption> 

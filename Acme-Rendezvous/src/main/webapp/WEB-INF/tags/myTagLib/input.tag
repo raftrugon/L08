@@ -16,16 +16,27 @@
 <%@ attribute name="min"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Min number" %> 
 <%@ attribute name="max"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Max number" %> 
 <%@ attribute name="step"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Steps" %> 
+<%@ attribute name="addon"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Input text addon" %> 
+<%@ attribute name="rows"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Rows for textarea" %> 
 
 
 
 <jstl:choose>
-<jstl:when test="${type eq 'text' }">
+<jstl:when test="${type eq 'text' and addon ne null}">
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon">${addon}</span>
+			<form:input class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
+		</div>
+	<form:errors cssClass="error" path="${name}" />	
+	</div>
+</jstl:when>
+<jstl:when test="${type eq 'text' and addon eq null }">
 	<div class="form-group">
 	<form:label class="control-label" path="${name}">
 		<spring:message code="${model}.${name}" />:
 	</form:label>
-	<form:input class="form-control" path="${name}" readonly="${readonly}"/>
+	<form:input class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>
@@ -88,6 +99,7 @@
 		<form:hidden path="${hiddenFields[i]}"/>
 	</jstl:forEach>
 </jstl:when>
+<<<<<<< HEAD
 <jstl:when test="${type eq 'checkBox' }">
 	<div class="form-group">
 	<form:label class="control-label" path="${name}">
@@ -95,6 +107,13 @@
 	</form:label>
 	<form:checkbox class="form-control" path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
+=======
+<jstl:when test="${type eq 'textarea'}">
+	<div class="form-group">
+			<spring:message code='${model}.${name}' var="placeholder"/>
+			<form:textarea readonly="${readonly}" path="${name}" style="resize:none" class="form-control" rows="${rows}" placeholder="${placeholder}" ></form:textarea>
+			<form:errors cssClass="error" path="${name}" />	
+>>>>>>> 2ff44623227a3219fed5d7e470f4e3664fe99d83
 	</div>
 </jstl:when>
 </jstl:choose>
