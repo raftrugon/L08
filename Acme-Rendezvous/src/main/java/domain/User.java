@@ -15,8 +15,6 @@ import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-
-
 @Entity
 @Access(AccessType.PROPERTY)
 public class User extends Actor {
@@ -27,13 +25,11 @@ public class User extends Actor {
 
 	@NotNull
 	@Past
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy") //Acorde al input date de input.tag
 	public Date getBirthDate() {
-		return this.birthDate;
+		return birthDate;
 	}
 
-	public void setBirthDate(final Date birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -47,20 +43,20 @@ public class User extends Actor {
 	@NotNull
 	@OneToMany(mappedBy = "user")
 	public Collection<Rsvp> getRsvps() {
-		return this.rsvps;
+		return rsvps;
 	}
 
-	public void setRsvps(final Collection<Rsvp> rsvps) {
+	public void setRsvps(Collection<Rsvp> rsvps) {
 		this.rsvps = rsvps;
 	}
 
 	@NotNull
 	@OneToMany(mappedBy = "user")
 	public Collection<Rendezvous> getRendezvouses() {
-		return this.rendezvouses;
+		return rendezvouses;
 	}
 
-	public void setRendezvouses(final Collection<Rendezvous> rendezvouses) {
+	public void setRendezvouses(Collection<Rendezvous> rendezvouses) {
 		this.rendezvouses = rendezvouses;
 	}
 

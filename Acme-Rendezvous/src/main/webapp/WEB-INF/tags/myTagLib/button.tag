@@ -9,7 +9,7 @@
 <%@ attribute name="model"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Model attribute" %>
 <%@ attribute name="noDelete"  rtexprvalue="true"  required="false" type="java.lang.String"  description="if set hides delete button" %>
 <%@ attribute name="id"  rtexprvalue="true"  required="true" type="java.lang.String"  description="id of object" %>
-<%@ attribute name="cancelUri"  rtexprvalue="true"  required="true" type="java.lang.String"  description="URI for redirect when cancel" %>
+<%@ attribute name="cancelUri"  rtexprvalue="true"  required="false" type="java.lang.String"  description="URI for redirect when cancel" %>
 
 <div class="btn-group btn-group-justified">
 	<div class="btn-group">
@@ -21,11 +21,13 @@
 	    	onclick="return confirm('<spring:message code="${model}.confirm.delete" />')" />
 		</div>
   	</jstl:if>
-	<div class="btn-group">
-		<input class="btn btn-default" type="button" name="cancel"
-			value="<spring:message code="${model}.cancel"/>"
-			onclick="javascript: window.location.replace('${cancelUri}')" />
-	</div>
+  	<jstl:if test="${cancelUri ne null }">
+		<div class="btn-group">
+			<input class="btn btn-default" type="button" name="cancel"
+				value="<spring:message code="${model}.cancel"/>"
+				onclick="javascript: window.location.replace('${cancelUri}')" />
+		</div>
+	</jstl:if>
 </div>
 <jstl:if test="${message ne null }">
 	<p style="error"><spring:message code="${message}"/></p>
