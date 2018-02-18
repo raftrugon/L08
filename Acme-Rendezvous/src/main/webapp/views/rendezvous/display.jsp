@@ -68,7 +68,8 @@
 		<img src="<jstl:out value='${rendezvous.picture}'/>" style="max-height:200px"/>
 	</jstl:if>
 </div>
-<!-- Comments -->
+
+<!-- Comments & Announcements -->
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#accordion">Commentsasd</a></li>
   <li><a data-toggle="tab" href="#announcementTab">Announcementsads</a></li>
@@ -76,7 +77,11 @@
 <div class="tab-content">
 	<div class="container col-md-12 panel-group tab-pane fade in active" id="accordion" style="margin-top:20px;">
 	<div id="newCommentDiv"></div>
-	
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${not rsvpd}">
+			<a href="security/login.do" class="btn btn-block btn-primary"><span class="glyphicon glyphicon-log-in"></span> <spring:message code="master.page.login" /></a>
+		</jstl:if>	
+	</security:authorize>
 	<jstl:forEach items="${rendezvous.comments}" var="comment">
 	<div class="media panel panel-default">
 		<div class="panel-heading"> 
@@ -116,13 +121,36 @@
 		</div>
 	</jstl:if>
 	<div class="panel-footer">
-		<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.write'/>" />
+		<jstl:if test="${rsvpd eq true}">
+			<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.write'/>" />
+		</jstl:if>
 	</div>
 	</div>
 	</jstl:forEach>
 	</div>
-	<div id="annoucementTab" class="tab-pane fade">
-	
+	<div id="announcementTab" class="tab-pane fade">
+		<div class="timeline">
+			<jstl:forEach items="${rendezvous.announcements}" var="announcement" varStatus="x">
+			<jstl:choose>
+			<jstl:when test="${x.count mod 2 eq 1}">
+				<div class="container left timelinecontainer">
+				    <div class="content timelinecontent">
+				      <h2><jstl:out value="${announcement.title}"/></h2>
+				      <p><jstl:out value="${announcement.description}"/></p>
+				    </div>
+				 </div>
+			</jstl:when>
+			<jstl:otherwise>
+				<div class="container right timelinecontainer">
+				    <div class="content timelinecontent">
+				      <h2><jstl:out value="${announcement.title}"/></h2>
+				      <p><jstl:out value="${announcement.description}"/></p>
+				    </div>
+				 </div>
+			</jstl:otherwise>
+			</jstl:choose>
+			</jstl:forEach>
+		</div>
 	</div>
 </div>
 </div>
@@ -172,9 +200,6 @@
 	});
 	$(document).ready(function(){
 		initMap();
-		$.get("user/comment/createComment.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
-			$('#newCommentDiv').html(data);
-		});
 		$('.newReplyBtn').click(function(e){
 			e.preventDefault();
 			$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
@@ -190,6 +215,15 @@
 		});
 	});
 </script>
+<jstl:if test="${rsvpd eq true}">
+	<script>
+		$(function(){
+			$.get("user/comment/createComment.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
+				$('#newCommentDiv').html(data);
+			});
+		});
+	</script>
+</jstl:if>
 <script>
       function initMap() {
         var uluru = {lat: <jstl:out value="${rendezvous.latitude}"/>, lng: <jstl:out value="${rendezvous.longitude}"/>};
