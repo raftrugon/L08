@@ -29,21 +29,8 @@
 			
 
 					
-			<%-- <security:authorize access="hasRole('ADMIN')">
-				<li><a  href="#"><spring:message code="master.page.legalText"/></a></li>  -->
-				<%--  
-				<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="actor.adminRegister"/>
-				<span class="caret"></span> </a>
-					<ul class="dropdown-menu">
-						<li><a href="profile/registerByAdmin.do?type=explorer"><spring:message code="actor.adminExplorer" /></a></li>
-						<li><a href="profile/registerByAdmin.do?type=auditor"><spring:message code="actor.adminAuditor" /></a></li>
-						<li><a href="profile/registerByAdmin.do?type=sponsor"><spring:message code="actor.adminSponsor" /></a></li>
-						<li><a href="profile/registerByAdmin.do?type=ranger"><spring:message code="actor.adminRanger" /></a></li>
-						<li><a href="profile/registerByAdmin.do?type=manager"><spring:message code="actor.adminManager" /></a></li>	
-						
-					</ul>
-				</li>-->
+		<security:authorize access="hasRole('ADMIN')">
+				<li><a  href="admin/dashboard.do"><spring:message code="master.page.dashboard"/></a></li> 
 			</security:authorize>
 			
 		

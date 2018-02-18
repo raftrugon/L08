@@ -49,7 +49,7 @@
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>
-<jstl:when test="${type eq 'date' }">
+<jstl:when test="${type eq 'moment' }">
 	<div class="form-group">
 		<form:label class="control-label " path="${name}">	
 			<spring:message code="${model}.${name}" />:	
@@ -66,6 +66,28 @@
 	    $(document).ready(function () {
 	        $('.dtPicker').datetimepicker({
 	        	format: "DD/MM/YYYY HH:mm",
+	        	locale: "<jstl:out value='${locale}'/>"
+	        });
+	    });
+</script>
+</jstl:when>
+<jstl:when test="${type eq 'date' }">
+	<div class="form-group">
+		<form:label class="control-label " path="${name}">	
+			<spring:message code="${model}.${name}" />:	
+		</form:label>	
+		<div class='input-group date dtPicker' id='dtPicker.${name}'>
+	        <form:input type='text' class="form-control" path="${name}"/>
+	        <span class="input-group-addon">
+	            <span class="glyphicon glyphicon-calendar"></span>
+	        </span>
+	    </div>
+	    <form:errors cssClass="error" path="${name}" />
+	</div>
+	<script type="text/javascript">
+	    $(document).ready(function () {
+	        $('.dtPicker').datetimepicker({
+	        	format: "DD/MM/YYYY",
 	        	locale: "<jstl:out value='${locale}'/>"
 	        });
 	    });
