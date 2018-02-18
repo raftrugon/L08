@@ -15,9 +15,9 @@
 
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
-	<div class="panel panel-default" style="width:95%;text-align:center">
+	<div class="panel panel-default" style="width:95%;">
 		<div class="well" style="margin-bottom:10px;text-align:center"><strong><i class="fas fa-bullhorn"></i> <spring:message code="rendezvous.announcement.new"/></strong></div>
-		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px;width:95%;">		
+		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px !important;width:95%;margin:auto">		
 			<jstl:set var="model" value="announcement" scope="request"/>
 			<lib:input type="hidden" name="id,version,creationMoment,rendezvous"/>
 			<spring:message code='announcement.title' var="titlePlaceholder"/>

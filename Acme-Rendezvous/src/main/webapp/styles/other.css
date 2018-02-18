@@ -2,3 +2,9 @@
 	background-color:#c5c5c5 !important;
 	cursor:pointer;
 }
+
+.centerimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

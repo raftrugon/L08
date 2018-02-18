@@ -50,17 +50,17 @@
 }
 
 /* Place the timelinecontainer to the left */
-.left {
+.timelineleft {
   left: 0;
 }
 
 /* Place the timelinecontainer to the right */
-.right {
+.timelineright {
   left: 50%;
 }
 
 /* Add arrows to the left timelinecontainer (pointing right) */
-.left::before {
+.timelineleft::before {
   content: " ";
   height: 0;
   position: absolute;
@@ -74,7 +74,7 @@
 }
 
 /* Add arrows to the right timelinecontainer (pointing left) */
-.right::before {
+.timelineright::before {
   content: " ";
   height: 0;
   position: absolute;
@@ -88,7 +88,7 @@
 }
 
 /* Fix the circle for timelinecontainers on the right side */
-.right::after {
+.timelineright::after {
   left: -16px;
 }
 
@@ -123,12 +123,12 @@
   }
 
 /* Make sure all circles are at the same spot */
-  .left::after, .right::after {
+  .timelineleft::after, .right::after {
     left: 15px;
   }
 
 /* Make all right timelinecontainers behave like the left ones */
-  .right {
+  .timelineright {
     left: 0%;
   }
 }
