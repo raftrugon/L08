@@ -12,6 +12,7 @@ package controllers.Admin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import services.CommentService;
 import services.RendezvousService;
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Rendezvous;
 
 @Controller
 @RequestMapping("/admin")
@@ -50,52 +52,45 @@ public class AdminController extends AbstractController {
 	}
 
 	// Dashboard ---------------------------------------------------------------		
-
-	@RequestMapping("/panel")
-	public ModelAndView panel(@RequestParam(defaultValue = "dashboard") String type) {
-		ModelAndView result = new ModelAndView("admin/panel");
-		result.addObject("type", type);
-		return result;
-	}
-
 	@RequestMapping("/dashboard")
 	public ModelAndView dashboard() {
 		ModelAndView result;
 		result = new ModelAndView("admin/dashboard");
 
-		//All avg,min,max,std in the same list for one table. Each list inside the list is one row.(14.6.a->14.6.d, 35.4.a->35.4.b)
+		//The table with all the avgs and the stdevs
 		List<List<Double>> list = new ArrayList<List<Double>>();
-		list.add(Arrays.asList(tripService.getTripApplicationStats()));
-		list.add(Arrays.asList(managerService.getTripsPerManager()));
-		list.add(Arrays.asList(tripService.getTripPriceStats()));
-		list.add(Arrays.asList(rangerService.getTripsPerRanger()));
-		list.add(Arrays.asList(tripService.getTripNotesStats()));
+		list.add(Arrays.asList(rendezvousService.getRendezvousStats()));
+		//6.3.3
+		//6.3.4
+		list.add(Arrays.asList(rendezvousService.getRendezvousAnnouncementStats()));
+		list.add(Arrays.asList(rendezvousService.getRendezvousQuestionStats()));
+		//stats de respuestas a preguntas por rendezvous
 		list.add(Arrays.asList(commentService.getCommentRepliesStats()));
 		result.addObject("list", list);
+		
+		//Another table to show ratio of users have ever created a rendezvous versus the users 
+		//who have never created any rendezvouses
+		result.addObject("ratioOfUsersWhoCreatedRendezvouses", rendezvousService.getRatioOfUsersWhoHaveCreatedRendezvouses());
+		
+		//Another table with the top 10 rendezvouses by RSVPs
+		List<Rendezvous> top10Rendezvouses = new ArrayList<Rendezvous>();
+		top10Rendezvouses.addAll(rendezvousService.getTop10RendezvousByRSVPs());
+		result.addObject("top10RnedezVouses",top10Rendezvouses);
+		
+		//Another table to show the rendezvouses with the number of announcements over
+		//the 75% avg
+		List<Rendezvous> rendezvousWithAnnouncementsOverAvg = new ArrayList<Rendezvous>();
+		rendezvousWithAnnouncementsOverAvg.addAll(rendezvousService.getRendezvousesWithNumberOfAnnouncementsOver75PerCentAvg());
+		result.addObject("rendezvousWithAnnouncementsOverAvg", rendezvousWithAnnouncementsOverAvg);
 
-		//Another table to show the trips that are over the avg in nº of applications (14.6.j)
-		List<Trip> tripsOverAvg = new ArrayList<Trip>();
-		tripsOverAvg.addAll(tripService.getTripsWithApplicationNumberOverAvg());
-		result.addObject("tripsOverAvg", tripsOverAvg);
+		//Another table to show the rendezvouses linked to a number of rendezvouses that 
+		//is greater than the average plus 10%.
+		List<Rendezvous> rendezvousesLinkedToMoreThan110PerCent = new ArrayList<Rendezvous>();
+		rendezvousesLinkedToMoreThan110PerCent.addAll(rendezvousService.getRendezvousesLinkedToMoreThan10PerCentAVGNumberOfRendezvouses());
+		result.addObject("rendezvousesLinkedToMoreThan110PerCent", rendezvousService.getRendezvousesLinkedToMoreThan10PerCentAVGNumberOfRendezvouses());
 
-		//All ratios on one table(Same row for all)(14.6.i, 35.4.c->35.4.g)
-		Map<String, Double> ratiosMap = new HashMap<String, Double>();
-		ratiosMap.put("admin.ratioCancelledTrips", tripService.getCancelledRatio());
-		ratiosMap.put("admin.ratioAuditRecord", tripService.getAuditRecordRatio());
-		ratiosMap.put("admin.ratioRangersCurricula", rangerService.ratioOfCurriculaRangers());
-		ratiosMap.put("admin.ratioRangersEndorsed", rangerService.ratioOfEndorsedRangers());
-		ratiosMap.put("admin.ratioSuspiciousManagers", managerService.ratioOfSuspiciousManager());
-		ratiosMap.put("admin.ratioSuspiciousRangers", rangerService.ratioOfSuspiciousRanger());
-		result.addObject("ratiosMap", ratiosMap.entrySet());
 
-		//Ratios of each status of application(14.6.e->14.6.h)
-		List<List<Double>> appratios = new ArrayList<List<Double>>();
-		appratios.add(applicationService.getApplicationStatusRatios());
-		result.addObject("appratios", appratios);
 
-		//Table for all legal Texts and nº of references to them (14.6.k)
-		result.addObject("legalTexts", legalTextService.findAll());
-		result.addObject("legalTextsUses", legalTextService.getTableReferencedLegalTexts());
 		return result;
 	}
 
