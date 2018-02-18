@@ -8,26 +8,25 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
-<jstl:set var="model" value="rendezvous" scope="request"/>
+
 
 <!--  LEFT  -->
 <div class="col-md-2">
 
-	<form class="form-horizontal" action="${requestUri}" method="get">
-	<div class="form-group">
-		<spring:message code="rendezvous.announcement.title"/> :
-		<input class="form-control" type="text" name="newAnnouncementTitle" />
-	</div>
-	<div class="form-group">
-		<spring:message code="rendezvous.announcement.description"/>  	
-		<textarea class="form-control" type="text" name="newAnnouncementDescription"></textarea>
-	</div>
-	<div class="btn-group">
-		<input class="btn btn-primary" type="submit" name="save"
-			value="<spring:message code="rendezvous.announcement.save"/>" />
-	</div>
-	</form>
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement">		
+			<jstl:set var="model" value="announcement" scope="request"/>
+			<lib:input type="hidden" name="id,version,creationMoment,rendezvous"/>
+			<lib:input type="text" name="title"/>
+			<lib:input type="textarea" name="description" rows="4"/>
+			<lib:button id="0" noDelete="true" />
+		</form:form>
+	</jstl:if>
+</security:authorize>
 	</br>
+	
+	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	<table class="displaytag" style="margin-top:0 !important;">
 	<thead>
@@ -207,4 +206,24 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
     </script>
-    
+<script>
+	$('#saveButtonannouncement').click(function(e){
+		var announcement = {};
+		$('#announcement').find('input[type=text],input[type=hidden],textarea').each(function(){
+			announcement[$(this).attr('name')] = $(this).val();
+		});	
+		e.preventDefault();
+		alert(JSON.stringify(announcement));
+		$.ajax({
+			type:'post',
+			url:"ajax/user/announcement/save.do",
+			data: announcement,
+			processData: 'false',
+			contentType: 'application/x-www-form-urlencoded',
+			dataType: 'json',
+			success: function(data){
+			alert(data);
+			}
+		});
+	});
+</script>    
