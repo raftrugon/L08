@@ -26,10 +26,12 @@
 <jstl:forEach items="${rendezvouss}" var="rendezvous">
 <div class="col-md-3">
 	<div class="card" >
-		<a href="rendezvous/display.do?rendezvousId=${rendezvous.id}">
+		<div onclick="location.href = 'rendezvous/display.do?rendezvousId=${rendezvous.id}'" style="cursor:pointer;height:100%">
 			<jstl:if test="${rendezvous.picture eq null}">
-				<img src="images/nopic.jpg" style="width:100%">
-				<figcaption></figcaption>
+				<div class="nopicContainer">
+					<img src="images/nopic.jpg" style="width:100%" class="nopic"/>
+					<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
+				</div>
 			</jstl:if>
 			<jstl:if test="${rendezvous.picture ne null}">
 				<img src="${rendezvous.picture}" style="width:100%">
@@ -40,7 +42,7 @@
 	        <div style="text-align:center" class="cardDate">
 				<fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${rendezvous.organisationMoment}"/>
 	        </div>
-		</a>
+		</div>
 		<input class="cardButton" type="button" name="cancel"
 				value="${rendezvous.user.name} ${rendezvous.user.surnames} "	
 		onclick="javascript: relativeRedir('user-display.do?userId=${rendezvous.user.id}');" />
