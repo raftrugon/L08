@@ -68,6 +68,12 @@
 	<jstl:if test="${rendezvous.picture ne null}">
 		<img src="<jstl:out value='${rendezvous.picture}'/>" style="max-height:200px"/>
 	</jstl:if>
+	<jstl:if test="${rendezvous.picture eq null}">
+		<div class="nopicContainer">
+			<img src="images/nopic.jpg" style="max-height:200px" class="nopic"/>
+			<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
+		</div>
+	</jstl:if>
 </div>
 
 <!-- Comments & Announcements -->
@@ -157,7 +163,7 @@
 </div>
 <!--  RIGHT  -->
 <div class="col-md-2">
-<div id="map" style="height:300px;width=100%"></div>
+<div id="map" style="height:300px;width:95%"></div>
 <display:table pagesize="20" class= "displaytag" keepStatus="true" name="rendezvous.rendezvouses" requestURI="${requestUri}" id="row1">
 	<display:setProperty name="paging.banner.onepage" value=""/>
 	<display:setProperty name="paging.banner.placement" value="bottom"/>
