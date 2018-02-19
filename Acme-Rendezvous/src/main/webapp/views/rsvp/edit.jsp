@@ -11,11 +11,13 @@
 <form:form id="rsvpForm" modelAttribute="rsvp">
 <lib:input type="hidden" name="id,version,user,rendezvous,questionsAndAnswers"/>
 <jstl:forEach items="${rsvp.questionsAndAnswers}" var="entity">
-	<div class="well well-sm" style="margin-bottom:5px"><strong><jstl:out value="${entity.key}"/></strong></div>
-	<input type="text" style="padding-left:3em" class="form-control answerInput" value="${entity.value}"/>
+	<div class="form-group">
+		<div class="well well-sm" style="margin-bottom:5px"><strong><jstl:out value="${entity.key}"/></strong></div>
+		<input type="text" style="margin-left:3em" class="form-control answerInput" value="${entity.value}"/>
+	</div>
 </jstl:forEach>
 <div class="form-group">
-	<input id="saveButtonrsvp" type="button" class="btn btn-success" value="aldsfj">
+	<input id="saveButtonrsvp" type="button" class="btn btn-block btn-success" value="aldsfj">
 </div>
 </form:form>
 

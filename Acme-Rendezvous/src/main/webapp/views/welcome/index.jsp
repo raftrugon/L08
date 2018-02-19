@@ -50,19 +50,33 @@
   </a>
 </div> --%>
 
+
+<div id="map" style="height:85vh;width:100%"></div>
+
 <script>
-      function initMap() {
-        var uluru = {lat: <jstl:out value="${rendezvous.latitude}"/>, lng: <jstl:out value="${rendezvous.longitude}"/>};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
+function initMap() {
+	var labels = 'ABCDEFGHIJ';
+	var labelIndex = 0;
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 6,
+        center: {lat:40.0,lng:-3.703790}
+      });
+    <jstl:forEach items="${rendezvouses}" var="rendezvous">
+	 var pos${rendezvous.id} = {lat: ${rendezvous.latitude}, lng: ${rendezvous.longitude}};
+	 var marker${rendezvous.id} = new google.maps.Marker({
+	      position: pos${rendezvous.id} ,
+          label: labels[labelIndex++],
+	      map: map
+	    });
+	</jstl:forEach>
+
+  }
+</script>
+<script>
+	$(document).ready(function(){
+		initMap();
+	});
 </script>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
 </script>

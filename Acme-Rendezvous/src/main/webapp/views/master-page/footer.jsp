@@ -14,6 +14,6 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 
-<div class="footer" style="margin:10px;position:relative;bottom:0%">
-	<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Tanzanika Co., Inc.</b>
+<div class="footer" >
+	<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Rendezvous Co., Inc.</b>
 </div>
