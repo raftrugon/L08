@@ -99,34 +99,34 @@
 				<img src="${comment.picture}" style="max-height:150px">
 			</div>
 		</div> 
-	<jstl:if test="${not empty comment.replies}">
-		<div class="panel commentpanel" style="text-align:center" data-toggle="collapse" data-parent="#accordion" href="#collapse${comment.id}">
-			<span style="white-space:nowrap;"><spring:message code="rendezvous.viewReplies"/> <i class="fas fa-chevron-down"></i></span>
-			<span style="white-space:nowrap;display:none"><spring:message code="rendezvous.hideReplies"/> <i class="fas fa-chevron-up"></i></span>
-		</div>
-		<div id="collapse${comment.id}" class="panel-collapse collapse">
-			<jstl:forEach items="${comment.replies}" var="reply">
-				<div class="media" style="padding-left:45px;margin-top:5px;">
-					<div class="media-left">
-						<img src="images/avatar.png" class="media-object" style="width:45px">
-					</div>
-					<div class="media-body">
-						<h4 class="media-heading">${reply.user.name} ${reply.user.surnames}<small><i>
-						<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${reply.creationMoment}" /></i></small></h4>
-						<p>${reply.text}</p>
-					</div>
-					<div class="media-right">
-						<img src="${reply.picture}" style="max-height:150px;margin-right:15px;margin-bottom:10px;">
-					</div>
-				</div>	
-			</jstl:forEach>
-		</div>
-	</jstl:if>
-	<div class="panel-footer">
-		<jstl:if test="${rsvpd eq true}">
-			<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.reply'/>" />
+		<jstl:if test="${not empty comment.replies}">
+			<div class="panel commentpanel" style="text-align:center" data-toggle="collapse" data-parent="#accordion" href="#collapse${comment.id}">
+				<span style="white-space:nowrap;"><spring:message code="rendezvous.viewReplies"/> <i class="fas fa-chevron-down"></i></span>
+				<span style="white-space:nowrap;display:none"><spring:message code="rendezvous.hideReplies"/> <i class="fas fa-chevron-up"></i></span>
+			</div>
+			<div id="collapse${comment.id}" class="panel-collapse collapse">
+				<jstl:forEach items="${comment.replies}" var="reply">
+					<div class="media" style="padding-left:45px;margin-top:5px;">
+						<div class="media-left">
+							<img src="images/avatar.png" class="media-object" style="width:45px">
+						</div>
+						<div class="media-body">
+							<h4 class="media-heading">${reply.user.name} ${reply.user.surnames}<small><i>
+							<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${reply.creationMoment}" /></i></small></h4>
+							<p>${reply.text}</p>
+						</div>
+						<div class="media-right">
+							<img src="${reply.picture}" style="max-height:150px;margin-right:15px;margin-bottom:10px;">
+						</div>
+					</div>	
+				</jstl:forEach>
+			</div>
 		</jstl:if>
-	</div>
+		<div class="panel-footer">
+			<jstl:if test="${rsvpd eq true}">
+				<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.reply'/>" />
+			</jstl:if>
+		</div>
 	</div>
 	</jstl:forEach>
 	</div>
@@ -135,16 +135,16 @@
 			<jstl:forEach items="${rendezvous.announcements}" var="announcementItem" varStatus="x">
 			<jstl:choose>
 			<jstl:when test="${x.count mod 2 eq 1}">
-				<div class="container left timelinecontainer">
-				    <div class="content timelinecontent">
+				<div class="timelinecontainer timelineleft ">
+				    <div class="timelinecontent ">
 				      <h2><jstl:out value="${announcementItem.title}"/></h2>
 				      <p><jstl:out value="${announcementItem.description}"/></p>
 				    </div>
 				 </div>
 			</jstl:when>
 			<jstl:otherwise>
-				<div class="container right timelinecontainer">
-				    <div class="content timelinecontent">
+				<div class="timelinecontainer timelineright ">
+				    <div class="timelinecontent ">
 				      <h2><jstl:out value="${announcementItem.title}"/></h2>
 				      <p><jstl:out value="${announcementItem.description}"/></p>
 				    </div>

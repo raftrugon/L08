@@ -29,7 +29,7 @@
        
 	<jstl:forEach items="${rendezvouses}" var="rendezvous" varStatus="x">
     	<div class="item <jstl:if test='${x.first}'>active</jstl:if>" >
-	      <img class="centerimage" src="${rendezvous.picture}" alt="----" style="max-height:600px;">
+	      <img class="centerimage" src="${rendezvous.picture}" alt="----" style="max-height:400px;">
 	      <div class="carousel-caption">
 	        <h3>${rendezvous.name}</h3>
 	        <p>${rendezvous.description}</p>
