@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Announcement;
+import domain.Rsvp;
 
 import services.AnnouncementService;
 import services.RsvpService;
@@ -53,5 +54,26 @@ public class AjaxController {
 			} catch (Throwable oops) {
 				return "3";
 			}
+	}
+	
+	@RequestMapping(value="rsvp/create", method = RequestMethod.GET)
+	public ModelAndView createRSVP(@RequestParam(required=true) final int rendezvousId){
+		try{
+			Rsvp rsvp = rsvpService.create(rendezvousId);
+			ModelAndView result = new ModelAndView("rsvp/edit");
+			result.addObject("rsvp",rsvp);
+			return result;
+		}catch(Throwable oops){
+			return new ModelAndView("redirect: /rendezvous/display.do?rendezvousId="+rendezvousId);
+		}
+	}
+	
+	@RequestMapping(value="rsvp/save", method = RequestMethod.POST)
+	public ModelAndView saveRSVP(@Valid final Rsvp rsvp, final BindingResult binding){
+		try{
+			rsvpService.save(rsvp);
+		}catch(Throwable oops){}
+		
+		return new ModelAndView("redirect: /rendezvous/display.do?rendezvousId="+rsvp.getRendezvous().getId());
 	}
 }

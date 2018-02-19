@@ -16,6 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<%--
 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="max-width:600px;margin:auto">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -47,4 +48,21 @@
     <span class="glyphicon glyphicon-chevron-right"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
+</div> --%>
+
+<script>
+      function initMap() {
+        var uluru = {lat: <jstl:out value="${rendezvous.latitude}"/>, lng: <jstl:out value="${rendezvous.longitude}"/>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
+</script>

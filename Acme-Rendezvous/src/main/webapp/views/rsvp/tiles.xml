@@ -22,5 +22,6 @@
 	</definition>
 	
 	<definition name="rsvp/qa" template="/views/rsvp/qa.jsp"/>
+	<definition name="rsvp/edit" template="/views/rsvp/edit.jsp"/>
 	
 </tiles-definitions>

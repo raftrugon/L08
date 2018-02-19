@@ -12,7 +12,6 @@
 
 <!--  LEFT  -->
 <div class="col-md-2">
-
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
 	<div class="panel panel-default" style="width:95%;">
@@ -27,7 +26,7 @@
 		</form:form>
 	</div>
 	</jstl:if>
-</security:authorize>	
+</security:authorize>
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	<table class="displaytag" style="margin-top:0 !important;">
@@ -72,7 +71,7 @@
 </div>
 
 <!-- Comments & Announcements -->
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs nav-justified col-md-12">
   <li class="active"><a data-toggle="tab" href="#accordion"><spring:message code="rendezvous.comments.tab"/></a></li>
   <li><a data-toggle="tab" href="#announcementTab"><spring:message code="rendezvous.announcements.tab"/></a></li>
 </ul>
@@ -81,7 +80,7 @@
 	<div id="newCommentDiv"></div>
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${not rsvpd}">
-			<a href="security/login.do" class="btn btn-block btn-primary"><span class="glyphicon glyphicon-log-in"></span> <spring:message code="master.page.login" /></a>
+			<input type="button" name="RSVPbtn" class="btn btn-block btn-primary" value='<spring:message code="rendezvous.rsvp" />' />
 		</jstl:if>	
 	</security:authorize>
 	<jstl:forEach items="${rendezvous.comments}" var="comment">
@@ -213,6 +212,13 @@
 		$('.commentpanel').click(function(e){
 			$(this).children('span').each(function(){
 				$(this).toggle();
+			});
+		});
+		$('[name=RSVPbtn]').click(function(e){
+			e.preventDefault();
+			$.get("ajax/rsvp/create.do?rendezvousId=${rendezvous.id}", function(data){
+				$('#modalBody').html(data);
+				$('#qaModal').modal('show');
 			});
 		});
 	});
