@@ -154,6 +154,7 @@ public class RendezvousService {
 		//OPCION: Checkear aqui bd, setear un objeto nuevo y validarlo. Si no tiene errores
 		//setear el objeto con findOne. (no valdría para nada el save)
 
+		//Hacerlo en el save
 		res.setName(rendezvousForm.getName());
 		res.setDescription(rendezvousForm.getDescription());
 		res.setOrganisationMoment(rendezvousForm.getOrganisationMoment());

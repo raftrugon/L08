@@ -8,23 +8,55 @@
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
 <div class=center-text>
-<display:table pagesize="100" class= "displaytag" keepStatus="true" name="announcements" requestURI="${requestUri}" id="row">
-	<display:caption> 
-	 	<spring:message code='announcement.title'/>
-	 </display:caption>
-	
-	<!-- Shared Variables -->
-	<jstl:set var="model" value="announcement" scope="request"/>
-	<!-- Attributes -->
-  	<lib:column name="title"/>
-	<lib:column name="description"/>
-	<lib:column name="creationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="rendezvous" link="rendezvous/display.do?rendezvousId=${row.rendezvous.id}" linkName="${row.rendezvous.name}"/>
-	
-	<display:setProperty name="paging.banner.onepage" value=""/>
-    <display:setProperty name="paging.banner.placement" value="bottom"/>
-    <display:setProperty name="paging.banner.all_items_found" value=""/>
-    <display:setProperty name="paging.banner.one_item_found" value=""/>
-    <display:setProperty name="paging.banner.no_items_found" value=""/>
-</display:table>
+	<div class="container well" style="padding: 30px 40px 30px 40px;">
+	  	<h2 style="text-align:center;"><spring:message code='announcements'/></h2>
+	  	<p style="text-align:center;"><spring:message code='announcements.description'/></p><br>
+		
+	  	<jstl:forEach var="announcement" items="${announcements}" varStatus="x" >
+	  		<hr>
+	  		
+	  		<jstl:choose>
+				<jstl:when test="${x.count mod 2 eq 1}">
+					<div class="media" >
+				  		<div class="media-left" >
+				      		<img src="${announcement.rendezvous.picture}" class="media-object" style="width:70px;height:46px;">
+				    	</div>
+				    	<div class="media-body">
+				      		<h4 class="media-heading"><a href="/Acme-Rendezvous/user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
+				      			<small><i>
+				      				<spring:message code='announcements.postedOn' /> <jstl:out value="${announcement.creationMoment}"/>
+				      				<spring:message code='announcements.about' /> <a href="/Acme-Rendezvous/rendezvous/display.do?rendezvousId=${announcement.rendezvous.id}" ><jstl:out value="${announcement.rendezvous.name}"/></a>.
+				      			</i></small>
+				      		</h4>
+				      		<p><jstl:out value="${announcement.description}"/></p>
+				    	</div>
+					</div>
+				</jstl:when>
+				
+				
+				
+				<jstl:otherwise>
+					<div class="media" >
+				  		
+				    	<div class="media-body">
+				      		<h4 class="media-heading" style="text-align: right;"><a href="/Acme-Rendezvous/user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
+				      			<small><i>
+				      				<spring:message code='announcements.postedOn' /> <jstl:out value="${announcement.creationMoment}"/>
+				      				<spring:message code='announcements.about' /> <a href="/Acme-Rendezvous/rendezvous/display.do?rendezvousId=${announcement.rendezvous.id}" ><jstl:out value="${announcement.rendezvous.name}"/></a>.
+				      			</i></small>
+				      		</h4>
+				      		<p style="text-align:right;"><jstl:out value="${announcement.description}"/></p>
+				    	</div>
+				    	<div class="media-right">
+				      		<img src="${announcement.rendezvous.picture}" class="media-object" style="width:70px;height:46px;">
+				    	</div>
+					</div>
+				</jstl:otherwise>
+			</jstl:choose>
+			
+		</jstl:forEach>
 	</div>
+  
+  
+</div>
+
