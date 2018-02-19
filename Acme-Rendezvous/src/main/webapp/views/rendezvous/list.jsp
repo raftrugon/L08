@@ -24,17 +24,17 @@
 </display:table> --%>
 
 <jstl:forEach items="${rendezvouss}" var="rendezvous">
-<div class="col-md-3">
+<div class="col-md-3 col-sm-4 col-xs-12">
 	<div class="card" >
 		<div onclick="location.href = 'rendezvous/display.do?rendezvousId=${rendezvous.id}'" style="cursor:pointer;height:100%">
 			<jstl:if test="${rendezvous.picture eq null}">
 				<div class="nopicContainer">
-					<img src="images/nopic.jpg" style="width:100%" class="nopic"/>
+					<img src="images/nopic.jpg" style="object-fit:cover;width:100%" class="nopic"/>
 					<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
 				</div>
 			</jstl:if>
 			<jstl:if test="${rendezvous.picture ne null}">
-				<img src="${rendezvous.picture}" style="width:100%">
+				<img src="${rendezvous.picture}" style="object-fit:cover;height:60%;width:100%">
 			</jstl:if>
 	        <h1>
 	        	<jstl:out value="${rendezvous.name}"/>
