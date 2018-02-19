@@ -6,8 +6,10 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class=center-text>
+
+<%-- <div class=center-text>
 <display:table pagesize="5" class= "displaytag" keepStatus="true" name="rendezvouss" requestURI="${requestUri}" id="row">
 	<!-- Shared Variables -->
 	<jstl:set var="model" value="rendezvous" scope="request"/>
@@ -19,5 +21,30 @@
 	<lib:column name="coordinates" value="[${row.longitude},${row.latitude}]"/>
 	<lib:column name="user" link="user-display.do?userId=${row.user.id}" linkName="${row.user.name} ${row.user.surnames}"/>
 	
-</display:table>
+</display:table> --%>
+
+<jstl:forEach items="${rendezvouss}" var="rendezvous">
+<div class="col-md-3">
+	<div class="card" >
+		<a href="rendezvous/display.do?rendezvousId=${rendezvous.id}">
+			<jstl:if test="${rendezvous.picture eq null}">
+				<img src="images/nopic.jpg" style="width:100%">
+				<figcaption></figcaption>
+			</jstl:if>
+			<jstl:if test="${rendezvous.picture ne null}">
+				<img src="${rendezvous.picture}" style="width:100%">
+			</jstl:if>
+	        <h1>
+	        	<jstl:out value="${rendezvous.name}"/>
+	        </h1>
+	        <div style="text-align:center" class="cardDate">
+				<fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${rendezvous.organisationMoment}"/>
+	        </div>
+		</a>
+		<input class="cardButton" type="button" name="cancel"
+				value="${rendezvous.user.name} ${rendezvous.user.surnames} "	
+		onclick="javascript: relativeRedir('user-display.do?userId=${rendezvous.user.id}');" />
 	</div>
+</div>
+</jstl:forEach>
+

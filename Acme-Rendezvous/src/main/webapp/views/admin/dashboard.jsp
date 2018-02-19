@@ -28,7 +28,7 @@
 		<jstl:when test="${row_rowNum == 4}">
 			<spring:message code="admin.dash4"/>
 		</jstl:when>
-			<%-- <jstl:when test="${row_rowNum == 5}">
+		<jstl:when test="${row_rowNum == 5}">
 			<spring:message code="admin.dash5"/>
 		</jstl:when>
 		<jstl:when test="${row_rowNum == 6}">
@@ -36,7 +36,7 @@
 		</jstl:when>
 		<jstl:when test="${row_rowNum == 7}">
 			<spring:message code="admin.dash6"/>
-		</jstl:when> --%>
+		</jstl:when>
 	
 	</jstl:choose>	
 	</display:column>

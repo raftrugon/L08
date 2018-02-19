@@ -60,11 +60,11 @@ public class AdminController extends AbstractController {
 		//The table with all the avgs and the stdevs
 		List<List<Double>> list = new ArrayList<List<Double>>();
 		list.add(Arrays.asList(rendezvousService.getRendezvousStats()));
-		//6.3.3
-		//6.3.4
+		list.add(Arrays.asList(rendezvousService.getRendezvousUserStats()));
+		list.add(Arrays.asList(rendezvousService.getUserRendezvousesStats()));
 		list.add(Arrays.asList(rendezvousService.getRendezvousAnnouncementStats()));
 		list.add(Arrays.asList(rendezvousService.getRendezvousQuestionStats()));
-		//stats de respuestas a preguntas por rendezvous
+		list.add(Arrays.asList(rendezvousService.getAnswersToQuestionsStats()));
 		list.add(Arrays.asList(commentService.getCommentRepliesStats()));
 		result.addObject("list", list);
 		

@@ -117,10 +117,15 @@ public class RendezvousService {
 		return this.rendezvousRepository.getRatioOfUsersWhoHaveCreatedRendezvouses();
 	}
 
-	//Average and stdev of users per rendezvous
+	public Double[] getRendezvousUserStats() {
+		return rendezvousRepository.getRendezvousUserStats();
+	}
+	
 
-	//Average and stdev of rendezvouses that are RSVPd per user
-
+	public Double[] getUserRendezvousesStats() {
+		return rendezvousRepository.getUserRendezvousesStats();
+	}
+	
 	public Collection<Rendezvous> getTop10RendezvousByRSVPs() {
 		return this.rendezvousRepository.getTop10RendezvousByRSVPs();
 	}
@@ -140,6 +145,12 @@ public class RendezvousService {
 	public Double[] getRendezvousQuestionStats() {
 		return this.rendezvousRepository.getRendezvousQuestionStats();
 	}
+	
+	public Double[] getAnswersToQuestionsStats() {
+		return rendezvousRepository.getAnswersToQuestionsStats();
+	}
+	
+	
 
 	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 
