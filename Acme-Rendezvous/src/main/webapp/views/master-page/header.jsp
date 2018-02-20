@@ -13,7 +13,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1500">
 	<div class="containter-fluid">
 		<div class="navbar-header">
 		 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -71,7 +71,7 @@
 			
 			
 			<security:authorize access="isAnonymous()">
-				<li><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <spring:message code="master.page.register" /> &nbsp;</a></li>
+				<li><a href="register/user.do"><span class="glyphicon glyphicon-user"></span> <spring:message code="master.page.register" /> &nbsp;</a></li>
 				<li><a  href="security/login.do"><span class="glyphicon glyphicon-log-in"></span> <spring:message code="master.page.login" /> &nbsp; </a></li>
 			</security:authorize>
 		</ul>

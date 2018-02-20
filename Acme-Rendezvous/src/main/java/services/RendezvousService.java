@@ -53,6 +53,7 @@ public class RendezvousService {
 		res.setAnnouncements(new ArrayList<Announcement>());
 		res.setComments(new ArrayList<Comment>());
 		res.setRsvps(new ArrayList<Rsvp>());
+		res.setInnapropriate(false);
 		return res;
 	}
 

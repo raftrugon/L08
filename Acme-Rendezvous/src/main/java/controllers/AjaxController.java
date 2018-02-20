@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Announcement;
+import domain.Rendezvous;
 import domain.Rsvp;
 
 import services.AnnouncementService;
+import services.RendezvousService;
 import services.RsvpService;
 
 @RestController
@@ -24,6 +26,8 @@ public class AjaxController {
 	private RsvpService 				rsvpService;
 	@Autowired
 	private AnnouncementService 				announcementService;
+	@Autowired
+	private RendezvousService			rendezvousService;
 	 
 	
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)

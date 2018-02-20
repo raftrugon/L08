@@ -13,11 +13,11 @@
 <jstl:forEach items="${rsvp.questionsAndAnswers}" var="entity">
 	<div class="form-group">
 		<div class="well well-sm" style="margin-bottom:5px"><strong><jstl:out value="${entity.key}"/></strong></div>
-		<input type="text" style="margin-left:3em" class="form-control answerInput" value="${entity.value}"/>
+		<input type="text" class="form-control answerInput" value="${entity.value}" />
 	</div>
 </jstl:forEach>
 <div class="form-group">
-	<input id="saveButtonrsvp" type="button" class="btn btn-block btn-success" value="aldsfj">
+	<input id="saveButtonrsvp" type="button" class="btn btn-block btn-success" value="<spring:message code='rendezvous.rsvp'/> ">
 </div>
 </form:form>
 

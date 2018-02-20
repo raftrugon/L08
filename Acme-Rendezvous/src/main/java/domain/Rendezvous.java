@@ -36,6 +36,7 @@ public class Rendezvous extends DomainEntity {
 	private Boolean				deleted;
 	private Boolean				adultOnly;
 	private Collection<String>	questions;
+	private Boolean				innapropriate;
 
 
 	@NotBlank
@@ -128,6 +129,15 @@ public class Rendezvous extends DomainEntity {
 
 	public void setQuestions(final Collection<String> questions) {
 		this.questions = questions;
+	}
+
+	@NotNull
+	public Boolean getInnapropriate() {
+		return innapropriate;
+	}
+
+	public void setInnapropriate(Boolean innapropriate) {
+		this.innapropriate = innapropriate;
 	}
 
 

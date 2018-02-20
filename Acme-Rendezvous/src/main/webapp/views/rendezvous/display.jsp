@@ -8,8 +8,23 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
+<jstl:if test="${rendezvous.innapropriate eq true}">
+	<script>
+		$(function(){
+			$('#inappropriateBlur').css("filter","blur(5px)").css("-webkit-filter","blur(5px)");
+			$('#inappropriateModal').modal({backdrop: 'static', keyboard: false});
+		});
+	</script>
 
-
+	<div id="inappropriateModal" class="modal fade" role="dialog">
+  		<div class="modal-dialog" style="margin-top:45vh">
+		    <div class="modal-content">
+		     	<div class="alert alert-danger" style="margin:0;text-align:center"><strong><spring:message code="rendezvous.inappropriate.alert"/></strong></div>
+		    </div>
+	 	</div>
+	</div>
+</jstl:if>
+<div id="inappropriateBlur">
 <!--  LEFT  -->
 <div class="col-md-2">
 <security:authorize access="hasRole('USER')">
@@ -83,17 +98,22 @@
 </ul>
 <div class="tab-content">
 	<div class="container col-md-12 panel-group tab-pane fade in active" id="accordion" style="margin-top:20px;">
+	<jsp:useBean id="now" class="java.util.Date" />
+	<jstl:if test="${rendezvous.organisationMoment lt now }">
+		<div class="alert alert-warning" style="text-align:center"><strong><spring:message code="rendezvous.past"/></strong></div>
+	</jstl:if>
 	<div id="newCommentDiv"></div>
 	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${not rsvpd}">
-			<input type="button" name="RSVPbtn" class="btn btn-block btn-primary" value='<spring:message code="rendezvous.rsvp" />' />
+		<jstl:if test="${not rsvpd and rendezvous.organisationMoment gt now }">
+			<input type="button" id="RSVPbtn" class="btn btn-block btn-primary" value='<spring:message code="rendezvous.rsvp" />' />
 		</jstl:if>	
 	</security:authorize>
 	<jstl:forEach items="${rendezvous.comments}" var="comment">
+	<jstl:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) + 1 %></jstl:set>
 	<div class="media panel panel-default">
 		<div class="panel-heading"> 
 			<div class="media-left">
-			  <img src="images/avatar.png" class="media-object" style="width:45px">
+			  <img src="images/kC${rand}.png" class="media-object" style="width:45px">
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">${comment.user.name} ${comment.user.surnames}<small><i>
@@ -111,9 +131,10 @@
 			</div>
 			<div id="collapse${comment.id}" class="panel-collapse collapse">
 				<jstl:forEach items="${comment.replies}" var="reply">
+					<jstl:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) + 1 %></jstl:set>
 					<div class="media" style="padding-left:45px;margin-top:5px;">
 						<div class="media-left">
-							<img src="images/avatar.png" class="media-object" style="width:45px">
+							<img src="images/kC${rand}.png" class="media-object" style="width:45px">
 						</div>
 						<div class="media-body">
 							<h4 class="media-heading">${reply.user.name} ${reply.user.surnames}<small><i>
@@ -220,7 +241,7 @@
 				$(this).toggle();
 			});
 		});
-		$('[name=RSVPbtn]').click(function(e){
+		$('#RSVPbtn').click(function(e){
 			e.preventDefault();
 			$.get("ajax/rsvp/create.do?rendezvousId=${rendezvous.id}", function(data){
 				$('#modalBody').html(data);
@@ -275,3 +296,5 @@
 		});
 	});
 </script>    
+
+</div>

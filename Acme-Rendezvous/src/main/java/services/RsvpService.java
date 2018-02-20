@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +40,9 @@ public class RsvpService {
 		Rendezvous r = rendezvousService.findOne(rendezvousId);
 		Assert.notNull(r);
 		Assert.isTrue(!userService.isRsvpd(rendezvousId));
+		Assert.isTrue(!r.getDeleted());
+		Assert.isTrue(!r.getInnapropriate());
+		Assert.isTrue(r.getOrganisationMoment().after(new Date()));
 		res.setUser(u);
 		res.setRendezvous(r);
 		Map<String,String> questions = new HashMap<String,String>();
@@ -66,7 +70,8 @@ public class RsvpService {
 		rsvpRepository.delete(rsvp);
 
 	}
-	
+
+
 	//Other Business Methods --------------------------------
 	
 	
