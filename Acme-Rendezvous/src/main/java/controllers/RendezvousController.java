@@ -64,6 +64,9 @@ public class RendezvousController extends AbstractController {
 		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(rendezvousService.findAll());
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouss", rendezvouss);
+		try{
+			result.addObject("rsvpdRendezvouses", rendezvousService.getRSVPRendezvousesForUser(userService.findByPrincipal()));
+		} catch (Throwable oops) {}
 		result.addObject("requestUri", "rendezvous/list.do");
 		return result;
 	}

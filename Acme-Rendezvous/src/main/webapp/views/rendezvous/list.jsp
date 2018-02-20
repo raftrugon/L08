@@ -7,6 +7,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <%-- <div class=center-text>
@@ -23,8 +24,32 @@
 	
 </display:table> --%>
 
+<security:authorize access="hasRole('USER')"> 
+<div style="padding-right:15px;padding-left:15px;">
+<ul class="nav nav-pills nav-justified" >
+  <li id="button1" class="active"><a href="javascript:all()"><spring:message code="rendezvous.list.all"/></a></li>
+  <li id="button2" class=""><a href="javascript:mine()"><spring:message code="rendezvous.list.mine"/></a></li>
+  <li id="button3" class=""><a href="javascript:rsvp()"><spring:message code="rendezvous.list.rsvpd"/></a></li>
+  <li id="button4" class=""><a href="javascript:non_rsvp()"><spring:message code="rendezvous.list.non-rsvpd"/></a></li>
+</ul>
+</div>
+</br>
+</security:authorize>
+
 <jstl:forEach items="${rendezvouss}" var="rendezvous">
-<div class="col-md-3 col-sm-4 col-xs-12">
+<jstl:if test="${fn:contains(rsvpdRendezvouses, rendezvous)}">
+	<jstl:set var="rsvp" value="rsvp"/>
+</jstl:if>
+<jstl:if test="${not fn:contains(rsvpdRendezvouses, rendezvous)}">
+	<jstl:set var="rsvp" value=""/>
+</jstl:if>
+<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+	<jstl:set var="mine" value="mine"/>
+</jstl:if>
+<jstl:if test="${rendezvous.user.userAccount.username ne pageContext.request.userPrincipal.name }">
+	<jstl:set var="mine" value=""/>
+</jstl:if>
+<div class="col-md-3 col-sm-4 col-xs-12 ${rsvp} ${mine} cardContainer">
 	<div class="card" >
 		<div onclick="location.href = 'rendezvous/display.do?rendezvousId=${rendezvous.id}'" style="cursor:pointer;height:100%">
 			<jstl:if test="${rendezvous.picture eq null}">
@@ -50,3 +75,40 @@
 </div>
 </jstl:forEach>
 
+<script>
+function rsvp(){
+	$('#mainContainer').find('.cardContainer').not('.rsvp').hide();
+	$('#mainContainer').find('.cardContainer.rsvp').show();
+	document.getElementById("button1").className = "";
+	document.getElementById("button2").className = "";
+	document.getElementById("button3").className = "active";
+	document.getElementById("button4").className = "";
+};
+
+function non_rsvp(){
+	$('#mainContainer').find('.cardContainer').not('.rsvp').show();
+	$('#mainContainer').find('.cardContainer.rsvp').hide();
+	document.getElementById("button1").className = "";
+	document.getElementById("button2").className = "";
+	document.getElementById("button3").className = "";
+	document.getElementById("button4").className = "active";
+};
+
+function mine(){
+	$('#mainContainer').find('.cardContainer').not('.mine').hide();
+	$('#mainContainer').find('.cardContainer.mine').show();
+	document.getElementById("button1").className = "";
+	document.getElementById("button2").className = "active";
+	document.getElementById("button3").className = "";
+	document.getElementById("button4").className = "";
+};
+
+function all(){
+	$('#mainContainer').find('.cardContainer').show();
+	document.getElementById("button1").className = "active";
+	document.getElementById("button2").className = "";
+	document.getElementById("button3").className = "";
+	document.getElementById("button4").className = "";
+};
+
+</script>
