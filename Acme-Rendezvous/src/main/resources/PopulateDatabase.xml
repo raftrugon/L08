@@ -11,7 +11,7 @@
 	">
 	
 	
-	<!-- Useraccount 3 -->
+	<!-- Useraccount 5 -->
 	
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
@@ -171,7 +171,7 @@
 	</bean>
 	
 	
-	<!-- ANNOUNCEMENTS 2 -->
+	<!-- ANNOUNCEMENTS 5 -->
 
 	<bean id="announcement1" class="domain.Announcement">
 		<property name="title" value="Se recomienda llevar comida" />
