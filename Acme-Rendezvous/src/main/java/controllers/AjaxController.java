@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AnnouncementService;
+import services.CommentService;
 import services.RsvpService;
 import services.UserService;
 import domain.Announcement;
+import domain.Comment;
 import domain.Rsvp;
 import domain.User;
 
@@ -27,6 +29,8 @@ public class AjaxController {
 	private AnnouncementService 				announcementService;
 	@Autowired
 	private UserService					userService;
+	@Autowired
+	private CommentService commentService;
 	 
 	
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)
@@ -40,12 +44,24 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value="admin/announcement/delete", method=RequestMethod.POST)
-	public int deleteAnnouncement(@RequestParam(required = true) Announcement announcement) {
+	public String deleteAnnouncement(@RequestParam(required = true) int announcementId) {
+		Announcement a = announcementService.findOne(announcementId);
 		try{
-			announcementService.deleteByAdmin(announcement);
-			return 1;
+			announcementService.deleteByAdmin(a);
+			return "1";
 		} catch(Throwable oops) {
-			return 0;
+			return "0";
+		}
+	}	
+	
+	@RequestMapping(value="admin/comment/delete", method=RequestMethod.POST)
+	public String deleteComment(@RequestParam(required = true) int commentId) {
+		Comment c = commentService.findOne(commentId);
+		try{
+			commentService.deleteByAdmin(c);
+			return "1";
+		} catch(Throwable oops) {
+			return "0";
 		}
 	}
 	
