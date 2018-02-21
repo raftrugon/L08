@@ -12,10 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AnnouncementService;
 import services.CommentService;
+import services.RendezvousService;
 import services.RsvpService;
 import services.UserService;
 import domain.Announcement;
 import domain.Comment;
+import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
 
@@ -31,6 +33,8 @@ public class AjaxController {
 	private UserService					userService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private RendezvousService rendezvousService;
 	 
 	
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)
@@ -42,6 +46,17 @@ public class AjaxController {
 		result.addObject("rsvp", rsvp);
 		return result;
 	}
+	
+	@RequestMapping(value="admin/rendezvous/delete", method=RequestMethod.POST)
+	public String deleteRendezvous(@RequestParam(required = true) int rendezvousId) {
+		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		try{
+			rendezvousService.deleteByAdmin(r);
+			return "1";
+		} catch(Throwable oops) {
+			return "0";
+		}
+	}	
 	
 	@RequestMapping(value="admin/announcement/delete", method=RequestMethod.POST)
 	public String deleteAnnouncement(@RequestParam(required = true) int announcementId) {
