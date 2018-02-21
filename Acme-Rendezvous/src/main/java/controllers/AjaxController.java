@@ -111,4 +111,26 @@ public class AjaxController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="loadAnnouncements", method = RequestMethod.GET)
+	public ModelAndView loadAnnouncements(@RequestParam(required=true) final int type){
+		ModelAndView result = new ModelAndView("announcement/subList");
+		if(type==0){
+			result.addObject("announcements",announcementService.findAllOrdered());
+		}else{
+			try{
+				User u = userService.findByPrincipal();
+				if(type==1){
+					result.addObject("announcements",announcementService.getMyAnnouncements(u));
+				}else if(type==2){
+					result.addObject("announcements",announcementService.getRSVPAnnouncementsForUser(u));
+				}else{
+					result.addObject("announcements",announcementService.findAllOrdered());
+				}
+			}catch(Throwable oops){
+				result.addObject("announcements",announcementService.findAllOrdered());
+			}
+		}
+		return result;
+	}
 }

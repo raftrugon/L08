@@ -28,7 +28,7 @@
 				
 		<li><a href="rendezvous/list.do"><spring:message code="master.page.rendezvous.list" /></a></li>
 		<li><a href="user-list.do"><spring:message code="master.page.user.list" /></a></li>
-		<li><a href="user/announcement/list.do"><spring:message code="master.page.announcement.feed" /></a></li>
+		<li><a href="announcement/list.do"><spring:message code="master.page.announcement.feed" /></a></li>
 		
 			<security:authorize access="hasRole('ADMIN')">
 				<button onClick="javascript:window.location.href = 'admin/dashboard.do'" class="btn btn-danger navbar-btn"><spring:message code="master.page.dashboard" /></button>

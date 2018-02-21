@@ -72,10 +72,7 @@
 					<!-- PICTURE -->
 					<div class="col-sm-2" style="height:100%;padding: 0px 0px 0px 0px">
 					<jstl:if test="${rsvpRendezvous.picture eq null}">
-						<div class="nopicContainer" style="align:left;">
-							<img src="images/nopic.jpg" style="height:100%;" class="nopic"/>
-							<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
-						</div>
+						<img src="images/nopic.jpg" style="height:100%;height:100%;width:110%;" class="nopic"/>
 					</jstl:if>
 					<jstl:if test="${rsvpRendezvous.picture ne null}">
 						<img src="${rsvpRendezvous.picture}" style="height:100%;width:110%;" >

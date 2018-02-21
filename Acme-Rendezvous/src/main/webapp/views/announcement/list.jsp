@@ -9,20 +9,26 @@
 <%@taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<security:authorize access="hasRole('USER')">
 <div style="padding-right:15px;padding-left:15px;margin-bottom:10px">
 <ul class="nav nav-pills nav-justified">
-  <li id="button1" class="active "><a href="javascript:load(0)"><spring:message code="announcement.list.all"/></a></li>
-  <li id="button2" class=""><a class="" href="javascript:load(1)"><spring:message code="announcement.list.mine"/></a></li>
-  <li id="button3" class=""><a class="" href="javascript:load(2)"><spring:message code="announcement.list.rsvpd"/></a></li>
+  <li id="button1" class="active "><a href="javascript:load(0)"><spring:message code="announcements.list.all"/></a></li>
+  <li id="button2" class=""><a class="" href="javascript:load(1)"><spring:message code="announcements.list.mine"/></a></li>
+  <li id="button3" class=""><a class="" href="javascript:load(2)"><spring:message code="announcements.list.rsvpd"/></a></li>
 </ul>
 </div>
-
+</security:authorize>
 <div id="announcementContainer" class=center-text></div>
 
-<script>
+<script async defer>
 function load(i){
 	$.get('ajax/loadAnnouncements.do?type='+i,function(data){
-		$('announcementContainer').html(data);
+		$('#announcementContainer').html(data);
 	});		
 }
+</script>
+<script defer>
+$(function(){
+	load(0);
+});
 </script>

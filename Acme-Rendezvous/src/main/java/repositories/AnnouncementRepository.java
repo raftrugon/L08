@@ -13,8 +13,15 @@ import domain.User;
 
 @Repository
 public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
+	
+	@Query("select a from Announcement a order by creationMoment DESC")
+	Collection<Announcement> findAllOrdered();
 
 	@Query("select r.rendezvous.announcements from Rsvp r where r.user = ?1 order by creationMoment DESC")
-	Collection<Announcement> getAnnouncementsForUser(User user);
+	Collection<Announcement> getRSVPAnnouncementsForUser(User user);
+	
+	@Query("select r.announcements from Rendezvous r where r.user = ?1 order by creationMoment DESC")
+	Collection<Announcement> getMyAnnouncements(User user);
+
 
 }

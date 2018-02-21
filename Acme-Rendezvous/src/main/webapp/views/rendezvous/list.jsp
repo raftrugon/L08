@@ -60,7 +60,7 @@
 <jstl:if test="${rendezvous.organisationMoment lt now}">
 	<jstl:set var="pastRend" value="color:red;"/>
 </jstl:if>
-<div class="col-md-3 col-sm-4 col-xs-12 ${rsvp} ${mine} cardContainer" >
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 ${rsvp} ${mine} cardContainer" >
 			<jstl:if test="${rendezvous.inappropriate eq true}">
 				<div class="alert alert-danger" style="position:absolute;top:40%;right:10%;left:10%;text-align:center;z-index:500;"><strong><spring:message code="rendezvous.inappropriate.alert"/></strong></div>
 			</jstl:if>
@@ -68,12 +68,12 @@
 		<div onclick="${rendClick}" style="height:100%;${rendStyle}">
 			<jstl:if test="${rendezvous.picture eq null}">
 				<div class="nopicContainer">
-					<img src="images/nopic.jpg" style="object-fit:cover;width:100%" class="nopic"/>
+					<img src="images/nopic.jpg" style="object-fit:cover;height:200px;width:100%" class="nopic"/>
 					<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
 				</div>
 			</jstl:if>
 			<jstl:if test="${rendezvous.picture ne null}">
-				<img src="${rendezvous.picture}" style="object-fit:cover;height:60%;width:100%">
+				<img src="${rendezvous.picture}" style="object-fit:cover;height:200px;width:100%">
 			</jstl:if>
 	        <h1>
 	        	<jstl:out value="${rendezvous.name}"/>

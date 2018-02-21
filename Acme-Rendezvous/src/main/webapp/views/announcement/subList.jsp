@@ -20,7 +20,15 @@
 				<jstl:when test="${x.count mod 2 eq 1}">
 					<div class="media" >
 				  		<div class="media-left" >
-				      		<img src="${announcement.rendezvous.picture}" class="media-object" style="width:120px;height:85px;">
+				  			<jstl:if test="${announcement.rendezvous.picture eq null}">
+								<div class="nopicContainer media-object" style="width:120px;height:85px;">
+									<img src="images/nopic.jpg" style="object-fit:cover;width:100%" class="nopic"/>
+									<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
+								</div>
+							</jstl:if>
+							<jstl:if test="${announcement.rendezvous.picture ne null}">
+				      			<img src="${announcement.rendezvous.picture}" class="media-object" style="width:120px;height:85px;">
+				      		</jstl:if>
 				    	</div>
 				    	<div class="media-body">
 				      		<h3 class="media-heading"><jstl:out value="${announcement.title}"/></h3>
@@ -53,7 +61,15 @@
 				      		</h5>
 				    	</div>
 				    	<div class="media-right">
-				      		<img src="${announcement.rendezvous.picture}" class="media-object" style="width:120px;height:85px;">
+				      		<jstl:if test="${announcement.rendezvous.picture eq null}">
+								<div class="nopicContainer media-object" style="width:120px;height:85px;">
+									<img src="images/nopic.jpg" style="object-fit:cover;width:100%" class="nopic"/>
+									<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
+								</div>
+							</jstl:if>
+							<jstl:if test="${announcement.rendezvous.picture ne null}">
+				      			<img src="${announcement.rendezvous.picture}" class="media-object" style="width:120px;height:85px;">
+				      		</jstl:if>
 				    	</div>
 					</div>
 				</jstl:otherwise>

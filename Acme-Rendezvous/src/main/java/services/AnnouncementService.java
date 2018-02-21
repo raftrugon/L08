@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.servlet.ModelAndView;
 
 import repositories.AnnouncementRepository;
 import domain.Admin;
@@ -54,6 +55,8 @@ public class AnnouncementService {
 		Assert.notNull(res);
 		return res;
 	}
+	
+
 
 	public Announcement save(Announcement announcement) {
 		Assert.notNull(announcement);
@@ -77,8 +80,18 @@ public class AnnouncementService {
 	
 	//Other Business Methods --------------------------------
 	
-	public Collection<Announcement> getAnnouncementsForUser(User user) {
-		return announcementRepository.getAnnouncementsForUser(user);
+
+	public Collection<Announcement> findAllOrdered() {
+		return announcementRepository.findAllOrdered();
 	}
+	
+	public Collection<Announcement> getRSVPAnnouncementsForUser(User user) {
+		return announcementRepository.getRSVPAnnouncementsForUser(user);
+	}
+	
+	public Collection<Announcement> getMyAnnouncements(User user) {
+		return announcementRepository.getMyAnnouncements(user);
+	}
+
 	
 }
