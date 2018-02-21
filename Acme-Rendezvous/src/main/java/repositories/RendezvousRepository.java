@@ -13,6 +13,9 @@ import domain.User;
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer> {
 	
+	@Query("select r from Rendezvous r where r.adultOnly = false")
+	Collection<Rendezvous> findAllUnder18();
+	
 	@Query("select r.rendezvous from Rsvp r where r.user = ?1")
 	Collection<Rendezvous> getRSVPRendezvousesForUser(User user);
 	

@@ -43,6 +43,7 @@
 <jstl:set var="pastRend" value=""/>
 <jstl:set var="rsvp" value=""/>
 <jstl:set var="mine" value=""/>
+<jstl:set var="inappropriateClass" value=""/>
 <jstl:if test="${fn:contains(rsvpdRendezvouses, rendezvous)}">
 	<jstl:set var="rsvp" value="rsvp"/>
 </jstl:if>
@@ -51,6 +52,7 @@
 </jstl:if>
 <jstl:if test="${rendezvous.inappropriate eq true}">
 	<jstl:set var="inappropriateStyle" value="filter:blur(5px);-webkit-filter:blur(5px);"/>
+	<jstl:set var="inappropriateClass" value="inappropriate"/>
 </jstl:if>
 <jstl:if test="${rendezvous.inappropriate ne true}">
 	<jstl:set var="rendClick" value="location.href = 'rendezvous/display.do?rendezvousId=${rendezvous.id}'"/>
@@ -60,7 +62,7 @@
 <jstl:if test="${rendezvous.organisationMoment lt now}">
 	<jstl:set var="pastRend" value="color:red;"/>
 </jstl:if>
-<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 ${rsvp} ${mine} cardContainer" >
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 ${rsvp} ${mine} ${inappropriate} cardContainer" >
 			<jstl:if test="${rendezvous.inappropriate eq true}">
 				<div class="alert alert-danger" style="position:absolute;top:40%;right:10%;left:10%;text-align:center;z-index:500;"><strong><spring:message code="rendezvous.inappropriate.alert"/></strong></div>
 			</jstl:if>
@@ -103,6 +105,7 @@ function rsvp(){
 function non_rsvp(){
 	$('#mainContainer').find('.cardContainer').not('.rsvp').show();
 	$('#mainContainer').find('.cardContainer.rsvp').hide();
+	$('#mainContainer').find('.cardContainer.inappropriate').hide();
 	document.getElementById("button1").className = "";
 	document.getElementById("button2").className = "";
 	document.getElementById("button3").className = "";

@@ -65,7 +65,11 @@ public class RendezvousService {
 	}
 
 	public Collection<Rendezvous> findAll() {
-		return this.rendezvousRepository.findAll();
+		return rendezvousRepository.findAll();
+	}
+	
+	public Collection<Rendezvous> findAllUnder18() {
+		return rendezvousRepository.findAllUnder18();
 	}
 
 	public Rendezvous save(final Rendezvous rendezvous) {

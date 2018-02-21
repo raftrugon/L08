@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,6 +107,12 @@ public class UserService {
 	public Boolean isRsvpd(int rendezvousId){
 		Assert.isTrue(rendezvousId != 0);
 		return (userRepository.isRsvpd(rendezvousId, findByPrincipal()) == 1);
+	}
+	
+	public Boolean isAdult(){
+		User u = findByPrincipal();
+		 DateTime user18 = new DateTime(u.getBirthDate()).plusYears(18);
+		 return user18.isBeforeNow();
 	}
 
 	//RegisterUserForm ----> User

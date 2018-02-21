@@ -40,8 +40,10 @@ public class RendezvousController extends AbstractController {
 		ModelAndView result;
 		Boolean rsvpd = false;
 		Announcement newAnnouncement = null;
+		Boolean isAdult = false;
 		try{
 			rsvpd = userService.isRsvpd(rendezvousId);
+			isAdult = userService.isAdult();
 			newAnnouncement = announcementService.create(rendezvousId);
 		}catch(Throwable oops){}
 		try{
@@ -49,6 +51,7 @@ public class RendezvousController extends AbstractController {
 			result = new ModelAndView("rendezvous/display");
 			result.addObject("rendezvous",rendezvous);
 			result.addObject("rsvpd",rsvpd);
+			result.addObject("isAdult",isAdult);
 			if(newAnnouncement != null)
 				result.addObject("announcement",newAnnouncement);
 		}catch(Throwable oops){
@@ -59,13 +62,18 @@ public class RendezvousController extends AbstractController {
 	}
 	@RequestMapping("/list")
 	public ModelAndView list() {
-		ModelAndView result;
-		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(rendezvousService.findAll());
-		result = new ModelAndView("rendezvous/list");
-		result.addObject("rendezvouss", rendezvouss);
+		ModelAndView result = new ModelAndView("rendezvous/list");
+		List<Rendezvous> rendezvouss = null;
 		try{
+			if(userService.isAdult())
+				rendezvouss = new ArrayList<Rendezvous>(rendezvousService.findAll());
+			else
+				rendezvouss = new ArrayList<Rendezvous>(rendezvousService.findAllUnder18());
 			result.addObject("rsvpdRendezvouses", rendezvousService.getRSVPRendezvousesForUser(userService.findByPrincipal()));
-		} catch (Throwable oops) {}
+		}catch(Throwable oops){
+			rendezvouss = new ArrayList<Rendezvous>(rendezvousService.findAllUnder18());
+		}
+		result.addObject("rendezvouss", rendezvouss);
 		result.addObject("requestUri", "rendezvous/list.do");
 		return result;
 	}
