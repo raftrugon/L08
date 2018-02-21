@@ -66,11 +66,12 @@ public class AnnouncementService {
 		return res;
 	}
 
-	public void delete(final Announcement announcement) {
+	public Announcement deleteByAdmin(final Announcement announcement) {
 		Assert.notNull(announcement);
 		Admin a = adminService.findByPrincipal();
 		Assert.notNull(a);
-		announcementRepository.delete(announcement);
+		announcement.setinappropriate(true);
+		return announcementRepository.save(announcement);
 
 	}
 	
