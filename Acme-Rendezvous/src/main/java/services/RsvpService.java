@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +75,14 @@ public class RsvpService {
 
 
 	//Other Business Methods --------------------------------
+	
+	public Collection<String> getPendingQuestions(Rsvp rsvp){
+		Assert.notNull(rsvp);
+		Collection<String> res = new ArrayList<String>(rsvp.getRendezvous().getQuestions());
+		res.removeAll(rsvp.getQuestionsAndAnswers().keySet());	
+		
+		return res;
+	}
 	
 	
 }

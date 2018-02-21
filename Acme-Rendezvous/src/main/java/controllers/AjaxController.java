@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Announcement;
-import domain.Rendezvous;
-import domain.Rsvp;
-
 import services.AnnouncementService;
-import services.RendezvousService;
 import services.RsvpService;
+import domain.Announcement;
+import domain.Rsvp;
 
 @RestController
 @RequestMapping("/ajax")
@@ -26,14 +23,15 @@ public class AjaxController {
 	private RsvpService 				rsvpService;
 	@Autowired
 	private AnnouncementService 				announcementService;
-	@Autowired
-	private RendezvousService			rendezvousService;
 	 
 	
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)
 	public ModelAndView qa(@RequestParam(required=true)final int rsvpId) {
 		ModelAndView result = new ModelAndView("rsvp/qa");
-		result.addObject("qa",rsvpService.findOne(rsvpId).getQuestionsAndAnswers());
+		Rsvp rsvp = rsvpService.findOne(rsvpId);
+		result.addObject("qa",rsvp.getQuestionsAndAnswers());
+		result.addObject("pendingQuestions", rsvpService.getPendingQuestions(rsvp));
+		result.addObject("rsvp", rsvp);
 		return result;
 	}
 	

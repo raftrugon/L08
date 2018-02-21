@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.AnnouncementService;
 import services.RendezvousService;
 import services.UserService;
-import utilities.internal.SchemaPrinter;
 import domain.Announcement;
 import domain.Rendezvous;
 

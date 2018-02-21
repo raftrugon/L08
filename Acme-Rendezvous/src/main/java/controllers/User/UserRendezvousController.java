@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RendezvousService;
+import services.RsvpService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Rendezvous;
+import domain.Rsvp;
 import forms.UserRendezvousCreateForm;
 
 @Controller
@@ -27,6 +29,8 @@ public class UserRendezvousController extends AbstractController {
 	private RendezvousService	rendezvousService;
 	@Autowired
 	private UserService			userService;
+	@Autowired
+	private RsvpService			rsvpService;
 
 
 	//Constructor
@@ -64,6 +68,32 @@ public class UserRendezvousController extends AbstractController {
 		result.addObject("questions", rendezvous.getQuestions());
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("requestUri", "user/rendezvous/questions-list.do?rendezvousId=" + rendezvousId);
+		return result;
+	}
+	
+	@RequestMapping(value = "/answer", method = RequestMethod.POST)
+	public ModelAndView answer(@RequestParam String question, @RequestParam String rsvpId, 
+						       @RequestParam String answer) {
+		
+		ModelAndView result;
+		
+		try{
+			int rsvpIdInt = Integer.parseInt(rsvpId);
+			
+			Rsvp rsvp = rsvpService.findOne(rsvpIdInt);
+			Assert.notNull(rsvp);
+			Assert.isTrue(rsvp.getUser().equals(userService.findByPrincipal()));
+			
+			rsvp.getQuestionsAndAnswers().put(question, answer);
+			rsvpService.save(rsvp);
+			
+			result = new ModelAndView("redirect:/rendezvous/display.do?rendezvousId="+rsvp.getRendezvous().getId());
+		}		
+		catch (Throwable oops) {
+			result = new ModelAndView("redirect:/rendezvous/list.do");
+			result.addObject("message", "rendezvous.commitError");
+		}
+		
 		return result;
 	}
 

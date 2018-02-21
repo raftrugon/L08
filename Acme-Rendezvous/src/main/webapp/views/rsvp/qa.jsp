@@ -13,3 +13,23 @@
 	<div class="well well-sm" style="margin-bottom:5px"><strong><jstl:out value="${entity.key}"/></strong></div>
 	<p style="padding-left:3em"><jstl:out value="${entity.value}"/></p>
 </jstl:forEach>
+
+<jstl:if test="${pageContext.request.userPrincipal.name eq rsvp.user.userAccount.username}" >
+	<jstl:forEach items="${pendingQuestions}" var="item">
+		<div class="well well-sm" style="margin-bottom:5px"><strong><jstl:out value="${item}"/></strong></div>
+		
+		<form action="user/rendezvous/answer.do" method="post">
+			<input type="hidden" name="question" value="${item}">
+			<input type="hidden" name="rsvpId" value="${rsvp.id}">
+		
+		<spring:message code="rendezvous.answer" var="answerVar" />
+		<p style="padding-left:3em">
+			<input type="text" name="answer">
+			<input type="submit" name="submit"
+					value="<jstl:out value="${answerVar}"/>"	
+			onclick="javascript: relativeRedir('/user/rendezvous/answer.do');" />
+		</p>
+		</form>
+		
+	</jstl:forEach>
+</jstl:if>
