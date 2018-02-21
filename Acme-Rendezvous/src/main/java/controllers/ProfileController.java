@@ -20,12 +20,12 @@ public class ProfileController extends AbstractController {
 
 	// Action-1 ---------------------------------------------------------------		
 
-	@RequestMapping("/action-1")
+	@RequestMapping("/terms")
 	public ModelAndView action1() {
 		ModelAndView result;
-
-		result = new ModelAndView("profile/action-1");
-
+				
+		result = new ModelAndView("profile/terms");
+		
 		return result;
 	}
 

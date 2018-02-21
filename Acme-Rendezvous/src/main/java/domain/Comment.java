@@ -27,6 +27,7 @@ public class Comment extends DomainEntity {
 	private Date	creationMoment;
 	private String	text;
 	private String	picture;
+	private Boolean	inappropriate;
 
 	@Past
 	@NotNull
@@ -58,6 +59,14 @@ public class Comment extends DomainEntity {
 		this.picture = picture;
 	}
 
+	@NotNull
+	public Boolean getinappropriate() {
+		return inappropriate;
+	}
+
+	public void setinappropriate(Boolean inappropriate) {
+		this.inappropriate = inappropriate;
+	}	
 
 	// Relationships ----------------------------------------------------------
 
