@@ -20,5 +20,7 @@
 		<put-attribute name="title" value="Anuncios" />
 		<put-attribute name="body" value="/views/announcement/list.jsp" />
 	</definition>
+	
+	<definition name="announcement/subList" template="/views/announcement/subList.jsp"/>
 
 </tiles-definitions>
