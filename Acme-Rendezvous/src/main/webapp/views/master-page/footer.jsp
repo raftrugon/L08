@@ -14,6 +14,10 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 
+
+
 <div class="footer" >
 	<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Rendezvous Co., Inc.</b>
+	<br>
+	<a href="profile/terms.do"/><spring:message code="masterpage.terms"/></a>
 </div>
