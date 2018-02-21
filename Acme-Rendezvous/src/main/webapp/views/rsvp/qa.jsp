@@ -27,7 +27,7 @@
 			<input type="text" name="answer">
 			<input type="submit" name="submit"
 					value="<jstl:out value="${answerVar}"/>"	
-			onclick="javascript: relativeRedir('/user/rendezvous/answer.do');" />
+			onclick="location.href = '/user/rendezvous/answer.do'" />
 		</p>
 		</form>
 		

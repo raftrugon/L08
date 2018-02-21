@@ -31,4 +31,6 @@
 		<put-attribute name="body" value="/views/user/create.jsp" />
 	</definition>
 	
+	<definition name="user/card" template="/views/user/card.jsp"/>
+	
 </tiles-definitions>

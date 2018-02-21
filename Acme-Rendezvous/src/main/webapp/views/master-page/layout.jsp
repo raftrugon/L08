@@ -78,7 +78,7 @@
 		<h1><tiles:insertAttribute name="title" /></h1>
 	</div> --%>
 	
-	<div id="mainContainer" class="container-fluid" style="margin-top:70px;">
+	<div id="mainContainer" class="container-fluid" style="margin-top:70px;margin-bottom:40px">
 	<jstl:if test="${message != null}">
 	<div class="alert alert-danger">
 	<strong><spring:message code="master.page.errors.header"/>!</strong> <spring:message code="${message}"/>
