@@ -64,7 +64,7 @@ public class RsvpService {
 
 	public Rsvp save(Rsvp rsvp) {
 		Assert.isTrue(rsvp.getUser().equals(userService.findByPrincipal()));
-		Assert.isTrue(!userService.isRsvpd(rsvp.getId()));
+		Assert.isTrue(!userService.isRsvpd(rsvp.getRendezvous().getId()));
 		return rsvpRepository.save(rsvp);
 	}
 

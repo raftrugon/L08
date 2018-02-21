@@ -8,6 +8,14 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
+	<div id="callbackModal" class="modal fade" role="dialog">
+  		<div class="modal-dialog" style="margin-top:45vh">
+		    <div class="modal-content">
+		     	<div id="callbackAlert" class="alert" style="margin:0;text-align:center;font-weight:bold;"></div>
+		    </div>
+	 	</div>
+	</div>
+	
 <jstl:if test="${rendezvous.inappropriate eq true}">
 	<script>
 		$(function(){
@@ -20,6 +28,22 @@
   		<div class="modal-dialog" style="margin-top:45vh">
 		    <div class="modal-content">
 		     	<div class="alert alert-danger" style="margin:0;text-align:center"><strong><spring:message code="rendezvous.inappropriate.alert"/></strong></div>
+		    </div>
+	 	</div>
+	</div>
+</jstl:if>
+<jstl:if test="${isAdult eq false and rendezvous.adultOnly eq true}">
+	<script>
+		$(function(){
+			$('#inappropriateBlur').css("filter","blur(5px)").css("-webkit-filter","blur(5px)");
+			$('#under18Modal').modal({backdrop: 'static', keyboard: false});
+		});
+	</script>
+
+	<div id="under18Modal" class="modal fade" role="dialog">
+  		<div class="modal-dialog" style="margin-top:45vh">
+		    <div class="modal-content">
+		     	<div class="alert alert-danger" style="margin:0;text-align:center"><strong><spring:message code="rendezvous.under18.alert"/></strong></div>
 		    </div>
 	 	</div>
 	</div>
@@ -86,7 +110,7 @@
 </div>
 
 <!-- Comments & Announcements -->
-<ul class="nav nav-tabs nav-justified col-md-12" style="margin-top:20px">
+<ul class="nav nav-tabs nav-justified col-md-12" style="margin-top:20px;padding-left:15px">
   <li class="active"><a data-toggle="tab" href="#accordion"><spring:message code="rendezvous.comments.tab"/></a></li>
   <li><a data-toggle="tab" href="#announcementTab"><spring:message code="rendezvous.announcements.tab"/></a></li>
 </ul>

@@ -101,17 +101,19 @@ public class AjaxController {
 			result.addObject("rsvp",rsvp);
 			return result;
 		}catch(Throwable oops){
-			return new ModelAndView("error");
+			return new ModelAndView("ajaxException");
 		}
 	}
 	
 	@RequestMapping(value="rsvp/save", method = RequestMethod.POST)
-	public ModelAndView saveRSVP(@Valid final Rsvp rsvp, final BindingResult binding){
+	public String saveRSVP(@Valid final Rsvp rsvp, final BindingResult binding){
 		try{
 			rsvpService.save(rsvp);
-		}catch(Throwable oops){}
-		
-		return new ModelAndView("redirect: /rendezvous/display.do?rendezvousId="+rsvp.getRendezvous().getId());
+			return "1";
+		}catch(Throwable oops){
+			oops.printStackTrace();
+			return "0";
+		}
 	}
 	
 	@RequestMapping(value="user-card", method = RequestMethod.GET)

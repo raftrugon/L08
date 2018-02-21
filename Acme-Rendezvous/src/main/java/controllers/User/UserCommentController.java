@@ -37,7 +37,6 @@ public class UserCommentController extends AbstractController {
 		ModelAndView result;
 		try {
 			Comment comment = commentService.createComment(rendezvousId);
-			SchemaPrinter.print(comment);
 			result = newEditModelAndView(comment);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:list.do");

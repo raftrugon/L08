@@ -20,5 +20,7 @@
 		<put-attribute name="title" value="Pánico" />
 		<put-attribute name="body" value="/views/misc/panic.jsp" />
 	</definition>
+	
+	<definition name="ajaxException" template="/views/misc/error.jsp"/>
 
 </tiles-definitions>
