@@ -92,11 +92,11 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-	public void deleteByAdmin(final Comment comment) {
+	public Comment deleteByAdmin(final Comment comment) {
 		Admin a = adminService.findByPrincipal();
 		Assert.notNull(a);
-		commentRepository.delete(comment);
-
+		comment.setinappropriate(true);
+		return commentRepository.save(comment);
 	}
 	
 	//Other Business Methods --------------------------------

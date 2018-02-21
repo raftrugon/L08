@@ -88,11 +88,12 @@ public class RendezvousService {
 		return saved;
 	}
 
-	public void deleteByAdmin(final Rendezvous rendezvous) {
+	public Rendezvous deleteByAdmin(final Rendezvous rendezvous) {
 		Assert.notNull(rendezvous);
 		Assert.isTrue(rendezvous.getId() != 0);
 		Assert.notNull(this.adminService.findByPrincipal());
-		this.rendezvousRepository.delete(rendezvous);
+		rendezvous.setinappropriate(true);
+		return rendezvousRepository.save(rendezvous);
 	}
 
 	public Rendezvous deleteByUser(final int rendezvousId) {
