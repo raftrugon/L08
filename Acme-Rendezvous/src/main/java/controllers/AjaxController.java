@@ -42,7 +42,7 @@ public class AjaxController {
 	@RequestMapping(value="admin/announcement/delete", method=RequestMethod.POST)
 	public int deleteAnnouncement(@RequestParam(required = true) Announcement announcement) {
 		try{
-			announcementService.delete(announcement);
+			announcementService.deleteByAdmin(announcement);
 			return 1;
 		} catch(Throwable oops) {
 			return 0;
