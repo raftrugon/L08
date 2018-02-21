@@ -34,6 +34,10 @@
 				<button onClick="javascript:window.location.href = 'admin/dashboard.do'" class="btn btn-danger navbar-btn"><spring:message code="master.page.dashboard" /></button>
 			</security:authorize>
 			
+			<security:authorize access="hasRole('USER')">
+				<button onClick="javascript:window.location.href = 'user/rendezvous/create.do'" class="btn btn-danger navbar-btn"><i class="fas fa-plus-square"></i> <spring:message code="master.page.rendezvous.create" /></button>
+			</security:authorize>
+			
 		<%-- <security:authorize access="all()"> 
 		<form class="navbar-form navbar-left" action="trip/list.do">
 		  <div class="input-group">
