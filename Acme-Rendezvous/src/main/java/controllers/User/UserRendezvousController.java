@@ -70,30 +70,30 @@ public class UserRendezvousController extends AbstractController {
 		result.addObject("requestUri", "user/rendezvous/questions-list.do?rendezvousId=" + rendezvousId);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/answer", method = RequestMethod.POST)
-	public ModelAndView answer(@RequestParam String question, @RequestParam String rsvpId, 
-						       @RequestParam String answer) {
-		
+	public ModelAndView answer(@RequestParam final String question, @RequestParam final String rsvpId,
+		@RequestParam final String answer) {
+
 		ModelAndView result;
-		
+
 		try{
 			int rsvpIdInt = Integer.parseInt(rsvpId);
-			
-			Rsvp rsvp = rsvpService.findOne(rsvpIdInt);
+
+			Rsvp rsvp = this.rsvpService.findOne(rsvpIdInt);
 			Assert.notNull(rsvp);
-			Assert.isTrue(rsvp.getUser().equals(userService.findByPrincipal()));
-			
+			Assert.isTrue(rsvp.getUser().equals(this.userService.findByPrincipal()));
+
 			rsvp.getQuestionsAndAnswers().put(question, answer);
-			rsvpService.save(rsvp);
-			
+			this.rsvpService.save(rsvp);
+
 			result = new ModelAndView("redirect:/rendezvous/display.do?rendezvousId="+rsvp.getRendezvous().getId());
-		}		
+		}
 		catch (Throwable oops) {
 			result = new ModelAndView("redirect:/rendezvous/list.do");
 			result.addObject("message", "rendezvous.commitError");
 		}
-		
+
 		return result;
 	}
 
@@ -129,14 +129,20 @@ public class UserRendezvousController extends AbstractController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 		ModelAndView result;
-		Rendezvous rendezvous = this.rendezvousService.reconstruct(rendezvousForm, binding);
+		Rendezvous saved;
+
+		Rendezvous validatedObject = this.rendezvousService.reconstruct(rendezvousForm, binding);
 
 		if (binding.hasErrors()) {
 			System.out.println(binding.toString());
 			result = this.newEditModelAndView(rendezvousForm);
 		} else
 			try {
-				Rendezvous saved = this.rendezvousService.save(rendezvous);
+				if(rendezvousForm.getRendezvousId() == 0)								//Si es un objeto nuevo
+					saved = this.rendezvousService.save(validatedObject);
+				else																	//Si es un objecto existente en base de datos
+					saved = this.rendezvousService.reconstructAndSave(rendezvousForm);
+
 				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
 			} catch (Throwable oops) {
 				result = this.newEditModelAndView(rendezvousForm);

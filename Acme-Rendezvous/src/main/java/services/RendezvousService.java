@@ -119,14 +119,14 @@ public class RendezvousService {
 	}
 
 	public Double[] getRendezvousUserStats() {
-		return rendezvousRepository.getRendezvousUserStats();
+		return this.rendezvousRepository.getRendezvousUserStats();
 	}
-	
+
 
 	public Double[] getUserRendezvousesStats() {
-		return rendezvousRepository.getUserRendezvousesStats();
+		return this.rendezvousRepository.getUserRendezvousesStats();
 	}
-	
+
 	public Collection<Rendezvous> getTop10RendezvousByRSVPs() {
 		return this.rendezvousRepository.getTop10RendezvousByRSVPs();
 	}
@@ -146,27 +146,20 @@ public class RendezvousService {
 	public Double[] getRendezvousQuestionStats() {
 		return this.rendezvousRepository.getRendezvousQuestionStats();
 	}
-	
+
 	public Double[] getAnswersToQuestionsStats() {
-		return rendezvousRepository.getAnswersToQuestionsStats();
+		return this.rendezvousRepository.getAnswersToQuestionsStats();
 	}
-	
-	
+
+
 
 	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 
 		Rendezvous res;
 
-		//Viendo si es create o edit
-		if (rendezvousForm.getRendezvousId() == 0)
-			res = this.create();
-		else
-			res = this.findOne(rendezvousForm.getRendezvousId());
+		res = this.create();
 
-		//OPCION: Checkear aqui bd, setear un objeto nuevo y validarlo. Si no tiene errores
-		//setear el objeto con findOne. (no valdría para nada el save)
-
-		//Hacerlo en el save
+		//Reconstruct
 		res.setName(rendezvousForm.getName());
 		res.setDescription(rendezvousForm.getDescription());
 		res.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
@@ -180,5 +173,31 @@ public class RendezvousService {
 
 		return res;
 	}
+
+	public Rendezvous reconstructAndSave(final UserRendezvousCreateForm rendezvousForm) {
+
+		//Checkeos contra base de datos
+		Rendezvous bd = this.findOne(rendezvousForm.getRendezvousId());
+		Assert.notNull(rendezvousForm);
+		Assert.isTrue(!bd.getFinalMode() && !bd.getDeleted());
+		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
+
+		//Reconstruct
+		bd.setName(rendezvousForm.getName());
+		bd.setDescription(rendezvousForm.getDescription());
+		bd.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
+		bd.setPicture(rendezvousForm.getPicture());
+		bd.setLatitude(rendezvousForm.getLatitude());
+		bd.setLongitude(rendezvousForm.getLongitude());
+		bd.setFinalMode(rendezvousForm.isFinalMode());
+		bd.setAdultOnly(rendezvousForm.isAdultOnly());
+
+		//Save
+		Rendezvous saved = this.rendezvousRepository.save(bd);
+
+		return saved;
+	}
+
+
 
 }
