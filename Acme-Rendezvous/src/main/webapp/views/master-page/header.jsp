@@ -77,4 +77,13 @@
 		</ul>
 		</div>
 	</div>
+	
+	<!-- Modal to display the notifications from an ajax method -->
+	<div id="ajaxModalNotification" class="modal fade" role="dialog">
+      <div class="modal-dialog" style="margin-top:45vh">
+        <div class="modal-content" id="ajaxModalContent">
+           <div class="alert alert-danger" style="margin:0;text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.inappropriate.alert"/></strong></div>
+        </div>
+     </div>
+  </div>
 </nav>

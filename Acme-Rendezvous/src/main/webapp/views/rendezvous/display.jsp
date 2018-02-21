@@ -104,7 +104,16 @@
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">${comment.user.name} ${comment.user.surnames}<small><i>
-				<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${comment.creationMoment}" /></i></small></h4>
+				<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${comment.creationMoment}" /></i>
+				<jstl:if test="${comment.inappropriate eq false}">
+					<security:authorize access="hasRole('ADMIN')">
+						<a href="javascript:deleteComment();" style="color:red;padding:1em;" id="${comment.id}" class="deleteCommentLink">
+							<i class="fas fa-times"></i> 
+							<spring:message code="rendezvous.adminDelete"/>
+						</a>
+					</security:authorize>
+				</jstl:if>
+				</small></h4>
 				<p>${comment.text}</p>
 			</div>
 			<div class="media-right" style="text-align:right">
@@ -151,7 +160,14 @@
 				<div class="timelinecontainer timelineleft ">
 				    <div class="timelinecontent ">
 				      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong><br/><small class="text-primary"><i><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></i></small></h2>
-				      <p><jstl:out value="${announcementItem.description}"/></p>
+				      <p style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></p>
+				      <jstl:if test="${announcementItem.inappropriate eq false }">
+					      <security:authorize access="hasRole('ADMIN')">
+							  <button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" style="position:absolute; right:20px; bottom:10px;">
+							  	<spring:message code="rendezvous.adminDelete"/>
+							  </button>
+						  </security:authorize>
+					  </jstl:if>
 				    </div>
 				 </div>
 			</jstl:when>
@@ -159,8 +175,15 @@
 				<div class="timelinecontainer timelineright ">
 				    <div class="timelinecontent ">
 				      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong><br/><small class="text-primary"><i><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></i></small></h2>
-				      <p><jstl:out value="${announcementItem.description}"/></p>
-				    </div>
+				      <p style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></p>
+				      <jstl:if test="${announcementItem.inappropriate eq false }">
+					      <security:authorize access="hasRole('ADMIN')">
+							  <button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" style="position:absolute; right:20px; bottom:10px;">
+							  	<spring:message code="rendezvous.adminDelete"/>
+							  </button>
+						  </security:authorize>
+					  </jstl:if>
+				     </div>
 				 </div>
 			</jstl:otherwise>
 			</jstl:choose>
@@ -300,4 +323,42 @@ function initMap() {
 	});
 </script>    
 
+<script>
+$(function(){
+	$('.deleteAnnouncementButton').click(function(e){
+		e.preventDefault();
+		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
+			var msg='';
+			if(data='0'){
+				msg = '<div class="alert alert-danger" style="text-align:center"><strong><spring:message code="rendezvous.announcement.delete.error"/></strong></div>';
+			}
+			if(data='1'){
+				msg = '<div class="alert alert-success" style="text-align:center"><strong><spring:message code="rendezvous.announcement.delete.success"/></strong></div>';
+			}
+			$( "#ajaxModalContent" ).html( msg );
+			$( "#ajaxModalNotification").modal('show');
+			});
+	});
+});
+
+</script>
+<script>
+$(function deleteComment(){
+	$('.deleteCommentLink').click(function(e){
+		e.preventDefault();
+		$.post( "ajax/admin/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
+			var msg='';
+			if(data='0'){
+				msg = '<div class="alert alert-danger" style="text-align:center"><strong><spring:message code="rendezvous.comment.delete.error"/></strong></div>';
+			}
+			if(data='1'){
+				msg = '<div class="alert alert-success" style="text-align:center"><strong><spring:message code="rendezvous.comment.delete.success"/></strong></div>';
+			}
+			$( "#ajaxModalContent" ).html( msg );
+			$( "#ajaxModalNotification").modal('show');
+			});
+	});
+});
+
+</script>
 </div>
