@@ -25,15 +25,14 @@
 </display:table> --%>
 
 <security:authorize access="hasRole('USER')"> 
-<div style="padding-right:15px;padding-left:15px;">
-<ul class="nav nav-pills nav-justified" >
-  <li id="button1" class="active"><a href="javascript:all()"><spring:message code="rendezvous.list.all"/></a></li>
-  <li id="button2" class=""><a href="javascript:mine()"><spring:message code="rendezvous.list.mine"/></a></li>
-  <li id="button3" class=""><a href="javascript:rsvp()"><spring:message code="rendezvous.list.rsvpd"/></a></li>
-  <li id="button4" class=""><a href="javascript:non_rsvp()"><spring:message code="rendezvous.list.non-rsvpd"/></a></li>
+<div style="padding-right:15px;padding-left:15px;margin-bottom:10px">
+<ul class="nav nav-pills nav-justified">
+  <li id="button1" class="active rendezvousPill"><a href="javascript:all()"><spring:message code="rendezvous.list.all"/></a></li>
+  <li id="button2" class="rendezvousPill"><a class="rendezvousPill" href="javascript:mine()"><spring:message code="rendezvous.list.mine"/></a></li>
+  <li id="button3" class="rendezvousPill"><a class="rendezvousPill" href="javascript:rsvp()"><spring:message code="rendezvous.list.rsvpd"/></a></li>
+  <li id="button4" class="rendezvousPill"><a class="rendezvousPill" href="javascript:non_rsvp()"><spring:message code="rendezvous.list.non-rsvpd"/></a></li>
 </ul>
 </div>
-</br>
 </security:authorize>
 
 <jstl:forEach items="${rendezvouss}" var="rendezvous">
@@ -70,7 +69,7 @@
 		</div>
 		<input class="cardButton" type="button" name="cancel"
 				value="${rendezvous.user.name} ${rendezvous.user.surnames} "	
-		onclick="javascript: relativeRedir('user-display.do?userId=${rendezvous.user.id}');" />
+		onclick="location.href = 'user-display.do?userId=${rendezvous.user.id}'" />
 	</div>
 </div>
 </jstl:forEach>

@@ -1,11 +1,8 @@
-#announcementTab {
-  box-sizing: border-box;
-}
 
-/* Set a background color */
 #announcementTab {
-  background-color: #474e5d;
-  font-family: Helvetica, sans-serif;
+	box-sizing: border-box;	
+  	font-family: Helvetica, sans-serif;
+  	margin-top: 20px;
 }
 
 /* The actual timeline (the vertical ruler) */
@@ -20,7 +17,7 @@
   content: '';
   position: absolute;
   width: 6px;
-  background-color: white;
+  background-color: #808080;
   top: 0;
   bottom: 0;
   left: 49.75%;												/* MODIFICADO 50 */					
@@ -31,8 +28,17 @@
 .timelinecontainer {
   padding: 15px 40px;										/* MODIFICADO 10 40 */
   position: relative;
-  background-color: inherit;
   width: 50%;
+}
+
+/* The actual timelinecontent */
+.timelinecontent {
+  padding: 20px 30px;
+  position: relative;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* The circles on the timeline */
@@ -42,8 +48,8 @@
   width: 25px;
   height: 25px;
   right: -10px;												/* MODIFICADO -17 */
-  background-color: white;
-  border: 4px solid #FF9F55;
+  background-color:  #00FF00;
+  border: 4px solid #808080;
   top: 18px;												/* MODIFICADO 15 */
   border-radius: 50%;
   z-index: 1;
@@ -68,9 +74,9 @@
   width: 0;
   z-index: 1;
   right: 30px;
-  border: medium solid white;
+  border: medium solid #e3e3e3;
   border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent white;
+  border-color: transparent transparent transparent #e3e3e3;
 }
 
 /* Add arrows to the right timelinecontainer (pointing left) */
@@ -82,9 +88,9 @@
   width: 0;
   z-index: 1;
   left: 30px;
-  border: medium solid white;
+  border: medium solid #e3e3e3;
   border-width: 10px 10px 10px 0;
-  border-color: transparent white transparent transparent;
+  border-color: transparent #e3e3e3 transparent #e3e3e3;
 }
 
 /* Fix the circle for timelinecontainers on the right side */
@@ -92,13 +98,7 @@
   left: -16px;
 }
 
-/* The actual timelinecontent */
-.timelinecontent {
-  padding: 20px 30px;
-  background-color: white;
-  position: relative;
-  border-radius: 6px;
-}
+
 
 /* Media queries - Responsive timeline on screens less than 600px wide */
 @media all and (max-width: 600px) {
@@ -117,9 +117,9 @@
 /* Make sure that all arrows are pointing leftwards */
   .timelinecontainer::before {
     left: 60px;
-    border: medium solid white;
+    border: medium solid #e3e3e3;
     border-width: 10px 10px 10px 0;
-    border-color: transparent white transparent transparent;
+    border-color: transparent #e3e3e3 transparent transparent;
   }
 
 /* Make sure all circles are at the same spot */

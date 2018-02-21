@@ -18,73 +18,10 @@
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 <%@taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class=center-text>
+<div>
 
-	<!--------------------------------------------- PERSONAL DATA -----------------------------------------------  -->
-	
-	<!-- <div class="col-sm-1">
-	
-	</div> -->
-	<div class="col-sm-5">
-		<h1><spring:message code="personalData" /></h1>
-		<div class="well"><!------------------------------ USER INFO ----------------------------------------->
-		
-			<a href="#personalData" class="btn btn-primary btn-lg" data-toggle="modal"><spring:message code="show"/></a>
-			<div class="modal fade" id="personalData">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!--  Header de la ventana -->
-						<div class="modal-header">
-							<button style="button" class="close" data-dismiss="modal">&times;</button>
-							<h3 class="modal-title"><spring:message code="personalData"/></h3>
-						</div>
-						
-						<!-- Contenido de la ventana -->
-						<div class="modal-body">
-							<table class="table table-bordered">
-							  	<thead>
-							    	<tr>
-							      		<th scope="col"><spring:message code="user.name" /></th>
-							      		<th scope="col"><spring:message code="user.surnames" /></th>
-							      		<th scope="col"><spring:message code="user.address" /></th>
-							      		<th scope="col"><spring:message code="user.phoneNumber" /></th>
-							      		<th scope="col"><spring:message code="user.email" /></th>
-							      		<th scope="col"><spring:message code="user.birthDate" /></th>
-							    	</tr>
-							  	</thead>
-							  	<tbody>
-							    	<tr>
-							      		<!-- <th scope="row">1</th> -->
-							      		<td><jstl:out value="${user.name}"/></td>
-							      		<td><jstl:out value="${user.surnames}"/></td>
-							      		<td><jstl:out value="${user.address}"/></td>
-							      		<td><jstl:out value="${user.phoneNumber}"/></td>
-							      		<td><jstl:out value="${user.email}"/></td>
-							      		<td><jstl:out value="${user.birthDate}"/></td>
-							    	</tr>
-							    
-							  	</tbody>
-							</table>
-						</div>
-						<!-- Footer de la ventana -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-						</div>
-						
-					</div>
-				</div>
-			</div>			
-		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<div class="well"><!----------------------------------- OWN RENDEZVOUSES ----------------------------------->
+<div class="col-md-5">
+		<div class="well "><!----------------------------------- OWN RENDEZVOUSES ----------------------------------->
 		
 			<h3><spring:message code="ownRendezvouses" /></h3>
 			<table class="table">
@@ -107,19 +44,26 @@
 			  		</jstl:forEach>
 			  	</tbody>
 			</table>
-	
-		</div>
+	</div>
 	</div>
 	
 	
-		
-	
-	
-	
-	
-	<!--------------------------------------------------- RENDEZVOUSES CORREGIR --------------------------------------------------------------------  -->
-	<div class="col-sm-7">
-		<h1><spring:message code="rendezvouses" /></h1>
+	<!--------------------------------------------- PERSONAL DATA -----------------------------------------------  -->
+		<div class="userCard col-md-2" style="overflow:hidden;padding:0">
+		  <img src="images/kS1.png" style="width:100%;margin-top:-25px;">
+		  <button class="cardUserButton" style="margin-top:-25px;cursor:initial"><jstl:out value="${user.name} ${user.surnames}"/></button>
+		  <p><strong><spring:message code="user.address" /></strong></p>
+		  <p><jstl:if test="${user.address eq null}">-</jstl:if><jstl:out value="${user.address}"/></p>
+		  <p><strong><spring:message code="user.phoneNumber" /></strong></p>
+		  <p><jstl:if test="${user.phoneNumber eq null}">-</jstl:if><jstl:out value="${user.phoneNumber}"/></p>
+		  <p><strong><spring:message code="user.email" /></strong></p>
+		  <p><jstl:out value="${user.email}"/></p>
+		  <p><strong><spring:message code="user.birthDate" /></strong></p>
+		  <p><fmt:formatDate value="${user.birthDate}" type="date" dateStyle="long"/></p>
+		</div>
+
+	<!--------------------------------------------------- RENDEZVOUSES RSVP --------------------------------------------------------------------  -->
+	<div class="col-md-5">
 		<div class="well">
 			
 			<jstl:forEach var="rsvpRendezvous" items="${rendezvouses}" varStatus="x" >

@@ -16,20 +16,22 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
+<%@taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class=center-text>
-	<display:table pagesize="5" class= "displaytag" keepStatus="true" name="users" requestURI="${requestUri}" id="row">
-		
-		<!-- Shared Variables -->
-		<jstl:set var="model" value="user" scope="request"/>
-		
-		<!-- Attributes -->
-	  	<lib:column name="name" link="/Acme-Rendezvous/user-display.do?userId=${row.id}" linkName="${row.name}"/>
-		<lib:column name="surnames"/>
-		<lib:column name="address"/>
-		<lib:column name="phoneNumber"/>
-		<lib:column name="email"/>
-		<lib:column name="birthDate" format="{0,date,dd/MM/yy HH:mm}"/>
-
-	</display:table>
+<jstl:forEach items="${users}" var="user">
+<jstl:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) + 1 %></jstl:set>
+<div class="col-md-2">
+	<div class="userCard" style="overflow:hidden">
+		  <img src="images/kS${rand}.png" style="width:100%;margin-top:-25px;">
+		  <button class="cardUserButton" onclick="location.href = 'user-display.do?userId=${user.id}'" style="margin-top:-25px;"><jstl:out value="${user.name} ${user.surnames}"/></button>
+		  <p><strong><spring:message code="user.address" /></strong></p>
+		  <p><jstl:if test="${user.address eq null}">-</jstl:if><jstl:out value="${user.address}"/></p>
+		  <p><strong><spring:message code="user.phoneNumber" /></strong></p>
+		  <p><jstl:if test="${user.phoneNumber eq null}">-</jstl:if><jstl:out value="${user.phoneNumber}"/></p>
+		  <p><strong><spring:message code="user.email" /></strong></p>
+		  <p><jstl:out value="${user.email}"/></p>
+		  <p><strong><spring:message code="user.birthDate" /></strong></p>
+		  <p><fmt:formatDate value="${user.birthDate}" type="date" dateStyle="long"/></p>
+	</div>
 </div>
+</jstl:forEach>

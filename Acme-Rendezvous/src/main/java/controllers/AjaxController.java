@@ -12,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AnnouncementService;
 import services.RsvpService;
+import services.UserService;
 import domain.Announcement;
 import domain.Rsvp;
+import domain.User;
 
 @RestController
 @RequestMapping("/ajax")
@@ -23,6 +25,8 @@ public class AjaxController {
 	private RsvpService 				rsvpService;
 	@Autowired
 	private AnnouncementService 				announcementService;
+	@Autowired
+	private UserService					userService;
 	 
 	
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)
@@ -66,7 +70,7 @@ public class AjaxController {
 			result.addObject("rsvp",rsvp);
 			return result;
 		}catch(Throwable oops){
-			return new ModelAndView("redirect: /rendezvous/display.do?rendezvousId="+rendezvousId);
+			return new ModelAndView("error");
 		}
 	}
 	
@@ -77,5 +81,18 @@ public class AjaxController {
 		}catch(Throwable oops){}
 		
 		return new ModelAndView("redirect: /rendezvous/display.do?rendezvousId="+rsvp.getRendezvous().getId());
+	}
+	
+	@RequestMapping(value="user-card", method = RequestMethod.GET)
+	public ModelAndView userCard(@RequestParam(required=true) final int userId){
+		ModelAndView result;
+		try{
+			User u = userService.findOne(userId);
+			result = new ModelAndView("user/card");
+			result.addObject("user",u);
+		}catch(Throwable oops){
+			result = null;
+		}
+		return result;
 	}
 }

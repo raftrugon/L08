@@ -66,7 +66,6 @@ public class UserCommentController extends AbstractController {
 				commentService.save(comment);
 				result = "1";
 			} catch (Throwable oops) {
-				oops.printStackTrace();
 				result = "2";
 			}
 		return result;

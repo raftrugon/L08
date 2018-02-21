@@ -29,7 +29,7 @@
 <div class="col-md-2">
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
-	<div class="panel panel-default" style="width:95%;">
+	<div class="panel panel-default">
 		<div class="well" style="margin-bottom:10px;text-align:center"><strong><i class="fas fa-bullhorn"></i> <spring:message code="rendezvous.announcement.new"/></strong></div>
 		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px !important;width:95%;margin:auto">		
 			<jstl:set var="model" value="announcement" scope="request"/>
@@ -44,55 +44,42 @@
 </security:authorize>
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
-	<table class="displaytag" style="margin-top:0 !important;">
-	<thead>
-		<tr><th><a href="user-display.do?userId=<jstl:out value='${rendezvous.user.id}'/>"><jstl:out value='${rendezvous.user.name} ${rendezvous.user.surnames}'/></a></th></tr>
-	</thead>
-	<tbody>
-		<tr><td><jstl:out value="${rendezvous.user.address}"/></td></tr>
-		<tr><td><jstl:out value="${rendezvous.user.phoneNumber}"/></td></tr>
-		<tr><td><jstl:out value="${rendezvous.user.email}"/></td></tr>
-		<tr><td><jstl:out value="${formatedBirthDate}"/></td></tr>
-	</tbody>
-	</table>
 	
-	<display:table pagesize="20" class= "displaytag" keepStatus="true" name="rendezvous.rsvps" requestURI="${requestUri}" id="row">
-		<display:setProperty name="paging.banner.onepage" value=""/>
-		<display:setProperty name="paging.banner.placement" value="bottom"/>
-		<display:setProperty name="paging.banner.all_items_found" value=""/>
-		<display:setProperty name="paging.banner.one_item_found" value=""/>
-		<display:setProperty name="paging.banner.no_items_found" value=""/>
-
-		<lib:column name="name" link="user/display.do?userId=${row.id}" linkName="${row.user.name} ${row.user.surnames}"/>
-		<lib:btnColumn modal="q&a,info,qaModal,${row.id}"/>
+	<div id="userCardDiv"></div>
 	
-	</display:table>
+	<jstl:forEach items="${rendezvous.rsvps}" var="r">
+		<div class="chip">
+		<img src="images/kC1.png" width="96" height="96">
+		<small><jstl:out value="${r.user.name} ${r.user.surnames}"/></small>
+		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
+		</div>
+	</jstl:forEach>
 </div>
 
 
 <!--  CENTER  -->
 <div class="center-text col-md-8">
 <div class="well well-lg" style="text-align:center"><h1><strong><jstl:out value="${rendezvous.name}"/></strong> <small><fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${rendezvous.organisationMoment}" /></small></h1></div>
-<div class="col-md-6" style="text-align:right">
+<div class="col-md-7" style="text-align:right">
 	<blockquote class="blockquote-reverse">
 	    <p><jstl:out value="${rendezvous.description}"/></p>
 	    <footer><jstl:out value="${rendezvous.user.name} ${rendezvous.user.surnames}"/></footer>
   	</blockquote>
 </div>
-<div class="col-md-6" style="text-align:center">
+<div class="col-md-5" style="text-align:center">
 	<jstl:if test="${rendezvous.picture ne null}">
-		<img src="<jstl:out value='${rendezvous.picture}'/>" style="max-height:200px"/>
+		<img src="<jstl:out value='${rendezvous.picture}'/>" style="max-height:200px;width:100%;object-fit:cover"/>
 	</jstl:if>
 	<jstl:if test="${rendezvous.picture eq null}">
 		<div class="nopicContainer">
-			<img src="images/nopic.jpg" style="max-height:200px" class="nopic"/>
+			<img src="images/nopic.jpg" style="max-height:200px;width:100%;object-fit:cover" class="nopic"/>
 			<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
 		</div>
 	</jstl:if>
 </div>
 
 <!-- Comments & Announcements -->
-<ul class="nav nav-tabs nav-justified col-md-12">
+<ul class="nav nav-tabs nav-justified col-md-12" style="margin-top:20px">
   <li class="active"><a data-toggle="tab" href="#accordion"><spring:message code="rendezvous.comments.tab"/></a></li>
   <li><a data-toggle="tab" href="#announcementTab"><spring:message code="rendezvous.announcements.tab"/></a></li>
 </ul>
@@ -156,14 +143,14 @@
 	</div>
 	</jstl:forEach>
 	</div>
-	<div id="announcementTab" class="tab-pane fade">
+	<div id="announcementTab" class="tab-pane fade col-md-12">
 		<div class="timeline">
 			<jstl:forEach items="${rendezvous.announcements}" var="announcementItem" varStatus="x">
 			<jstl:choose>
 			<jstl:when test="${x.count mod 2 eq 1}">
 				<div class="timelinecontainer timelineleft ">
 				    <div class="timelinecontent ">
-				      <h2><jstl:out value="${announcementItem.title}"/></h2>
+				      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong><br/><small class="text-primary"><i><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></i></small></h2>
 				      <p><jstl:out value="${announcementItem.description}"/></p>
 				    </div>
 				 </div>
@@ -171,7 +158,7 @@
 			<jstl:otherwise>
 				<div class="timelinecontainer timelineright ">
 				    <div class="timelinecontent ">
-				      <h2><jstl:out value="${announcementItem.title}"/></h2>
+				      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong><br/><small class="text-primary"><i><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></i></small></h2>
 				      <p><jstl:out value="${announcementItem.description}"/></p>
 				    </div>
 				 </div>
@@ -180,28 +167,40 @@
 			</jstl:forEach>
 		</div>
 	</div>
-</div>
+</div> 
 </div>
 <!--  RIGHT  -->
 <div class="col-md-2">
-<div id="map" style="height:300px;width:95%"></div>
-<display:table pagesize="20" class= "displaytag" keepStatus="true" name="rendezvous.rendezvouses" requestURI="${requestUri}" id="row1">
-	<display:setProperty name="paging.banner.onepage" value=""/>
-	<display:setProperty name="paging.banner.placement" value="bottom"/>
-	<display:setProperty name="paging.banner.all_items_found" value=""/>
-	<display:setProperty name="paging.banner.one_item_found" value=""/>
-	<display:setProperty name="paging.banner.no_items_found" value=""/>
-	<!-- Attributes -->
-  	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row1.id}" linkName="${row1.name}"/>
-	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="user" link="user-display.do?userId=<jstl:out value='${row1.user.id}'/>" linkName="${row1.user.name} ${row1.user.surnames}"/>
-
-</display:table>
+<div id="map" style="height:300px;width:100%"></div>
+<jstl:forEach items="${rendezvous.rendezvouses}" var="rend">
+	<div class="cardDisplay col-xs-12">
+		<div onclick="location.href = 'rendezvous/display.do?rendezvousId=${rend.id}'" style="cursor:pointer;height:100%">
+			<jstl:if test="${rend.picture eq null}">
+				<div class="nopicContainer">
+					<img src="images/nopic.jpg" style="object-fit:cover;width:100%;max-height:150px" class="nopic"/>
+					<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
+				</div>
+			</jstl:if>
+			<jstl:if test="${rend.picture ne null}">
+				<img src="${rend.picture}" style="object-fit:cover;width:100%;max-height:150px">
+			</jstl:if>
+	        <h1>
+	        	<jstl:out value="${rend.name}"/>
+	        </h1>
+	        <div style="text-align:center" class="cardDate">
+				<fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${rend.organisationMoment}"/>
+	        </div>
+		</div>
+		<input class="cardButton" type="button" name="cancel" style="position:inherit"
+				value="${rend.user.name} ${rend.user.surnames} "	
+		onclick="location.href = 'user-display.do?userId=${rend.user.id}'" />
+	</div>
+</jstl:forEach>
 </div>
 
 <!-- Modal -->
 <div id="qaModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="margin:100px auto;">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -218,16 +217,30 @@
 
   </div>
 </div>
+<script defer>
+function initMap() {
+    var uluru = {lat: <jstl:out value="${rendezvous.latitude}"/>, lng: <jstl:out value="${rendezvous.longitude}"/>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    });
+  }
+</script>
 
 <script>
-	$("[data-toggle=modal]").click(function(e){
-		$.get("ajax/qa.do?rsvpId=" + $(this).attr('id'), function(data){
-			$('#modalBody').html(data);
-			$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
-		});
-	});
 	$(document).ready(function(){
-		initMap();
+		$('.chipQA').click(function(e){
+			e.preventDefault();
+			$.get("ajax/qa.do?rsvpId=" + $(this).attr('id'), function(data){
+				$('#modalBody').html(data);
+				$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+				$('#qaModal').modal('show');
+			});
+		});
 		$('.newReplyBtn').click(function(e){
 			e.preventDefault();
 			$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
@@ -243,10 +256,13 @@
 		});
 		$('#RSVPbtn').click(function(e){
 			e.preventDefault();
-			$.get("ajax/rsvp/create.do?rendezvousId=${rendezvous.id}", function(data){
+			$.get("ajax/rsvp/create.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
 				$('#modalBody').html(data);
 				$('#qaModal').modal('show');
 			});
+		});
+		$.get("ajax/user-card.do?userId=<jstl:out value='${rendezvous.user.id}'/>", function(data){
+			$('#userCardDiv').html(data);
 		});
 	});
 </script>
@@ -259,19 +275,6 @@
 		});
 	</script>
 </jstl:if>
-<script>
-      function initMap() {
-        var uluru = {lat: <jstl:out value="${rendezvous.latitude}"/>, lng: <jstl:out value="${rendezvous.longitude}"/>};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
     </script>
