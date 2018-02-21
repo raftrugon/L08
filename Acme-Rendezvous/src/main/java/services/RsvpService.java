@@ -43,7 +43,7 @@ public class RsvpService {
 		Assert.notNull(r);
 		Assert.isTrue(!userService.isRsvpd(rendezvousId));
 		Assert.isTrue(!r.getDeleted());
-		Assert.isTrue(!r.getInnapropriate());
+		Assert.isTrue(!r.getinappropriate());
 		Assert.isTrue(r.getOrganisationMoment().after(new Date()));
 		res.setUser(u);
 		res.setRendezvous(r);

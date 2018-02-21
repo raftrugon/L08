@@ -8,7 +8,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
-<jstl:if test="${rendezvous.innapropriate eq true}">
+<jstl:if test="${rendezvous.inappropriate eq true}">
 	<script>
 		$(function(){
 			$('#inappropriateBlur').css("filter","blur(5px)").css("-webkit-filter","blur(5px)");

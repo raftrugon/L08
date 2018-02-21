@@ -28,6 +28,7 @@ public class Announcement extends DomainEntity {
 	private Date	creationMoment;
 	private String	title;
 	private String	description;
+	private Boolean inappropriate;
 
 
 	@Past
@@ -60,6 +61,14 @@ public class Announcement extends DomainEntity {
 		this.description = description;
 	}
 
+	@NotNull
+	public Boolean getinappropriate() {
+		return inappropriate;
+	}
+
+	public void setinappropriate(Boolean inappropriate) {
+		this.inappropriate = inappropriate;
+	}
 
 	//Relationships -------------------
 	private Rendezvous rendezvous;
