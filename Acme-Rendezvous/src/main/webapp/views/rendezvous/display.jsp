@@ -65,6 +65,13 @@
 	    <p><jstl:out value="${rendezvous.description}"/></p>
 	    <footer><jstl:out value="${rendezvous.user.name} ${rendezvous.user.surnames}"/></footer>
   	</blockquote>
+  	<jstl:if test="${rendezvous.inappropriate eq false}">
+	  	<security:authorize access="hasRole('ADMIN')">
+		    <button id="${rendezvous.id}" class="btn btn-danger deleteRendezvousButton">
+				<spring:message code="rendezvous.adminDelete"/>
+			</button>
+		</security:authorize>
+	</jstl:if>
 </div>
 <div class="col-md-5" style="text-align:center">
 	<jstl:if test="${rendezvous.picture ne null}">
@@ -325,15 +332,34 @@ function initMap() {
 
 <script>
 $(function(){
+	$('.deleteRendezvousButton').click(function(e){
+		e.preventDefault();
+		$.post( "ajax/admin/rendezvous/delete.do",{rendezvousId: $(this).attr('id') }, function( data ) {
+			var msg='';
+			if(data='0'){
+				msg = '<div class="alert alert-danger" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.delete.error"/></strong></div>';
+			}
+			if(data='1'){
+				msg = '<div class="alert alert-success" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.delete.success"/></strong></div>';
+			}
+			$( "#ajaxModalContent" ).html( msg );
+			$( "#ajaxModalNotification").modal('show');
+			});
+	});
+});
+
+</script>
+<script>
+$(function(){
 	$('.deleteAnnouncementButton').click(function(e){
 		e.preventDefault();
 		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
 			var msg='';
 			if(data='0'){
-				msg = '<div class="alert alert-danger" style="text-align:center"><strong><spring:message code="rendezvous.announcement.delete.error"/></strong></div>';
+				msg = '<div class="alert alert-danger" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.announcement.delete.error"/></strong></div>';
 			}
 			if(data='1'){
-				msg = '<div class="alert alert-success" style="text-align:center"><strong><spring:message code="rendezvous.announcement.delete.success"/></strong></div>';
+				msg = '<div class="alert alert-success" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.announcement.delete.success"/></strong></div>';
 			}
 			$( "#ajaxModalContent" ).html( msg );
 			$( "#ajaxModalNotification").modal('show');
@@ -349,10 +375,10 @@ $(function deleteComment(){
 		$.post( "ajax/admin/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
 			var msg='';
 			if(data='0'){
-				msg = '<div class="alert alert-danger" style="text-align:center"><strong><spring:message code="rendezvous.comment.delete.error"/></strong></div>';
+				msg = '<div class="alert alert-danger" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.comment.delete.error"/></strong></div>';
 			}
 			if(data='1'){
-				msg = '<div class="alert alert-success" style="text-align:center"><strong><spring:message code="rendezvous.comment.delete.success"/></strong></div>';
+				msg = '<div class="alert alert-success" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.comment.delete.success"/></strong></div>';
 			}
 			$( "#ajaxModalContent" ).html( msg );
 			$( "#ajaxModalNotification").modal('show');
