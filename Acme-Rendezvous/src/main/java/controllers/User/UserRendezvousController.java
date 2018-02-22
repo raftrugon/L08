@@ -79,7 +79,6 @@ public class UserRendezvousController extends AbstractController {
 
 		try{
 			int rsvpIdInt = Integer.parseInt(rsvpId);
-
 			Rsvp rsvp = this.rsvpService.findOne(rsvpIdInt);
 			Assert.notNull(rsvp);
 			Assert.isTrue(rsvp.getUser().equals(this.userService.findByPrincipal()));
