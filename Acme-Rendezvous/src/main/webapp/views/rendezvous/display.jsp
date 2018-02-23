@@ -78,6 +78,9 @@
 		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
 		</div>
 	</jstl:forEach>
+	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+		<a href="user/rendezvous/editQuestions.do?rendezvousId=${rendezvous.id}" class="btn btn-block btn-primary" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
+	</jstl:if>
 </div>
 
 

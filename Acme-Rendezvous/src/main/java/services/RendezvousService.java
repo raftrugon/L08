@@ -17,6 +17,7 @@ import domain.Comment;
 import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
+import forms.UserQuestionsRendezvousCreateForm;
 import forms.UserRendezvousCreateForm;
 
 @Service
@@ -196,6 +197,22 @@ public class RendezvousService {
 		bd.setLongitude(rendezvousForm.getLongitude());
 		bd.setFinalMode(rendezvousForm.isFinalMode());
 		bd.setAdultOnly(rendezvousForm.isAdultOnly());
+
+		//Save
+		Rendezvous saved = this.rendezvousRepository.save(bd);
+
+		return saved;
+	}
+	
+	public Rendezvous reconstructQuestionsAndSave(final UserQuestionsRendezvousCreateForm questionsForm, int rendezvousId) {
+
+		//Checkeos contra base de datos
+		Rendezvous bd = this.findOne(rendezvousId);
+		Assert.notNull(questionsForm);
+		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
+
+		//Reconstruct
+		bd.setQuestions(questionsForm.getQuestions());
 
 		//Save
 		Rendezvous saved = this.rendezvousRepository.save(bd);

@@ -19,6 +19,7 @@ import services.UserService;
 import controllers.AbstractController;
 import domain.Rendezvous;
 import domain.Rsvp;
+import forms.UserQuestionsRendezvousCreateForm;
 import forms.UserRendezvousCreateForm;
 
 @Controller
@@ -122,6 +123,25 @@ public class UserRendezvousController extends AbstractController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/editQuestions", method = RequestMethod.GET)
+	public ModelAndView editQuestions(@RequestParam(required = true) final Integer rendezvousId) {
+		ModelAndView result;
+
+		try {
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+			UserQuestionsRendezvousCreateForm questionsRendezvousForm = new UserQuestionsRendezvousCreateForm(rendezvous);
+			Assert.isTrue(rendezvous.getUser().equals(this.userService.findByPrincipal()));
+			result = new ModelAndView("rendezvous/editQuestions");
+			result.addObject("rendezvousId", rendezvousId);
+			result.addObject("rendezvous", questionsRendezvousForm);
+			result.addObject("actionUri", "user/rendezvous/saveQuestions.do");
+			return result;
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:display.do?rendezvousId="+rendezvousId);
+		}
+		return result;
+	}
 
 	//---------------------- POST ----------------------
 
@@ -145,6 +165,34 @@ public class UserRendezvousController extends AbstractController {
 				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
 			} catch (Throwable oops) {
 				result = this.newEditModelAndView(rendezvousForm);
+				result.addObject("message", "rendezvous.commitError");
+			}
+		return result;
+	}
+	
+	@RequestMapping(value = "/saveQuestions", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveQuestions(final UserQuestionsRendezvousCreateForm questionsForm, final BindingResult binding, Integer rendezvousId) {
+		ModelAndView result;
+		Rendezvous saved;
+		
+		if (binding.hasErrors()) {
+			System.out.println(binding.toString());
+			result = new ModelAndView("rendezvous/editQuestions");
+			result.addObject("rendezvousId", rendezvousId);
+			result.addObject("rendezvous", questionsForm);
+			result.addObject("actionUri", "user/rendezvous/saveQuestions.do");
+		} else
+			try {
+				saved = this.rendezvousService.reconstructQuestionsAndSave(questionsForm, rendezvousId);
+
+				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
+			} catch (Throwable oops) {
+				System.out.println(oops.getLocalizedMessage());
+				System.out.println(oops.getMessage());
+				result = new ModelAndView("rendezvous/editQuestions");
+				result.addObject("rendezvousId", rendezvousId);
+				result.addObject("rendezvous", questionsForm);
+				result.addObject("actionUri", "user/rendezvous/saveQuestions.do");
 				result.addObject("message", "rendezvous.commitError");
 			}
 		return result;
