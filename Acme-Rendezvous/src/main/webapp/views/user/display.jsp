@@ -37,7 +37,7 @@
 			  		<jstl:forEach var="ownRendezvous" items="${user.rendezvouses}" varStatus="x" >
 			  			<tr>
 					      	<th scope="row">${x.count}</th>
-					      	<td><a href="/Acme-Rendezvous/rendezvous/display.do?rendezvousId=${ownRendezvous.id}"><jstl:out value="${ownRendezvous.name}"/></a></td>
+					      	<td><a href="rendezvous/display.do?rendezvousId=${ownRendezvous.id}"><jstl:out value="${ownRendezvous.name}"/></a></td>
 					      	<td><fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${ownRendezvous.organisationMoment}"/></td>
 					      	<td>(<jstl:out value="${ownRendezvous.latitude}"/>, <jstl:out value="${ownRendezvous.longitude}"/>)</td>
 			    		</tr>
@@ -82,7 +82,7 @@
 					<!-- INFO -->
 					<div class="col-sm-9" style="text-align:left;">
 						<strong><jstl:out value="${rsvpRendezvous.name}"/></strong><br>
-						<small><spring:message code="organisedBy" /> <a href="/Acme-Rendezvous/user-display.do?userId=${rsvpRendezvous.user.id}"><jstl:out value="${rsvpRendezvous.user.name}"/> <jstl:out value="${rsvpRendezvous.user.surnames}"/></a></small>
+						<small><spring:message code="organisedBy" /> <a href="user-display.do?userId=${rsvpRendezvous.user.id}"><jstl:out value="${rsvpRendezvous.user.name}"/> <jstl:out value="${rsvpRendezvous.user.surnames}"/></a></small>
 					</div>		        
 										
 				</div>

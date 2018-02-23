@@ -34,10 +34,10 @@
 				      		<h3 class="media-heading"><jstl:out value="${announcement.title}"/></h3>
 				      		<p><jstl:out value="${announcement.description}"/></p>
 				      		
-				      		<h5 style="text-align:right;"><a href="/Acme-Rendezvous/user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
+				      		<h5 style="text-align:right;"><a href="user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
 				      			<small><i>
 				      				<spring:message code='announcements.postedOn' /> <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${announcement.creationMoment}"/>
-				      				<spring:message code='announcements.about' /> <a href="/Acme-Rendezvous/rendezvous/display.do?rendezvousId=${announcement.rendezvous.id}" ><jstl:out value="${announcement.rendezvous.name}"/></a>.
+				      				<spring:message code='announcements.about' /> <a href="rendezvous/display.do?rendezvousId=${announcement.rendezvous.id}" ><jstl:out value="${announcement.rendezvous.name}"/></a>.
 				      			</i></small>
 				      		</h5>
 				    	</div>
@@ -53,11 +53,13 @@
 				      		<h3 class="media-heading" style="text-align:right;"><jstl:out value="${announcement.title}"/></h3>
 				      		<p style="text-align:right;"><jstl:out value="${announcement.description}"/></p>
 				      		
-				      		<h5 style="text-align:left;"><a href="/Acme-Rendezvous/user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
+				      		 <h5 style="text-align:left;">
 				      			<small><i>
 				      				<spring:message code='announcements.postedOn' /> <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${announcement.creationMoment}"/>
-				      				<spring:message code='announcements.about' /> <a href="/Acme-Rendezvous/rendezvous/display.do?rendezvousId=${announcement.rendezvous.id}" ><jstl:out value="${announcement.rendezvous.name}"/></a>.
+				      				<spring:message code='announcements.about' /> <a href="rendezvous/display.do?rendezvousId=${announcement.rendezvous.id}" ><jstl:out value="${announcement.rendezvous.name}"/></a>
+				      				<spring:message code='announcements.by' />
 				      			</i></small>
+				      			<a href="user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
 				      		</h5>
 				    	</div>
 				    	<div class="media-right">

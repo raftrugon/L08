@@ -103,11 +103,11 @@
 	</jstl:forEach>
 </jstl:when>
 <jstl:when test="${type eq 'checkBox' }">
-	<div class="form-group">
-	<form:label class="control-label" path="${name}">
+	<div >
+	<form:label  path="${name}">
 		<spring:message code="${model}.${name}" />:
 	</form:label>
-	<form:checkbox class="form-control" path="${name}" readonly="${readonly}"/>
+	<form:checkbox path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>

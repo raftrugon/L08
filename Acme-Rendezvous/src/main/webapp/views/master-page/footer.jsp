@@ -9,7 +9,7 @@
  --%>
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1"%>
-
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:useBean id="date" class="java.util.Date" />
@@ -18,6 +18,6 @@
 
 <div class="footer" >
 	<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Rendezvous Co., Inc.</b>
-	<br>
-	<a href="profile/terms.do"/><spring:message code="masterpage.terms"/></a>
+	
+	<a href="profile/terms.do" ><spring:message code="masterpage.terms"/></a>.
 </div>
