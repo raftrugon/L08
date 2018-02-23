@@ -56,8 +56,6 @@ public class RendezvousController extends AbstractController {
 			result.addObject("rendezvous",rendezvous);
 			result.addObject("rsvpd",rsvpd);
 			result.addObject("isAdult",isAdult);
-			result.addObject("announcements",announcementService.getRendezvousAnnouncementsSorted(rendezvousId));
-			result.addObject("comments",commentService.getRendezvousCommentsSorted(rendezvousId));
 		}catch(Throwable oops){
 			result = new ModelAndView("redirect:list.do");
 			redir.addFlashAttribute("message","master.page.errors.entityNotFound");

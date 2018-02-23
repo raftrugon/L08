@@ -15,23 +15,18 @@
 
 <!-- Modal to display the notifications from an ajax method -->
    		<div id="notificationDiv">
-   			<div id="notificationAlert" class="alert">&emsp;<a href="#" class="close" id="notificationClose" aria-label="close">&times;</a></div>
+   			<div id="notificationAlert" class=""></div>
    		</div>
    		<script>
-   			$('#notificationClose').click(function(e){
-   				e.preventDefault();
-   				$('#notificationDiv').hide("slow"); 
-   				$('#notificationAlert').html('&emsp;<a href="#" class="close" id="notificationClose" aria-label="close">&times;</a>');  
-   				clearTimeout(notificationTimeout);
-   			});
-   			
    			function notify(i,msg){
-   				$('#notificationAlert').addClass('alert-'+i);
+   				if(!(typeof notificationTimeout ==="undefined"))clearTimeout(notificationTimeout);
+   				$('#notificationAlert').html(''); 
+   				$('#notificationAlert').attr('class','alert alert-'+i);
 				$('#notificationAlert').prepend(msg);
 				$('#notificationDiv').show('slow');
 				notificationTimeout = setTimeout(function() {
 			        $("#notificationDiv").hide('slow');
-			        $('#notificationAlert').html('&emsp;<a href="#" class="close" id="notificationClose" aria-label="close">&times;</a>');  
+			        $('#notificationAlert').html('');  
 			        }, 7000);
    			}
    		</script>

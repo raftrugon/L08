@@ -107,8 +107,33 @@ public class AjaxController {
 	
 	@RequestMapping(value="rsvp/save", method = RequestMethod.POST)
 	public String saveRSVP(@Valid final Rsvp rsvp, final BindingResult binding){
+		if(binding.hasErrors()){
+			return "0";
+		}
 		try{
 			rsvpService.save(rsvp);
+			return "1";
+		}catch(Throwable oops){
+			oops.printStackTrace();
+			return "2";
+		}
+	}
+	
+	@RequestMapping(value="rsvp/createWithoutQuestions", method = RequestMethod.POST)
+	public String createWithoutQuestions(final int rendezvousId){
+		try{
+			rsvpService.save(rsvpService.create(rendezvousId));
+			return "1";
+		}catch(Throwable oops){
+			oops.printStackTrace();
+			return "2";
+		}
+	}
+	
+	@RequestMapping(value="rsvp/cancelRSVP", method = RequestMethod.POST)
+	public String cancelRSVP(final int rendezvousId){
+		try{
+			rsvpService.delete(rendezvousId);
 			return "1";
 		}catch(Throwable oops){
 			oops.printStackTrace();
@@ -147,6 +172,55 @@ public class AjaxController {
 			}catch(Throwable oops){
 				result.addObject("announcements",announcementService.findAllOrdered());
 			}
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="showComments", method = RequestMethod.GET)
+	public ModelAndView showComments(@RequestParam(required=true) final int rendezvousId){
+		ModelAndView result = new ModelAndView("comment/display");
+		Boolean rsvpd = false;
+		try{
+			rsvpd = userService.isRsvpd(rendezvousId);
+			if(rsvpd) result.addObject("newComment",commentService.createComment(rendezvousId));
+		}catch(Throwable oops){}
+		try{
+			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
+			result.addObject("rendezvous",rendezvous);
+			result.addObject("rsvpd",rsvpd);
+			result.addObject("comments",commentService.getRendezvousCommentsSorted(rendezvousId));
+		}catch(Throwable oops){
+			result = new ModelAndView("ajaxException");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="showAnnouncements", method = RequestMethod.GET)
+	public ModelAndView showAnnouncements(@RequestParam(required=true) final int rendezvousId){
+		ModelAndView result = new ModelAndView("announcement/display");
+		try{
+			result.addObject("announcements",announcementService.getRendezvousAnnouncementsSorted(rendezvousId));
+		}catch(Throwable oops){
+			result = new ModelAndView("ajaxException");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="showButtons", method = RequestMethod.GET)
+	public ModelAndView showButtons(@RequestParam(required=true) final int rendezvousId){
+		ModelAndView result = new ModelAndView("rendezvous/buttonsalerts");
+		Boolean rsvpd = false;
+		Boolean isAdult = false;
+		try{
+			rsvpd = userService.isRsvpd(rendezvousId);
+			isAdult = userService.isAdult();
+		}catch(Throwable oops){}
+		try{
+			result.addObject("rendezvous",rendezvousService.findOne(rendezvousId));
+			result.addObject("rsvpd",rsvpd);
+			result.addObject("isAdult",isAdult);
+		}catch(Throwable oops){
+			result = new ModelAndView("ajaxException");
 		}
 		return result;
 	}

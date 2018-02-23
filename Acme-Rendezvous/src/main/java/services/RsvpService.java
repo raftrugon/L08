@@ -69,11 +69,12 @@ public class RsvpService {
 		return rsvpRepository.save(rsvp);
 	}
 
-	public void delete(final Rsvp rsvp) {
+	public void delete(final int rendezvousId) {
+		User u = userService.findByPrincipal();
+		Rsvp rsvp = rsvpRepository.findForUserAndRendezvous(rendezvousId,u);
+		Assert.notNull(rsvp);
 		rsvpRepository.delete(rsvp);
-
 	}
-
 
 	//Other Business Methods --------------------------------
 	

@@ -43,13 +43,11 @@
 			success: function(data){
 				$('#qaModal').modal('hide');
 				if(data==1){
-				$('#callbackAlert').html('<spring:message code="rsvp.save.success" />');
-				$('#callbackAlert').addClass('alert-success');
+					notify('success','<spring:message code="rsvp.save.success" />');
 				}else{
-				$('#callbackAlert').html('<spring:message code="rsvp.save.error" />');
-				$('#callbackAlert').addClass('alert-danger');
+					notify('danger','<spring:message code="rsvp.save.error" />');
 				}
-				$('#callbackModal').modal('show');
+				reloadButtons();
 			}
 		});
 	});

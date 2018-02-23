@@ -14,6 +14,10 @@
 	<lib:input type="hidden" name="id,version,creationMoment,replies,replyingTo,user,rendezvous,inappropriate"/>
 	<lib:input type="textarea" name="text" rows="4"/>
 	<lib:input type="url" name="picture" addon="<i class='fas fa-paperclip'></i> <spring:message code='comment.picture.addon'/>" placeholder="http://www.url.com"/>
-	<lib:button id="0" noDelete="true" />
+	<div class="btn-group btn-group-justified">
+		<div class="btn-group">
+			<input class="btn btn-success" type="button" id="saveButtonComment" onClick="javascript:saveCommentButton(this)" name="save" value="<spring:message code="comment.save"/>" />
+		</div>
+	</div>
 </form:form>
 

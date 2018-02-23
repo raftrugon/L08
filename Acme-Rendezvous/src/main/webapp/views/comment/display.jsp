@@ -8,10 +8,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
-<jsp:useBean id="now" class="java.util.Date" />
-	<jstl:if test="${rendezvous.organisationMoment lt now }">
-		<div class="alert alert-warning" style="text-align:center"><strong><spring:message code="rendezvous.past"/></strong></div>
-	</jstl:if>
+
 	<jstl:if test="${rsvpd eq true}">
 	<div id="newCommentDiv">
 	<form:form modelAttribute="newComment">		
@@ -19,15 +16,14 @@
 	<lib:input type="hidden" name="id,version,creationMoment,replies,replyingTo,user,rendezvous,inappropriate"/>
 	<lib:input type="textarea" name="text" rows="4"/>
 	<lib:input type="url" name="picture" addon="<i class='fas fa-paperclip'></i> <spring:message code='comment.picture.addon'/>" placeholder="http://www.url.com"/>
-	<lib:button id="0" noDelete="true" />
+	<div class="btn-group btn-group-justified">
+		<div class="btn-group">
+			<input class="btn btn-success" type="button" id="saveButtonComment" onClick="javascript:saveCommentButton(this)" name="save" value="<spring:message code="comment.save"/>" />
+		</div>
+	</div>
 	</form:form>
 	</div>
 	</jstl:if>
-	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${not rsvpd and rendezvous.organisationMoment gt now }">
-			<input type="button" id="RSVPbtn" class="btn btn-block btn-primary" value='<spring:message code="rendezvous.rsvp" />' />
-		</jstl:if>	
-	</security:authorize>
 	<jstl:forEach items="${comments}" var="comment">
 	<jstl:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) + 1 %></jstl:set>
 	<div class="media panel panel-default">
@@ -84,3 +80,14 @@
 		</div>
 	</div>
 	</jstl:forEach>
+	
+	<script>
+	$('.newReplyBtn').click(function(e){
+		e.preventDefault();
+		$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
+			$('#modalBody').html(data);
+		});
+		$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+		$('#qaModal').modal('show');
+	});	
+	</script>

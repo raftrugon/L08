@@ -40,4 +40,6 @@
 		<put-attribute name="title" value="Editar Preguntas" />
 		<put-attribute name="body" value="/views/rendezvous/editQuestions.jsp" />
 	</definition>	
+	
+	<definition name="rendezvous/buttonsalerts" template="/views/rendezvous/buttonsalerts.jsp"/>
 </tiles-definitions>
