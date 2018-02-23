@@ -28,7 +28,6 @@
 		<value>/views/user/tiles.xml</value>
 		<value>/views/announcement/tiles.xml</value>
 		<value>/views/comment/tiles.xml</value>
-		<value>/views/profile/tiles.xml</value>
 		
 		
 	</util:list>
