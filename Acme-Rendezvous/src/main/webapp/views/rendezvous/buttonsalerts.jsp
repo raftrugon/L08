@@ -20,7 +20,7 @@
 			<input type="button" id="RSVPbtn" class="btn btn-block btn-primary" value='<spring:message code="rendezvous.rsvp" />' />
 		</jstl:if>
 		<jstl:if test="${rsvpd and rendezvous.organisationMoment gt now and not rendezvous.deleted}">
-			<input type="button" id="cancelRSVPbtn" class="btn btn-block btn-warning" value='<spring:message code="rendezvous.cancelRsvp" />' />
+			<input type="button" id="cancelRSVPbtn" class="btn btn-block btn-warning" value='<spring:message code="rendezvous.cancelRSVP" />' />
 		</jstl:if>		
 	</security:authorize>
 	<jstl:if test="${rendezvous.deleted}">
