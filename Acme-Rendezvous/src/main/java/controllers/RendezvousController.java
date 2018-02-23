@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.AnnouncementService;
+import services.CommentService;
 import services.RendezvousService;
 import services.UserService;
 import domain.Announcement;
@@ -28,6 +29,8 @@ public class RendezvousController extends AbstractController {
 	private UserService			userService;
 	@Autowired
 	private AnnouncementService			announcementService;
+	@Autowired
+	private CommentService		commentService;
 
 
 	//Constructor
@@ -37,25 +40,26 @@ public class RendezvousController extends AbstractController {
 	
 	@RequestMapping("/display")
 	public ModelAndView display(@RequestParam(required=true) final int rendezvousId, RedirectAttributes redir){
-		ModelAndView result;
+		ModelAndView result = new ModelAndView("rendezvous/display");
 		Boolean rsvpd = false;
 		Announcement newAnnouncement = null;
 		Boolean isAdult = false;
 		try{
 			rsvpd = userService.isRsvpd(rendezvousId);
+			if(rsvpd) result.addObject("newComment",commentService.createComment(rendezvousId));
 			isAdult = userService.isAdult();
 			newAnnouncement = announcementService.create(rendezvousId);
+			result.addObject("announcement",newAnnouncement);
 		}catch(Throwable oops){}
 		try{
 			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
-			result = new ModelAndView("rendezvous/display");
 			result.addObject("rendezvous",rendezvous);
 			result.addObject("rsvpd",rsvpd);
 			result.addObject("isAdult",isAdult);
-			if(newAnnouncement != null)
-				result.addObject("announcement",newAnnouncement);
+			result.addObject("announcements",announcementService.getRendezvousAnnouncementsSorted(rendezvousId));
+			result.addObject("comments",commentService.getRendezvousCommentsSorted(rendezvousId));
 		}catch(Throwable oops){
-			result = new ModelAndView("redirect: list.do");
+			result = new ModelAndView("redirect:list.do");
 			redir.addFlashAttribute("message","master.page.errors.entityNotFound");
 		}
 		return result;

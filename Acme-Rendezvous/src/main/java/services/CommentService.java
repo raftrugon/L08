@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class CommentService {
 		res.setReplies(new ArrayList<Comment>());
 		res.setCreationMoment(new Date(System.currentTimeMillis()-1000));
 		res.setUser(u);
+		res.setinappropriate(false);
 
 		return res;
 	}
@@ -66,6 +68,7 @@ public class CommentService {
 		res.setCreationMoment(new Date(System.currentTimeMillis()-1000));
 		res.setReplyingTo(aux);
 		res.setUser(u);
+		res.setinappropriate(false);
 		
 		return res;
 	}
@@ -82,9 +85,10 @@ public class CommentService {
 		Assert.notNull(comment);
 		Assert.notNull(u);
 		comment.setCreationMoment(new Date(System.currentTimeMillis()-1000));
-		if(comment.getReplyingTo() == null)
+		if(comment.getReplyingTo() == null){
 			Assert.notNull(comment.getRendezvous());
 			Assert.isTrue(rendezvousService.getRSVPRendezvousesForUser(u).contains(comment.getRendezvous()));
+		}
 		if(comment.getRendezvous() == null){
 			Assert.notNull(comment.getReplyingTo());
 		}
@@ -103,5 +107,9 @@ public class CommentService {
 	
 	public Double[] getCommentRepliesStats() {
 		return commentRepository.getCommentRepliesStats();
+	}
+
+	public Collection<Comment> getRendezvousCommentsSorted(int rendezvousId) {
+		return commentRepository.getRendezvousCommentsSorted(rendezvousId);
 	}
 }

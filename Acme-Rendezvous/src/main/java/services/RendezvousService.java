@@ -37,6 +37,8 @@ public class RendezvousService {
 	private AdminService			adminService;
 	@Autowired
 	private Validator				validator;
+	@Autowired
+	private RsvpService				rsvpService;
 
 
 	// Simple CRUD methods ----------------------------------------------------
@@ -87,9 +89,10 @@ public class RendezvousService {
 		Rendezvous saved = this.rendezvousRepository.save(rendezvous);
 
 		//Añadir rendezvous al user si es nuevo
-		if (rendezvous.getId() == 0)
+		if (rendezvous.getId() == 0){
 			rendezvous.getUser().getRendezvouses().add(saved);
-
+			rsvpService.rsvpForRendezvousCreator(saved);
+		}
 		return saved;
 	}
 

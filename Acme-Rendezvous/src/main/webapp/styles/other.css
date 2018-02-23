@@ -60,4 +60,23 @@
     vertical-align: middle;
 }
 
+#notificationDiv{
+	display:none;
+	position:absolute;
+	right:20px;
+	z-index:1100;
+}
 
+#notificationAlert{
+	width:500px;
+	margin:0;
+	text-align:center;
+	margin-bottom:0px;
+	font-weight:bold;
+}
+
+#notificationClose{
+	position: absolute;
+    top: 5px;
+    right: 10px
+}

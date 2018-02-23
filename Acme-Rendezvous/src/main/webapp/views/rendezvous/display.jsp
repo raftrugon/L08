@@ -57,7 +57,7 @@
 		<div class="well" style="margin-bottom:10px;text-align:center"><strong><i class="fas fa-bullhorn"></i> <spring:message code="rendezvous.announcement.new"/></strong></div>
 		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px !important;width:95%;margin:auto">		
 			<jstl:set var="model" value="announcement" scope="request"/>
-			<lib:input type="hidden" name="id,version,creationMoment,rendezvous"/>
+			<lib:input type="hidden" name="id,version,creationMoment,rendezvous,inappropriate"/>
 			<spring:message code='announcement.title' var="titlePlaceholder"/>
 			<lib:input type="text" name="title" placeholder="${titlePlaceholder}" noLabel="true"/>
 			<lib:input type="textarea" name="description" rows="4"/>
@@ -71,6 +71,10 @@
 	
 	<div id="userCardDiv"></div>
 	
+	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+		<a style="margin-bottom:10px" href="user/rendezvous/editQuestions.do?rendezvousId=${rendezvous.id}" class="btn btn-block btn-primary" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
+	</jstl:if>
+	
 	<jstl:forEach items="${rendezvous.rsvps}" var="r">
 		<div class="chip">
 		<img src="images/kC1.png" width="96" height="96">
@@ -78,9 +82,7 @@
 		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
 		</div>
 	</jstl:forEach>
-	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
-		<a href="user/rendezvous/editQuestions.do?rendezvousId=${rendezvous.id}" class="btn btn-block btn-primary" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
-	</jstl:if>
+	
 </div>
 
 
@@ -123,13 +125,23 @@
 	<jstl:if test="${rendezvous.organisationMoment lt now }">
 		<div class="alert alert-warning" style="text-align:center"><strong><spring:message code="rendezvous.past"/></strong></div>
 	</jstl:if>
-	<div id="newCommentDiv"></div>
+	<jstl:if test="${rsvpd eq true}">
+	<div id="newCommentDiv">
+	<form:form modelAttribute="newComment">		
+	<jstl:set var="model" value="comment" scope="request"/>
+	<lib:input type="hidden" name="id,version,creationMoment,replies,replyingTo,user,rendezvous,inappropriate"/>
+	<lib:input type="textarea" name="text" rows="4"/>
+	<lib:input type="url" name="picture" addon="<i class='fas fa-paperclip'></i> <spring:message code='comment.picture.addon'/>" placeholder="http://www.url.com"/>
+	<lib:button id="0" noDelete="true" />
+	</form:form>
+	</div>
+	</jstl:if>
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${not rsvpd and rendezvous.organisationMoment gt now }">
 			<input type="button" id="RSVPbtn" class="btn btn-block btn-primary" value='<spring:message code="rendezvous.rsvp" />' />
 		</jstl:if>	
 	</security:authorize>
-	<jstl:forEach items="${rendezvous.comments}" var="comment">
+	<jstl:forEach items="${comments}" var="comment">
 	<jstl:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) + 1 %></jstl:set>
 	<div class="media panel panel-default">
 		<div class="panel-heading"> 
@@ -188,7 +200,7 @@
 	</div>
 	<div id="announcementTab" class="tab-pane fade col-md-12">
 		<div class="timeline">
-			<jstl:forEach items="${rendezvous.announcements}" var="announcementItem" varStatus="x">
+			<jstl:forEach items="${announcements}" var="announcementItem" varStatus="x">
 			<jstl:choose>
 			<jstl:when test="${x.count mod 2 eq 1}">
 				<div class="timelinecontainer timelineleft ">
@@ -323,15 +335,6 @@ function initMap() {
 		});
 	});
 </script>
-<jstl:if test="${rsvpd eq true}">
-	<script>
-		$(function(){
-			$.get("user/comment/createComment.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
-				$('#newCommentDiv').html(data);
-			});
-		});
-	</script>
-</jstl:if>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
     </script>
@@ -351,7 +354,9 @@ function initMap() {
 			contentType: 'application/x-www-form-urlencoded',
 			dataType: 'json',
 			success: function(data){
-			alert(data);
+				if(data===1)notify('success','<spring:message code="announcement.create.success"/>');
+				else if (data==0) notify('danger','<spring:message code="announcement.create.bindingError"/>');
+				else notify('danger','<spring:message code="announcement.create.error"/>');
 			}
 		});
 	});
@@ -362,15 +367,8 @@ $(function(){
 	$('.deleteRendezvousButton').click(function(e){
 		e.preventDefault();
 		$.post( "ajax/admin/rendezvous/delete.do",{rendezvousId: $(this).attr('id') }, function( data ) {
-			var msg='';
-			if(data='0'){
-				msg = '<div class="alert alert-danger" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.delete.error"/></strong></div>';
-			}
-			if(data='1'){
-				msg = '<div class="alert alert-success" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.delete.success"/></strong></div>';
-			}
-			$( "#ajaxModalContent" ).html( msg );
-			$( "#ajaxModalNotification").modal('show');
+			if(data==1) notify('success','<spring:message code="rendezvous.delete.success"/>');
+			else notify('danger','<spring:message code="rendezvous.delete.error"/>');
 			});
 	});
 });
@@ -381,15 +379,8 @@ $(function(){
 	$('.deleteAnnouncementButton').click(function(e){
 		e.preventDefault();
 		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
-			var msg='';
-			if(data='0'){
-				msg = '<div class="alert alert-danger" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.announcement.delete.error"/></strong></div>';
-			}
-			if(data='1'){
-				msg = '<div class="alert alert-success" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.announcement.delete.success"/></strong></div>';
-			}
-			$( "#ajaxModalContent" ).html( msg );
-			$( "#ajaxModalNotification").modal('show');
+			if(data==1) notify('success','<spring:message code="rendezvous.announcement.delete.success"/>');
+			else notify('danger','<spring:message code="rendezvous.announcement.delete.error"/>');
 			});
 	});
 });
@@ -400,18 +391,36 @@ $(function deleteComment(){
 	$('.deleteCommentLink').click(function(e){
 		e.preventDefault();
 		$.post( "ajax/admin/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
-			var msg='';
-			if(data='0'){
-				msg = '<div class="alert alert-danger" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.comment.delete.error"/></strong></div>';
-			}
-			if(data='1'){
-				msg = '<div class="alert alert-success" style="text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.comment.delete.success"/></strong></div>';
-			}
-			$( "#ajaxModalContent" ).html( msg );
-			$( "#ajaxModalNotification").modal('show');
+			if(data==1) notify('success','<spring:message code="rendezvous.comment.delete.success"/>');
+			else notify('danger','<spring:message code="rendezvous.comment.delete.error"/>');
 			});
 	});
 });
 
+</script>
+<script>
+	$('.saveButtoncomment').click(function(e){
+		e.preventDefault();
+		var comment = {};
+		$(this).parent().parent().parent().find('input[type=text],input[type=hidden],textarea').each(function(){
+			comment[$(this).attr('name')] = $(this).val();
+		});
+		$.ajax({
+			type:'post',
+			url:"user/comment/save.do",
+			data: comment,
+			processData: 'false',
+			contentType: 'application/x-www-form-urlencoded',
+			dataType: 'json',
+			success: function(data){
+				if(data===1){
+					notify('success','<spring:message code="comment.create.success"/>');
+					$('#qaModal').modal('hide');
+				}
+				else if (data==0) notify('danger','<spring:message code="comment.create.bindingError"/>');
+				else notify('danger','<spring:message code="comment.create.error"/>');
+			}
+		});
+	});
 </script>
 </div>

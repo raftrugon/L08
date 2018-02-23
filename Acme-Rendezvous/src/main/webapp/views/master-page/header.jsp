@@ -13,6 +13,32 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
+<!-- Modal to display the notifications from an ajax method -->
+   		<div id="notificationDiv">
+   			<div id="notificationAlert" class="alert">&emsp;<a href="#" class="close" id="notificationClose" aria-label="close">&times;</a></div>
+   		</div>
+   		<script>
+   			$('#notificationClose').click(function(e){
+   				e.preventDefault();
+   				$('#notificationDiv').hide("slow"); 
+   				$('#notificationAlert').html('&emsp;<a href="#" class="close" id="notificationClose" aria-label="close">&times;</a>');  
+   				clearTimeout(notificationTimeout);
+   			});
+   			
+   			function notify(i,msg){
+   				$('#notificationAlert').addClass('alert-'+i);
+				$('#notificationAlert').prepend(msg);
+				$('#notificationDiv').show('slow');
+				notificationTimeout = setTimeout(function() {
+			        $("#notificationDiv").hide('slow');
+			        $('#notificationAlert').html('&emsp;<a href="#" class="close" id="notificationClose" aria-label="close">&times;</a>');  
+			        }, 7000);
+   			}
+   		</script>
+<!-- Function to receive parameters and message for modal ajax notifications -->
+
+
+
 <nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1500">
 	<div class="containter-fluid">
 		<div class="navbar-header">
@@ -35,7 +61,7 @@
 			</security:authorize>
 			
 			<security:authorize access="hasRole('USER')">
-				<button onClick="javascript:window.location.href = 'user/rendezvous/create.do'" class="btn btn-danger navbar-btn"><i class="fas fa-plus-square"></i> <spring:message code="master.page.rendezvous.create" /></button>
+				<button onClick="javascript:window.location.href = 'user/rendezvous/create.do'" class="btn btn-success navbar-btn"><i class="fas fa-plus-square"></i> <spring:message code="master.page.rendezvous.create" /></button>
 			</security:authorize>
 			
 		<%-- <security:authorize access="all()"> 
@@ -82,12 +108,5 @@
 		</div>
 	</div>
 	
-	<!-- Modal to display the notifications from an ajax method -->
-	<div id="ajaxModalNotification" class="modal fade" role="dialog">
-      <div class="modal-dialog" style="margin-top:45vh">
-        <div class="modal-content" id="ajaxModalContent">
-           <div class="alert alert-danger" style="margin:0;text-align:center;margin-bottom:0px;"><strong><spring:message code="rendezvous.inappropriate.alert"/></strong></div>
-        </div>
-     </div>
-  </div>
+	
 </nav>

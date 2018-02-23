@@ -22,6 +22,9 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Inte
 	
 	@Query("select r.announcements from Rendezvous r where r.user = ?1 order by creationMoment DESC")
 	Collection<Announcement> getMyAnnouncements(User user);
+	
+	@Query("select r.announcements from Rendezvous r where r.id = ?1 order by creationMoment DESC")
+	Collection<Announcement> getRendezvousAnnouncementsSorted(int rendezvousId);
 
 
 }

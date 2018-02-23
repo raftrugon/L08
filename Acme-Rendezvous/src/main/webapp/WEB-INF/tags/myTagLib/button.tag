@@ -13,7 +13,7 @@
 
 <div class="btn-group btn-group-justified">
 	<div class="btn-group">
-		<input class="btn btn-success" type="submit" id="saveButton${model}" name="save" value="<spring:message code="${model}.save"/>" />
+		<input class="btn btn-success saveButton${model}" type="submit" id="saveButton${model}" name="save" value="<spring:message code="${model}.save"/>" />
 	</div>
 	<jstl:if test="${id != 0 and noDelete eq null}">
 		<div class="btn-group">

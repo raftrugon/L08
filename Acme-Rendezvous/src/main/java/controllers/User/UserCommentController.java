@@ -32,17 +32,17 @@ public class UserCommentController extends AbstractController {
 		super();
 	}
 	
-	@RequestMapping(value = "/createComment", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam(required = true) final int rendezvousId) {
-		ModelAndView result;
-		try {
-			Comment comment = commentService.createComment(rendezvousId);
-			result = newEditModelAndView(comment);
-		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
-		}
-		return result;
-	}	
+//	@RequestMapping(value = "/createComment", method = RequestMethod.GET)
+//	public ModelAndView create(@RequestParam(required = true) final int rendezvousId) {
+//		ModelAndView result;
+//		try {
+//			Comment comment = commentService.createComment(rendezvousId);
+//			result = newEditModelAndView(comment);
+//		} catch (Throwable oops) {
+//			result = new ModelAndView("ajaxException");
+//		}
+//		return result;
+//	}	
 	@RequestMapping(value = "/replyComment", method = RequestMethod.GET)
 	public ModelAndView createReply(@RequestParam(required = true) final int commentId) {
 		ModelAndView result;
@@ -50,7 +50,7 @@ public class UserCommentController extends AbstractController {
 			Comment comment = commentService.createReply(commentId);
 			result = newEditModelAndView(comment);
 		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("ajaxException");
 		}
 		return result;
 	}
@@ -59,7 +59,7 @@ public class UserCommentController extends AbstractController {
 	public String save(@ModelAttribute @Valid final Comment comment, final BindingResult binding) {
 		String result;
 		if (binding.hasErrors())
-			result = binding.getAllErrors().toString();
+			result = "0";
 		else
 			try {
 				commentService.save(comment);

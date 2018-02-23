@@ -9,31 +9,11 @@
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
 
-<form:form action="user/comment/save.do" modelAttribute="comment">		
+<form:form modelAttribute="comment">		
 	<jstl:set var="model" value="comment" scope="request"/>
-	<lib:input type="hidden" name="id,version,creationMoment,replies,replyingTo,user,rendezvous"/>
+	<lib:input type="hidden" name="id,version,creationMoment,replies,replyingTo,user,rendezvous,inappropriate"/>
 	<lib:input type="textarea" name="text" rows="4"/>
-	<lib:input type="text" name="picture" addon="<i class='fas fa-paperclip'></i> <spring:message code='comment.picture.addon'/>" placeholder="http://www.url.com"/>
+	<lib:input type="url" name="picture" addon="<i class='fas fa-paperclip'></i> <spring:message code='comment.picture.addon'/>" placeholder="http://www.url.com"/>
 	<lib:button id="0" noDelete="true" />
 </form:form>
 
-<script>
-	$('#saveButtoncomment').click(function(e){
-		var comment = {};
-		$('#comment').find('input[type=text],input[type=hidden],textarea').each(function(){
-			comment[$(this).attr('name')] = $(this).val();
-		});
-		e.preventDefault();
-		$.ajax({
-			type:'post',
-			url:"user/comment/save.do",
-			data: comment,
-			processData: 'false',
-			contentType: 'application/x-www-form-urlencoded',
-			dataType: 'json',
-			success: function(data){
-			alert(data);
-			}
-		});
-	});
-</script>

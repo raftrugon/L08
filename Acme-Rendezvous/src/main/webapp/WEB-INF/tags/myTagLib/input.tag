@@ -27,7 +27,7 @@
 	<div class="form-group">
 		<div class="input-group">
 			<span class="input-group-addon">${addon}</span>
-			<form:input class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
+			<form:input type="${type}" class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
 		</div>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
@@ -39,7 +39,7 @@
 			<spring:message code="${model}.${name}" />:
 		</form:label>
 	</jstl:if>
-	<form:input class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
+	<form:input type="${type}" class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>

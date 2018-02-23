@@ -36,17 +36,12 @@
 	<form:errors class="error" path="password" />
 	<br />
 	</div>
-	<jstl:if test="${badCredentials == true}">
+	<jstl:if test="${showError == true}">
 		<div class="error">
-			<spring:message code="security.login.badcredentials" />
+			<spring:message code="security.login.failed" />
 		</div>
 	</jstl:if>
-	
-	<jstl:if test="${otherError == true}">
-		<div class="error">
-			<spring:message code="security.login.failed" /> <jstl:out value="${adminEmail}"/>
-		</div>
-	</jstl:if>
+
 	
 	<input type="submit" class="btn btn-success btn-group-justified" value="<spring:message code="security.login" />" />
 		

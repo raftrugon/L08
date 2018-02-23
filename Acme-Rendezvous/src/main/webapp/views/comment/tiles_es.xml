@@ -19,4 +19,6 @@
 	
 	<definition name="comment/create" template="/views/comment/create.jsp"/>
 	
+		<definition name="comment/display" template="/views/comment/display.jsp"/>
+	
 </tiles-definitions>

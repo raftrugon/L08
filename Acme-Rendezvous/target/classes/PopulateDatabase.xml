@@ -255,6 +255,8 @@
 		<property name="birthDate" value="11/21/1991" />
 		<property name="rsvps">
 			<list>
+				<ref bean="rsvp13" />
+				<ref bean="rsvp18" />
 			</list>
 		</property>
 		<property name="rendezvouses">
@@ -268,13 +270,16 @@
 		<property name="surnames" value="García Pacheco" />
 		<property name="email" value="user6@correo.com" />
 		<property name="address" value="Calle falsa 123" />
-		<property name="birthDate" value="12/22/1989" />
+		<property name="birthDate" value="12/22/2000" />
 		<property name="rsvps">
 			<list>
+				<ref bean="rsvp14" />
+				<ref bean="rsvp19" />
 			</list>
 		</property>
 		<property name="rendezvouses">
 			<list>
+				<ref bean="rendezvous13"/>
 			</list>
 		</property>			
 	</bean>
@@ -287,10 +292,12 @@
 		<property name="birthDate" value="1/25/1991" />
 		<property name="rsvps">
 			<list>
+				<ref bean="rsvp15" />
 			</list>
 		</property>
 		<property name="rendezvouses">
 			<list>
+				<ref bean="rendezvous14"/>
 			</list>
 		</property>			
 	</bean>
@@ -303,6 +310,8 @@
 		<property name="birthDate" value="10/15/1995" />
 		<property name="rsvps">
 			<list>
+				<ref bean="rsvp16" />
+				<ref bean="rsvp20" />
 			</list>
 		</property>
 		<property name="rendezvouses">
@@ -319,6 +328,7 @@
 		<property name="birthDate" value="12/22/1992" />
 		<property name="rsvps">
 			<list>
+				<ref bean="rsvp17" />
 			</list>
 		</property>
 		<property name="rendezvouses">
@@ -429,7 +439,7 @@
 	
 	<bean id="announcement13" class="domain.Announcement">
 		<property name="title" value="Llevad paraguas" />
-		<property name="creationMoment" value="01/11/2018 16:45" />
+		<property name="creationMoment" value="02/20/2018 16:45" />
 		<property name="description" value="He visto que va a llover" />
 		<property name="inappropriate" value="false" />
 		<property name="rendezvous" ref="rendezvous7" />
@@ -437,7 +447,7 @@
 	
 	<bean id="announcement14" class="domain.Announcement">
 		<property name="title" value="Me gusta la idea" />
-		<property name="creationMoment" value="01/11/2018 16:45" />
+		<property name="creationMoment" value="02/05/2018 16:00" />
 		<property name="description" value="Me apunto" />
 		<property name="inappropriate" value="false" />
 		<property name="rendezvous" ref="rendezvous8" />
@@ -445,7 +455,7 @@
 	
 	<bean id="announcement15" class="domain.Announcement">
 		<property name="title" value="Que cabron que eres" />
-		<property name="creationMoment" value="01/11/2018 16:45" />
+		<property name="creationMoment" value="04/24/2017 19:45" />
 		<property name="description" value="Siempre igual, siempre me estas jodiendo, me debes 31€ y tu vas a lo tuyo" />
 		<property name="inappropriate" value="true" />
 		<property name="rendezvous" ref="rendezvous8" />
@@ -616,7 +626,7 @@
 	
 	<bean id="comment13" class="domain.Comment">
 		<property name="text" value="De verdad? Me encanta" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
+		<property name="creationMoment" value="03/25/2017 12:37" />
 		<property name="inappropriate" value="true" />
 		
 		<property name="rendezvous" ref="rendezvous1" />
@@ -642,8 +652,8 @@
 	
 	<bean id="comment15" class="domain.Comment">
 		<property name="text" value="Te dejo por aqui mis dies" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="creationMoment" value="01/10/2018 12:37" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous2" />
 		<property name="user" ref="user2" />
@@ -655,7 +665,7 @@
 	
 	<bean id="comment16" class="domain.Comment">
 		<property name="text" value="Me gusta más como lo hace el Rubius" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
+		<property name="creationMoment" value="01/20/2016 12:37" />
 		<property name="inappropriate" value="true" />
 		
 		<property name="rendezvous" ref="rendezvous1" />
@@ -668,8 +678,8 @@
 	
 	<bean id="comment17" class="domain.Comment">
 		<property name="text" value="No se que poner" />
-		<property name="creationMoment" value="01/18/2016 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="creationMoment" value="08/05/2017 12:37" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous2" />
 		<property name="user" ref="user3" />
@@ -681,7 +691,7 @@
 	
 	<bean id="comment18" class="domain.Comment">
 		<property name="text" value="Soy de Mangel" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
+		<property name="creationMoment" value="04/03/2016 12:37" />
 		<property name="inappropriate" value="true" />
 		
 		<property name="rendezvous" ref="rendezvous1" />
@@ -694,7 +704,7 @@
 	
 	<bean id="comment19" class="domain.Comment">
 		<property name="text" value="Que pesaitos con el clash royale, viva Alexelcapo" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
+		<property name="creationMoment" value="04/15/2016 12:37" />
 		<property name="inappropriate" value="true" />
 		
 		<property name="rendezvous" ref="rendezvous8" />
@@ -707,8 +717,8 @@
 	
 	<bean id="comment20" class="domain.Comment">
 		<property name="text" value="Me ha gustado la organización" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="creationMoment" value="01/01/2018 12:37" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous7" />
 		<property name="user" ref="user4" />
@@ -720,8 +730,8 @@
 	
 	<bean id="comment21" class="domain.Comment">
 		<property name="text" value="Lo siento por no asistir, me dijeron mis amigos que estuvo increible" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="creationMoment" value="05/12/2017 12:37" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous9" />
 		<property name="user" ref="user2" />
@@ -733,8 +743,8 @@
 	
 	<bean id="comment22" class="domain.Comment">
 		<property name="text" value="Viva la Semana Santa, fuera la feria" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="creationMoment" value="04/10/2017 12:37" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous7" />
 		<property name="user" ref="user4" />
@@ -746,11 +756,50 @@
 	
 	<bean id="comment23" class="domain.Comment">
 		<property name="text" value="Que hemos visto a AirJordan y TheKing" />
-		<property name="creationMoment" value="01/18/2017 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="creationMoment" value="10/25/2017 12:37" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous9" />
 		<property name="user" ref="user4" />
+		<property name="replies">
+			<list>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="comment24" class="domain.Comment">
+		<property name="text" value="Otra vez con lo mismo" />
+		<property name="creationMoment" value="2/05/2017 12:37" />
+		<property name="inappropriate" value="true" />
+		
+		<property name="rendezvous" ref="rendezvous12" />
+		<property name="user" ref="user6" />
+		<property name="replies">
+			<list>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="comment25" class="domain.Comment">
+		<property name="text" value="Eres tela de pesado" />
+		<property name="creationMoment" value="1/20/2017 16:37" />
+		<property name="inappropriate" value="true" />
+		
+		<property name="rendezvous" ref="rendezvous14" />
+		<property name="user" ref="user7" />
+		<property name="replies">
+			<list>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="comment26" class="domain.Comment">
+		<property name="text" value="Me encanta el viaje, lo espero con ganas" />
+		<property name="creationMoment" value="10/25/2017 12:37" />
+		<property name="inappropriate" value="true" />
+		
+		<property name="rendezvous" ref="rendezvous13" />
+		<property name="user" ref="user8" />
 		<property name="replies">
 			<list>
 			</list>
@@ -981,8 +1030,8 @@
 		<property name="description" value="Son pesaitos, to los años lo mismo, yo prefiero la feria, arsa arsa" />
 		<property name="organisationMoment" value="3/3/2018 00:00" />
 		<property name="picture" value="http://pasion-origin.sevilla.abc.es/pasionensevilla/wp-content/uploads/2016/07/plaza-campana-nueva.jpg" />
-		<property name="latitude" value="5.0" />
-		<property name="longitude" value="-30.0" />
+		<property name="latitude" value="38.2238" />
+		<property name="longitude" value="-3.703790" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1016,8 +1065,8 @@
 		<property name="description" value="Arsa arsa, como me gusta el rebujito os invito chavales!!!" />
 		<property name="organisationMoment" value="10/4/2018 00:00" />
 		<property name="picture" value="https://www.viajablog.com/wp-content/uploads/2017/04/Feria-de-Abril-de-Sevilla.jpg" />
-		<property name="latitude" value="0.0" />
-		<property name="longitude" value="-25.0" />
+		<property name="latitude" value="37.2238" />
+		<property name="longitude" value="-5.5912" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1054,8 +1103,8 @@
 		<property name="name" value="Bares del centro" />
 		<property name="description" value="Podemos hacer una ruta de la cerveza" />
 		<property name="organisationMoment" value="1/1/2019 00:00" />
-		<property name="latitude" value="0.0" />
-		<property name="longitude" value="0.0" />
+		<property name="latitude" value="38.2238" />
+		<property name="longitude" value="-4.5912" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1090,9 +1139,9 @@
 	<bean id="rendezvous9" class="domain.Rendezvous">
 		<property name="name" value="Intercambio cultural" />
 		<property name="description" value="Propongo hacer un intercambio con personas de distintos paises y poder conocer de su cultura" />
-		<property name="organisationMoment" value="1/1/2020 00:00" />
-		<property name="latitude" value="0.0" />
-		<property name="longitude" value="0.0" />
+		<property name="organisationMoment" value="5/3/2020 00:00" />
+		<property name="latitude" value="40.2238" />
+		<property name="longitude" value="-5.5912" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1125,10 +1174,10 @@
 	<bean id="rendezvous10" class="domain.Rendezvous">
 		<property name="name" value="Vamos a ver la giralda" />
 		<property name="description" value="Como somos un grupo más grande nos sale más barato" />
-		<property name="organisationMoment" value="4/4/2018 00:00" />
+		<property name="organisationMoment" value="4/4/2018 15:00" />
 		<property name="picture" value="https://cdn.elviajerofisgon.com/wp-content/uploads/2015/05/Giralda-1-iStock-750x390.jpg" />
-		<property name="latitude" value="5.0" />
-		<property name="longitude" value="-30.0" />
+		<property name="latitude" value="37.2238" />
+		<property name="longitude" value="-5.6" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1149,6 +1198,7 @@
 		</property>
 		<property name="rsvps">
 			  <list>
+			  	<ref bean="rsvp17" />
 			  </list>
 		</property>
 		<property name="announcements">
@@ -1160,8 +1210,9 @@
 	<bean id="rendezvous11" class="domain.Rendezvous">
 		<property name="name" value="Vamos por el rio guadalquivir" />
 		<property name="description" value="Podemos ver esta preciosa ciudad desde el rio" />
-		<property name="organisationMoment" value="5/5/2018 00:00" />
-		<property name="longitude" value="-30.0" />
+		<property name="organisationMoment" value="6/6/2018 16:00" />
+		<property name="latitude" value="37.2238" />
+		<property name="longitude" value="-5.6" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1182,6 +1233,7 @@
 		</property>
 		<property name="rsvps">
 			  <list>
+			  	<ref bean="rsvp18" />
 			  </list>
 		</property>
 		<property name="announcements">
@@ -1195,8 +1247,8 @@
 		<property name="description" value="jejeje" />
 		<property name="organisationMoment" value="3/3/2018 00:00" />
 		
-		<property name="latitude" value="5.0" />
-		<property name="longitude" value="-30.0" />
+		<property name="latitude" value="39.00" />
+		<property name="longitude" value="-4.0" />
 		<property name="finalMode" value="false" />
 		<property name="deleted" value="false" />
 		<property name="adultOnly" value="false" />
@@ -1212,11 +1264,13 @@
 		</property>
 		<property name="comments">
 			  <list>
-
+					<ref bean="comment24" />
 			  </list>
 		</property>
 		<property name="rsvps">
 			  <list>
+			  	<ref bean="rsvp13" />
+			  	<ref bean="rsvp16" />
 			  </list>
 		</property>
 		<property name="announcements">
@@ -1224,6 +1278,81 @@
 			  </list>
 		</property>    
 	</bean>	
+	
+	<bean id="rendezvous13" class="domain.Rendezvous">
+		<property name="name" value="Plaza Del Sol" />
+		<property name="description" value="Vamos a tomarnos las uvas" />
+		<property name="organisationMoment" value="1/1/2019 00:00" />
+		<property name="picture" value="http://apartamentosmadridplaza.es/blog/wp-content/uploads/Plaza-de-sol-aerea.jpg" />
+		
+		<property name="latitude" value="40.416775" />
+		<property name="longitude" value="-3.703790" />
+		<property name="finalMode" value="false" />
+		<property name="deleted" value="false" />
+		<property name="adultOnly" value="false" />
+		<property name="inappropriate" value="false"/>
+		<property name="questions">
+			  <list>
+			  </list>
+		</property>
+		<property name="user" ref="user6" />
+		<property name="rendezvouses">
+			  <list>
+			  </list>
+		</property>
+		<property name="comments">
+			  <list>
+				<ref bean="comment26" />
+			  </list>
+		</property>
+		<property name="rsvps">
+			  <list>
+			  	<ref bean="rsvp14" />
+			  	<ref bean="rsvp20" />
+			  </list>
+		</property>
+		<property name="announcements">
+			  <list>
+			  </list>
+		</property>    
+	</bean>
+	
+	<bean id="rendezvous14" class="domain.Rendezvous">
+		<property name="name" value="Vamos a visitar el Benito Villamarin" />
+		<property name="description" value="Vamos a unir a todos los béticos de Sevilla" />
+		<property name="organisationMoment" value="3/5/2018 12:00" />
+		<property name="picture" value="https://thebestfutbol.com/wp-content/uploads/2018/01/Villamarin.jpg"/>
+		<property name="latitude" value="37.2238" />
+		<property name="longitude" value="-5.4" />
+		<property name="finalMode" value="false" />
+		<property name="deleted" value="false" />
+		<property name="adultOnly" value="false" />
+		<property name="inappropriate" value="false"/>
+		<property name="questions">
+			  <list>
+			  </list>
+		</property>
+		<property name="user" ref="user7" />
+		<property name="rendezvouses">
+			  <list>
+			  </list>
+		</property>
+		<property name="comments">
+			  <list>
+					<ref bean="comment25" />
+			  </list>
+		</property>
+		<property name="rsvps">
+			  <list>
+			  	<ref bean="rsvp15" />
+			  	<ref bean="rsvp19" />
+			  </list>
+		</property>
+		<property name="announcements">
+			  <list>
+			  </list>
+		</property>    
+	</bean>
 	
 	<!-- RSVP 1 -->
 
@@ -1362,6 +1491,94 @@
 		<property name="rendezvous" ref="rendezvous8" />
 		<property name="user" ref="user2" />
 	</bean>
+	
+	<bean id="rsvp13" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Utilizas mucho el móvil?" value="Solo cuando estoy aburrido."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous12" />
+		<property name="user" ref="user5" />
+	</bean>
+	<bean id="rsvp14" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Te gustan las redes sociales?" value="Estoy acabando la carrera, así que no tengo mucho tiempo para entrar, pero las solía utilizar."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous13" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<bean id="rsvp15" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Telegram o Whatsapp?" value="Me gusta más Telegram."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous14" />
+		<property name="user" ref="user7" />
+	</bean>
+	
+	<bean id="rsvp16" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Prefieres Facebook o Twitter?" value="Soy más de Instagram."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous12" />
+		<property name="user" ref="user8" />
+	</bean>
+	
+	<bean id="rsvp17" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Discotecas o pubs?" value="Los pubs ya que puedes hablar mejor con la otra persona."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous10" />
+		<property name="user" ref="user9" />
+	</bean>
+	
+	<bean id="rsvp18" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Que animales te gustan?" value="Me encantan los perros."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous11" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="rsvp19" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Trabajas?" value="Si, estoy en una empresa, bastante contento."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous14" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<bean id="rsvp20" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Te gustan los idiomas?" value="Solo se español y algo de inglés, pero me gustaría aprender otros idiomas."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous13" />
+		<property name="user" ref="user8" />
+	</bean>
+	
 	
 
 </beans>

@@ -7,6 +7,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -17,6 +18,7 @@ import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import security.UserAccountService;
 import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
@@ -30,6 +32,8 @@ public class UserService {
 
 	@Autowired
 	private UserRepository	userRepository;
+	@Autowired
+	private UserAccountService userAccountService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -77,7 +81,13 @@ public class UserService {
 		Assert.notNull(user);
 		//Assert.isNull(LoginService.getPrincipal().getAuthorities());
 		Assert.isTrue(user.getBirthDate().before(new Date()));
-
+		
+		if(user.getId() == 0){
+			Md5PasswordEncoder password = new Md5PasswordEncoder();
+			String encodedPassword = password.encodePassword(user.getUserAccount().getPassword(), null);
+			user.getUserAccount().setPassword(encodedPassword);
+			user.setUserAccount(userAccountService.save(user.getUserAccount()));
+		}
 		return this.userRepository.save(user);
 	}
 

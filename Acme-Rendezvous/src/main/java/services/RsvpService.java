@@ -64,7 +64,8 @@ public class RsvpService {
 
 	public Rsvp save(Rsvp rsvp) {
 		Assert.isTrue(rsvp.getUser().equals(userService.findByPrincipal()));
-		//Assert.isTrue(!userService.isRsvpd(rsvp.getRendezvous().getId()));
+		if(rsvp.getId() == 0)
+			Assert.isTrue(!userService.isRsvpd(rsvp.getRendezvous().getId()));
 		return rsvpRepository.save(rsvp);
 	}
 
@@ -84,5 +85,13 @@ public class RsvpService {
 		return res;
 	}
 	
+	public Rsvp rsvpForRendezvousCreator(Rendezvous rendezvous){
+		Assert.notNull(rendezvous);
+		Rsvp res = new Rsvp();
+		res.setRendezvous(rendezvous);
+		res.setUser(userService.findByPrincipal());
+		res.setQuestionsAndAnswers(new HashMap<String,String>());
+		return rsvpRepository.save(res);
+	}
 	
 }

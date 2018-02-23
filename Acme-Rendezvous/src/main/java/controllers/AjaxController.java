@@ -54,7 +54,7 @@ public class AjaxController {
 			rendezvousService.deleteByAdmin(r);
 			return "1";
 		} catch(Throwable oops) {
-			return "0";
+			return "2";
 		}
 	}	
 	
@@ -65,7 +65,7 @@ public class AjaxController {
 			announcementService.deleteByAdmin(a);
 			return "1";
 		} catch(Throwable oops) {
-			return "0";
+			return "2";
 		}
 	}	
 	
@@ -76,20 +76,20 @@ public class AjaxController {
 			commentService.deleteByAdmin(c);
 			return "1";
 		} catch(Throwable oops) {
-			return "0";
+			return "2";
 		}
 	}
 	
 	@RequestMapping(value = "user/announcement/save", method = RequestMethod.POST)
 	public String save(@Valid final Announcement announcement, final BindingResult binding) {
 		if (binding.hasErrors())
-			return "1";
+			return "0";
 		else
 			try {
 				announcementService.save(announcement);
-				return "2";
+				return "1";
 			} catch (Throwable oops) {
-				return "3";
+				return "2";
 			}
 	}
 	
@@ -112,7 +112,7 @@ public class AjaxController {
 			return "1";
 		}catch(Throwable oops){
 			oops.printStackTrace();
-			return "0";
+			return "2";
 		}
 	}
 	

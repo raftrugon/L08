@@ -46,6 +46,7 @@ public class AnnouncementService {
 		Assert.isTrue(u == r.getUser());
 		res.setCreationMoment(new Date(System.currentTimeMillis()-1000));
 		res.setRendezvous(r);
+		res.setinappropriate(false);
 		return res;
 	}
 
@@ -91,6 +92,10 @@ public class AnnouncementService {
 	
 	public Collection<Announcement> getMyAnnouncements(User user) {
 		return announcementRepository.getMyAnnouncements(user);
+	}
+	
+	public Collection<Announcement> getRendezvousAnnouncementsSorted(int rendezvousId){
+		return announcementRepository.getRendezvousAnnouncementsSorted(rendezvousId);
 	}
 
 	
