@@ -19,5 +19,5 @@
 <div class="footer" >
 	<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Rendezvous Co., Inc.</b>
 	
-	<a href="profile/terms.do" ><spring:message code="masterpage.terms"/></a>.
+	<a href="terms.do" ><spring:message code="masterpage.terms"/></a>.
 </div>

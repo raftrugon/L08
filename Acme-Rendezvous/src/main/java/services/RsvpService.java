@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RsvpRepository;
+import utilities.internal.SchemaPrinter;
 import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
@@ -48,8 +49,10 @@ public class RsvpService {
 		res.setUser(u);
 		res.setRendezvous(r);
 		Map<String,String> questions = new HashMap<String,String>();
-		for(String question: r.getQuestions()){
-			questions.put(question, "");
+		if(!(r.getQuestions().isEmpty())) {
+			for(String question: r.getQuestions()){
+				questions.put(question, "");
+			}
 		}
 		res.setQuestionsAndAnswers(questions);
 		return res;

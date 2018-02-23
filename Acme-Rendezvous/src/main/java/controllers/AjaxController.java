@@ -15,6 +15,7 @@ import services.CommentService;
 import services.RendezvousService;
 import services.RsvpService;
 import services.UserService;
+import utilities.internal.SchemaPrinter;
 import domain.Announcement;
 import domain.Comment;
 import domain.Rendezvous;
@@ -101,6 +102,7 @@ public class AjaxController {
 			result.addObject("rsvp",rsvp);
 			return result;
 		}catch(Throwable oops){
+			System.out.println(oops.getMessage());
 			return new ModelAndView("ajaxException");
 		}
 	}
@@ -111,7 +113,6 @@ public class AjaxController {
 			rsvpService.save(rsvp);
 			return "1";
 		}catch(Throwable oops){
-			oops.printStackTrace();
 			return "2";
 		}
 	}

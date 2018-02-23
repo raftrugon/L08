@@ -43,6 +43,7 @@
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 		
 		<security:intercept-url pattern="/user-**" access="permitAll" />
+		<security:intercept-url pattern="/terms**" access="permitAll" />
 		<security:intercept-url pattern="/register/**" access="isAnonymous()" />
 		<security:intercept-url pattern="/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
