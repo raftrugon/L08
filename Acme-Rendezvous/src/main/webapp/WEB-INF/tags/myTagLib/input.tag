@@ -23,7 +23,7 @@
 
 
 <jstl:choose>
-<jstl:when test="${type eq 'text' and addon ne null}">
+<jstl:when test="${(type eq 'text' or type eq 'password') and addon ne null}">
 	<div class="form-group">
 		<div class="input-group">
 			<span class="input-group-addon">${addon}</span>
@@ -32,7 +32,7 @@
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>
-<jstl:when test="${type eq 'text' and addon eq null }">
+<jstl:when test="${(type eq 'text' or type eq 'password') and addon eq null }">
 	<div class="form-group">
 	<jstl:if test="${noLabel eq null}">
 		<form:label class="control-label" path="${name}">
@@ -69,7 +69,7 @@
 	    $(document).ready(function () {
 	        $('.dtPicker').datetimepicker({
 	        	format: "DD/MM/YYYY HH:mm",
-	        	locale: "<jstl:out value='${locale}'/>"
+	        	locale: "<jstl:out value='${pageContext.request.locale.language}'/>"
 	        });
 	    });
 </script>
@@ -91,7 +91,7 @@
 	    $(document).ready(function () {
 	        $('.dtPicker').datetimepicker({
 	        	format: "DD/MM/YYYY",
-	        	locale: "<jstl:out value='${locale}'/>"
+	        	locale: "<jstl:out value='${pageContext.request.locale.language}'/>"
 	        });
 	    });
 </script>

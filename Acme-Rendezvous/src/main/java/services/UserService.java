@@ -136,6 +136,14 @@ public class UserService {
 		user.setRsvps(new ArrayList<Rsvp>());
 		user.setRendezvouses(new ArrayList<Rendezvous>());
 
+		//Authority
+		Collection<Authority> authorities = user.getUserAccount().getAuthorities();
+		Authority authority = new Authority();
+
+		authority.setAuthority(Authority.USER);
+		authorities.add(authority);
+		user.getUserAccount().setAuthorities(authorities);
+		
 		this.validator.validate(user, binding);
 
 		return user;

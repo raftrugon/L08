@@ -30,8 +30,21 @@
 			<!-- ------------- ACCOUNT DATA -----------------  -->
 			<h1><spring:message code="accountData" /></h1>
 			<lib:input name="userAccount.username" type="text" />
-			<lib:input name="userAccount.password" type="text" />
 			
+			<div class="form-group">
+				<form:label class="control-label" path="userAccount.password">
+					<spring:message code="user.userAccount.password" />:
+				</form:label>
+				<form:input type="password" class="form-control" path="userAccount.password" id="userAccountPassword"/>
+				<form:errors cssClass="error" path="userAccount.password" />	
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label"><spring:message code="user.repeatpassword" />:</label>
+				<input id="confirmPassword" type="password" class="form-control"/>
+				<p id="nomatch" style="display:none;color:red;font-weight:bold"><spring:message code="user.repeatpassword.nomatch"/></p>
+			</div>		
+	
 			<!-- ------------- PERSONAL DATA -----------------  -->
 			<h1><spring:message code="personalData" /></h1>
 			<lib:input name="name" type="text" />
@@ -47,4 +60,17 @@
 		
 		</form:form>		
 	</div>
+	<script>
+	$(function(){
+		$('#user').submit(function(e){
+			if($('#userAccountPassword').val() !== $('#confirmPassword').val()){
+				$('#nomatch').show();
+				return false;
+			}else{
+				$('#nomatch').hide();
+				return true;
+			}
+		});
+	});
+	</script>
 </security:authorize>
