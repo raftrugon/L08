@@ -35,7 +35,7 @@
 			<spring:message code="admin.dash6"/>
 		</jstl:when>
 		<jstl:when test="${row_rowNum == 7}">
-			<spring:message code="admin.dash6"/>
+			<spring:message code="admin.dash7"/>
 		</jstl:when>
 	
 	</jstl:choose>	
@@ -79,9 +79,14 @@
   	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row1.id}" linkName="${row1.name}"/>
 	<lib:column name="description"/>
 	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="picture" photoUrl="${row1.picture}"/>
+	<jstl:if test="${row1.picture ne null}">
+		<lib:column name="picture" photoUrl="${row1.picture}"/>
+	</jstl:if>
+	<jstl:if test="${row1.picture eq null}">
+		<lib:column name="picture" photoUrl="images/nopic.jpg" nopic="1"/>
+	</jstl:if>
 	<lib:column name="coordinates" value="[${row1.longitude},${row1.latitude}]"/>
-	<lib:column name="user" link="#" linkName="${row1.user.name} ${row1.user.surnames}"/>
+	<lib:column name="user" link="user-display.do?userId=${row1.user.id}" linkName="${row1.user.name} ${row1.user.surnames}"/>
 
 <display:setProperty name="paging.banner.onepage" value=""/>
     <display:setProperty name="paging.banner.placement" value="bottom"/>
@@ -100,9 +105,14 @@
   	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row2.id}" linkName="${row2.name}"/>
 	<lib:column name="description"/>
 	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="picture" photoUrl="${row2.picture}"/>
+	<jstl:if test="${row2.picture ne null}">
+		<lib:column name="picture" photoUrl="${row2.picture}"/>
+	</jstl:if>
+	<jstl:if test="${row2.picture eq null}">
+		<lib:column name="picture" photoUrl="images/nopic.jpg" nopic="1"/>
+	</jstl:if>
 	<lib:column name="coordinates" value="[${row2.longitude},${row2.latitude}]"/>
-	<lib:column name="user" link="#" linkName="${row2.user.name} ${row2.user.surnames}"/>
+	<lib:column name="user" link="user-display.do?userId=${row2.user.id}" linkName="${row2.user.name} ${row2.user.surnames}"/>
 
 <display:setProperty name="paging.banner.onepage" value=""/>
     <display:setProperty name="paging.banner.placement" value="bottom"/>
@@ -123,9 +133,14 @@
   	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row3.id}" linkName="${row3.name}"/>
 	<lib:column name="description"/>
 	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="picture" photoUrl="${row3.picture}"/>
+	<jstl:if test="${row3.picture ne null}">
+		<lib:column name="picture" photoUrl="${row3.picture}"/>
+	</jstl:if>
+	<jstl:if test="${row3.picture eq null}">
+		<lib:column name="picture" photoUrl="images/nopic.jpg" nopic="1"/>
+	</jstl:if>
 	<lib:column name="coordinates" value="[${row3.longitude},${row3.latitude}]"/>
-	<lib:column name="user" link="#" linkName="${row3.user.name} ${row3.user.surnames}"/>
+	<lib:column name="user" link="user-display.do?userId=${row3.user.id}" linkName="${row3.user.name} ${row3.user.surnames}"/>
 
 <display:setProperty name="paging.banner.onepage" value=""/>
     <display:setProperty name="paging.banner.placement" value="bottom"/>

@@ -43,7 +43,7 @@
 			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>		
 			
 			<hr>		
-			<p><hr><spring:message code="termsTextHead" /><a href="profile/terms.do"> <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
+			<p><hr><spring:message code="termsTextHead" /><a href="terms.do"> <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
 			
 			<lib:button model="rendezvous" id="${rendezvous.rendezvousId}" cancelUri="/Acme-Rendezvous" />
 	
