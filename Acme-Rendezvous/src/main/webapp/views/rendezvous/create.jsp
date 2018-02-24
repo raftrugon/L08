@@ -39,6 +39,15 @@
 			<lib:input name="longitude" type="text" />				
 			<lib:input name="picture" type="text" />
 			
+			<!-- Select rendezvouses for link them to the new rendezvous -->	
+			<strong><spring:message code="rendezvous.link"/></strong></br>
+			<spring:message code="rendezvous.link.explanation"/>	
+			<form:select class="selectpicker form-control" multiple="true" data-live-search="true" data-selected-text-format="count > 1" path="rendezvouses">
+	   			<form:options items="${rendezvouses}" itemValue="id" itemLabel="name"/>
+			</form:select>
+			</br>
+			
+			
 			<span class="col-md-6 " style="padding:0; margin:0;"><lib:input name="adultOnly" type="checkBox" /></span>			
 			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>		
 			

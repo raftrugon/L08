@@ -1,6 +1,7 @@
 
 package forms;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Temporal;
@@ -18,6 +19,7 @@ public class UserRendezvousCreateForm {
 	private Date	organisationMoment;
 	private boolean	finalMode, adultOnly;
 	private int		rendezvousId;
+	private Collection<Rendezvous> rendezvouses;
 
 
 	//Constructor
@@ -37,6 +39,8 @@ public class UserRendezvousCreateForm {
 		this.finalMode = rendezvous.getFinalMode();
 		this.adultOnly = rendezvous.getAdultOnly();
 		this.rendezvousId = rendezvous.getId();
+		this.rendezvouses = rendezvous.getRendezvouses();
+		
 	}
 
 	public String getName() {
@@ -113,4 +117,11 @@ public class UserRendezvousCreateForm {
 		this.rendezvousId = rendezvousId;
 	}
 
+	public Collection<Rendezvous> getRendezvouses() {
+		return this.rendezvouses;
+	}
+	
+	public void setRendezvouses(Collection<Rendezvous> rendezvouses) {
+		this.rendezvouses=rendezvouses;
+	}
 }
