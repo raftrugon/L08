@@ -46,6 +46,7 @@ public class RsvpService {
 		Assert.isTrue(!r.getDeleted());
 		Assert.isTrue(!r.getinappropriate());
 		Assert.isTrue(r.getOrganisationMoment().after(new Date()));
+		Assert.isTrue(!r.getAdultOnly() || userService.isAdult());
 		res.setUser(u);
 		res.setRendezvous(r);
 		Map<String,String> questions = new HashMap<String,String>();

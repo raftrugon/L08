@@ -9,6 +9,8 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -191,7 +193,8 @@ public class Rendezvous extends DomainEntity {
 	}
 
 	@NotNull
-	@OneToMany
+	@ManyToMany
+	@JoinTable(name = "linked_rendezvouses")
 	public Collection<Rendezvous> getRendezvouses() {
 		return this.rendezvouses;
 	}

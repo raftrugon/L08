@@ -26,3 +26,37 @@
 	<jstl:if test="${rendezvous.deleted}">
 		<div class="alert alert-danger" style="text-align:center"><strong><spring:message code="rendezvous.deleted"/></strong></div>
 	</jstl:if>
+	
+	<script>
+	$('#RSVPbtn').click(function(e){
+		e.preventDefault();
+		var questionss = '<jstl:out value="${rendezvous.questions}"/>';
+		if(questionss.length <= 2){
+			$.post("ajax/rsvp/createWithoutQuestions.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
+				if(data==1){
+					notify('success','<spring:message code="rsvp.save.success" />');
+				}else{
+					notify('danger','<spring:message code="rsvp.save.error" />');
+				}
+				reloadButtons();
+		});
+		}else{
+		$.get("ajax/rsvp/create.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
+			$('#modalBody').html(data);
+			$('#qaModal').modal('show');
+		});
+		}
+	});
+	$('#cancelRSVPbtn').click(function(e){
+		e.preventDefault();
+		$.post("ajax/rsvp/cancelRSVP.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
+			if(data==1){
+				notify('success','<spring:message code="rsvp.cancel.success" />');
+			}else{
+				notify('danger','<spring:message code="rsvp.cancel.error" />');
+			}
+			reloadButtons();
+		});
+	});
+	
+	</script>

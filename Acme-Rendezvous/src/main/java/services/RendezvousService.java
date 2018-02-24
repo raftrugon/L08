@@ -89,6 +89,7 @@ public class RendezvousService {
 		Rendezvous saved = this.rendezvousRepository.save(rendezvous);
 
 		//Añadir rendezvous al user si es nuevo
+		//RSVP automático para el creador
 		if (rendezvous.getId() == 0){
 			rendezvous.getUser().getRendezvouses().add(saved);
 			rsvpService.rsvpForRendezvousCreator(saved);
@@ -160,7 +161,19 @@ public class RendezvousService {
 		return this.rendezvousRepository.getAnswersToQuestionsStats();
 	}
 
-
+	public void link(int sourceId, int targetId){
+		Rendezvous source = findOne(sourceId);
+		Rendezvous target = findOne(targetId);
+		Assert.isTrue(source.getUser().equals(userService.findByPrincipal()));
+		source.getRendezvouses().add(target);
+	}
+	
+	public Collection<Rendezvous> getRendezvousesToLink(int rendezvousId) {
+		User u = userService.findByPrincipal();
+		Assert.notNull(u);
+		Rendezvous r = findOne(rendezvousId);
+		return rendezvousRepository.getRendezvousesToLink(u,r);
+	}
 
 	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 

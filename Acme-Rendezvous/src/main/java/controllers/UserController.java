@@ -68,30 +68,19 @@ public class UserController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		try {
-			RegisterUserForm user = new RegisterUserForm();
-			result = this.newEditModelAndView(user);
+			result = this.newEditModelAndView(null);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
 		}
 		return result;
 	}
 
-	/*
-	 * @RequestMapping(value = "/edit", method = RequestMethod.GET)
-	 * public ModelAndView edit(@RequestParam(required = true) final int userId) {
-	 * User user = this.userService.findOne(userId);
-	 * return this.newEditModelAndView(user);
-	 * }
-	 */
-
 	//Save Delete POST
 	@RequestMapping(value = "/register/user", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final RegisterUserForm userForm, final BindingResult binding) {
 		ModelAndView result;
 		User user = this.userService.reconstruct(userForm, binding);
-
 		if (binding.hasErrors()) {
-			System.out.println(binding.toString());
 			result = this.newEditModelAndView(userForm);
 		} else
 			try {
@@ -125,9 +114,7 @@ public class UserController extends AbstractController {
 	//EditModelAndView
 	protected ModelAndView newEditModelAndView(final RegisterUserForm userForm) {
 		ModelAndView result;
-
 		result = this.newEditModelAndView(userForm, null);
-
 		return result;
 	}
 

@@ -225,4 +225,14 @@ public class AjaxController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="user/linkRendezvous", method = RequestMethod.POST)
+	public String linkRendezvous(final int sourceId, final int targetId){
+		try{
+			rendezvousService.link(sourceId, targetId);
+			return "1";
+		}catch(Throwable oops){
+			return "2";
+		}
+	}
 }

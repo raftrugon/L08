@@ -51,4 +51,8 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query(value="select avg(a.qcount),std(a.qcount) from (select count(questionsAndAnswers_KEY) as qcount" +
 			" from rsvp_questionsandanswers as r where r.questionsandanswers not like '' group by r.rsvp_id) a;", nativeQuery=true)
 	Double[] getAnswersToQuestionsStats();
+
+	@Query("select r from Rendezvous r where r.user = ?1 and r.inappropriate = false and r.deleted = false and ?2 not member of r.rendezvouses and r != ?2")
+	Collection<Rendezvous> getRendezvousesToLink(User u, Rendezvous r);
+	
 }

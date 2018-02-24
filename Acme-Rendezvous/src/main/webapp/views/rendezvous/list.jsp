@@ -82,7 +82,7 @@
 	        </h1>
 	        <div style="text-align:center;${pastRend}" class="cardDate">
 				<fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${rendezvous.organisationMoment}"/>
-				<jstl:if test="${rendezvous.organisationMoment lt now}"><br/><strong><i>Took Place</i></strong></jstl:if>
+				<jstl:if test="${rendezvous.organisationMoment lt now}"><br/><strong><i><spring:message code="rendezvous.list.past"/></i></strong></jstl:if>
 	        </div>
 		</div>
 		<input class="cardButton" type="button" name="cancel"

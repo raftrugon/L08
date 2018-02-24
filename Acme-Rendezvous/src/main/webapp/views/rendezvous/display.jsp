@@ -139,6 +139,19 @@
 <!--  RIGHT  -->
 <div class="col-md-2">
 <div id="map" style="height:300px;width:100%"></div>
+<security:authorize access="hasRole('USER')">
+	<div class="dropdown" style="margin:20px 0 10px 0">
+    <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown"><spring:message code="rendezvous.linkTo"/>
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu" style="width:100%">
+      <input class="form-control" id="linkSearchInput" type="text" placeholder="Search..">
+      <jstl:forEach items="${myRendezvouses}" var="myRendezvous">
+     		<li id="linkli${myRendezvous.id}"><a href="javascript:link(${myRendezvous.id},${rendezvous.id})" >${myRendezvous.name}</a></li>
+      </jstl:forEach>
+    </ul>
+  </div>
+
+</security:authorize>
 <jstl:forEach items="${rendezvous.rendezvouses}" var="rend">
 	<div class="cardDisplay col-xs-12">
 		<div onclick="location.href = 'rendezvous/display.do?rendezvousId=${rend.id}'" style="cursor:pointer;height:100%">
@@ -215,7 +228,23 @@ function initMap() {
 			$('#buttonsAlertsDiv').html(data);
 		});
 	}
+	function link(sourceIdval,targetIdval){
+		$.post('ajax/user/linkRendezvous.do',{sourceId:sourceIdval,targetId:targetIdval},function(data){
+			if(data==1){
+				notify('success','<spring:message code="rendezvous.link.success"/>');
+				$('#linkli'+sourceIdval).remove();
+			}else{
+				notify('danger','<spring:message code="rendezvous.link.error"/>');
+			}
+		});
+	}
 	$(document).ready(function(){
+		$("#linkSearchInput").on("keyup", function() {
+		    var value = $(this).val().toLowerCase();
+		    $(".dropdown-menu li").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+		  });
 		$('.chipQA').click(function(e){
 			e.preventDefault();
 			$.get("ajax/qa.do?rsvpId=" + $(this).attr('id'), function(data){
@@ -227,36 +256,6 @@ function initMap() {
 		$('.commentpanel').click(function(e){
 			$(this).children('span').each(function(){
 				$(this).toggle();
-			});
-		});
-		$('#RSVPbtn').click(function(e){
-			e.preventDefault();
-			var questionss = '<jstl:out value="${rendezvous.questions}"/>';
-			if(questionss.length <= 2){
-				$.post("ajax/rsvp/createWithoutQuestions.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
-					if(data==1){
-						notify('success','<spring:message code="rsvp.save.success" />');
-					}else{
-						notify('danger','<spring:message code="rsvp.save.error" />');
-					}
-					reloadButtons();
-			});
-			}else{
-			$.get("ajax/rsvp/create.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
-				$('#modalBody').html(data);
-				$('#qaModal').modal('show');
-			});
-			}
-		});
-		$('#cancelRSVPbtn').click(function(e){
-			e.preventDefault();
-			$.post("ajax/rsvp/cancelRSVP.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
-				if(data==1){
-					notify('success','<spring:message code="rsvp.cancel.success" />');
-				}else{
-					notify('danger','<spring:message code="rsvp.cancel.error" />');
-				}
-				reloadButtons();
 			});
 		});
 		$.get("ajax/user-card.do?userId=<jstl:out value='${rendezvous.user.id}'/>", function(data){

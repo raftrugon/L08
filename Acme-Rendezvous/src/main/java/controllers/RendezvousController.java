@@ -48,6 +48,7 @@ public class RendezvousController extends AbstractController {
 			rsvpd = userService.isRsvpd(rendezvousId);
 			if(rsvpd) result.addObject("newComment",commentService.createComment(rendezvousId));
 			isAdult = userService.isAdult();
+			result.addObject("myRendezvouses",rendezvousService.getRendezvousesToLink(rendezvousId));
 			newAnnouncement = announcementService.create(rendezvousId);
 			result.addObject("announcement",newAnnouncement);
 		}catch(Throwable oops){}

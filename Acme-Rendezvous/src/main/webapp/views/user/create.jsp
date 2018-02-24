@@ -18,7 +18,7 @@
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
 <security:authorize access="isAnonymous()">
-	<div class=center-text>
+	<div class="well col-md-6 col-md-offset-3">
 		
 		<form:form action="register/user.do" modelAttribute="user">		
 				

@@ -22,7 +22,8 @@ public class User extends Actor {
 	// Attributes -------------------------------------------------------------
 	private Date	birthDate;
 
-
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy") //Acorde al input date de input.tag
 	@NotNull
 	@Past
 	public Date getBirthDate() {
