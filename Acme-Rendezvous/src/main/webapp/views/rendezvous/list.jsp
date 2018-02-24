@@ -68,13 +68,13 @@
 			</jstl:if>
 	<div class="card" style="${inappropriateStyle}">
 		<div onclick="${rendClick}" style="height:100%;${rendStyle}">
-			<jstl:if test="${rendezvous.picture eq null}">
+			<jstl:if test="${empty rendezvous.picture}">
 				<div class="nopicContainer">
 					<img src="images/nopic.jpg" style="object-fit:cover;height:200px;width:100%" class="nopic"/>
 					<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
 				</div>
 			</jstl:if>
-			<jstl:if test="${rendezvous.picture ne null}">
+			<jstl:if test="${not empty rendezvous.picture}">
 				<img src="${rendezvous.picture}" style="object-fit:cover;height:200px;width:100%">
 			</jstl:if>
 	        <h1>

@@ -104,10 +104,10 @@
 	</jstl:if>
 </div>
 <div class="col-md-5" style="text-align:center">
-	<jstl:if test="${rendezvous.picture ne null}">
+	<jstl:if test="${not empty rendezvous.picture}">
 		<img src="<jstl:out value='${rendezvous.picture}'/>" style="max-height:200px;width:100%;object-fit:cover"/>
 	</jstl:if>
-	<jstl:if test="${rendezvous.picture eq null}">
+	<jstl:if test="${empty rendezvous.picture}">
 		<div class="nopicContainer">
 			<img src="images/nopic.jpg" style="max-height:200px;width:100%;object-fit:cover" class="nopic"/>
 			<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
