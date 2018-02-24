@@ -16,12 +16,27 @@
 <%@ attribute name="photoUrl"  rtexprvalue="true"  required="false" type="java.lang.String"  description="URL to display photo" %>
 <%@ attribute name="value"  rtexprvalue="true"  required="false" type="java.lang.String"  description="value to display" %>
 <%@ attribute name="map"  rtexprvalue="true"  required="false" type="java.lang.String"  description="True if attribute is a map" %>
+<%@ attribute name="nopic"  rtexprvalue="true"  required="false" type="java.lang.String"  description="True if there is no image" %>
 
 <jstl:choose>
 <jstl:when test="${photoUrl ne null }">
+	<jstl:if test="${nopic eq null}">
+		<spring:message code="${model}.${name}" var="Header" />
+		<display:column title="${Header}" sortable="${sortable}" style="${style}" format="${format}">
+			<img style="" height="90" width="135"  src="${photoUrl}"></img>
+		</display:column>
+	</jstl:if>
+	<jstl:if test="${nopic ne null}">
+		<spring:message code="${model}.${name}" var="Header" />
+		<display:column title="${Header}" sortable="${sortable}" style="${style}" format="${format}">
+			<img style="opacity:0.5" height="90" width="135"  src="${photoUrl}"></img>
+		</display:column>
+	</jstl:if>
+</jstl:when>
+<jstl:when test="${photoUrl ne null }">
 	<spring:message code="${model}.${name}" var="Header" />
 	<display:column title="${Header}" sortable="${sortable}" style="${style}" format="${format}">
-		<img style="height:100px;" src="${photoUrl}"></img>
+		<img style="" height="90" width="135"  src="${photoUrl}"></img>
 	</display:column>
 </jstl:when>
 <jstl:when test="${value ne null }">

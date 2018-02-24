@@ -105,7 +105,7 @@
 					      	</td>
 					      	<td><a href="rendezvous/display.do?rendezvousId=${rsvpRendezvous.id}"><jstl:out value="${rsvpRendezvous.name}"/></a></td>
 					      	<td><fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${rsvpRendezvous.organisationMoment}"/></td>
-					      	<td><a href="rendezvous/user-display.do?userId=${rsvpRendezvous.user.id}"><jstl:out value="${rsvpRendezvous.user.name} ${rsvpRendezvous.user.surnames}"/></a></td>
+					      	<td><a href="user-display.do?userId=${rsvpRendezvous.user.id}"><jstl:out value="${rsvpRendezvous.user.name} ${rsvpRendezvous.user.surnames}"/></a></td>
 			    		</tr>
 			  		</jstl:forEach>
 			  	</tbody>
