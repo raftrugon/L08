@@ -56,7 +56,8 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	Collection<Rendezvous> getRendezvousesToLink(User u, Rendezvous r);
 	
 	@Query("select r from Rendezvous r where r.inappropriate = false and r.deleted = false")
-	Collection<Rendezvous> getRendezvousesToLink(Rendezvous r);
+	Collection<Rendezvous> getRendezvousesToLink();
+
 	
 	
 }

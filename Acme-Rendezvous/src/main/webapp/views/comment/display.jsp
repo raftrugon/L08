@@ -24,6 +24,9 @@
 	</form:form>
 	</div>
 	</jstl:if>
+	<jstl:if test="${empty comments}">
+		<div class="alert alert-info" style="text-align:center;font-weight:bold;margin-top:10px"><spring:message code="comment.none"/></div>
+	</jstl:if>
 	<jstl:forEach items="${comments}" var="comment">
 	<jstl:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) + 1 %></jstl:set>
 	<div class="media panel panel-default">

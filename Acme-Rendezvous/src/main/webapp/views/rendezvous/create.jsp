@@ -25,11 +25,10 @@
 			<jstl:set var="model" value="rendezvous" scope="request"/>	
 			
 			<!-- Hidden Attributes -->
-			<lib:input name="rendezvousId" type="hidden" />
+			<lib:input name="id" type="hidden" />
 			
 				
 			<!-- Attributes -->
-			<!-- ------------- ACCOUNT DATA -----------------  -->
 			<h1><spring:message code="rendezvous.new" /></h1>
 			<hr>
 			<lib:input name="name" type="text" />
@@ -40,13 +39,13 @@
 			<lib:input name="picture" type="text" />
 			
 			<!-- Select rendezvouses for link them to the new rendezvous -->	
-			<strong><spring:message code="rendezvous.link"/></strong></br>
-			<spring:message code="rendezvous.link.explanation"/>	
-			<form:select class="selectpicker form-control" multiple="true" data-live-search="true" data-selected-text-format="count > 1" path="rendezvouses">
+			<div class="form-group">
+			<label for="linkSelect"><strong><spring:message code="rendezvous.link"/></strong></label>
+			<spring:message code="rendezvous.link.explanation"/>
+			<form:select id="linkSelect" class="selectpicker form-control" multiple="true" data-live-search="true" data-selected-text-format="count > 1" path="rendezvouses">
 	   			<form:options items="${rendezvouses}" itemValue="id" itemLabel="name"/>
 			</form:select>
-			</br>
-			
+			</div>
 			
 			<span class="col-md-6 " style="padding:0; margin:0;"><lib:input name="adultOnly" type="checkBox" /></span>			
 			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>		
@@ -54,7 +53,7 @@
 			<hr>		
 			<p><hr><spring:message code="termsTextHead" /><a href="terms.do"> <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
 			
-			<lib:button model="rendezvous" id="${rendezvous.rendezvousId}" cancelUri="/Acme-Rendezvous" />
+			<lib:button model="rendezvous" id="${rendezvous.id}" cancelUri="/Acme-Rendezvous" />
 	
 			
 			
