@@ -73,7 +73,7 @@
 	<div id="userCardDiv"></div>
 	
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
-		<a style="margin-bottom:10px" href="user/rendezvous/editQuestions.do?rendezvousId=${rendezvous.id}" class="btn btn-block btn-primary" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
+		<a style="margin-bottom:10px" id="${rendezvous.id}" class="btn btn-block btn-primary editQAButton" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
 	</jstl:if>
 	
 	<jstl:forEach items="${rendezvous.rsvps}" var="r">
@@ -81,6 +81,7 @@
 		<img src="images/kC1.png" width="96" height="96">
 		<small><jstl:out value="${r.user.name} ${r.user.surnames}"/></small>
 		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
+		
 		</div>
 	</jstl:forEach>
 	
@@ -249,6 +250,14 @@ function initMap() {
 		$('.chipQA').click(function(e){
 			e.preventDefault();
 			$.get("ajax/qa.do?rsvpId=" + $(this).attr('id'), function(data){
+				$('#modalBody').html(data);
+				$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+				$('#qaModal').modal('show');
+			});
+		});
+		$('.editQAButton').click(function(e){
+			e.preventDefault();
+			$.get("ajax/rendezvous/qa/edit.do?rendezvousId=" + $(this).attr('id'), function(data){
 				$('#modalBody').html(data);
 				$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
 				$('#qaModal').modal('show');

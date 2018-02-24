@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,27 @@ public class AjaxController {
 		result.addObject("pendingQuestions", rsvpService.getPendingQuestions(rsvp));
 		result.addObject("rsvp", rsvp);
 		return result;
+	}	
+	
+	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.GET)
+	public ModelAndView editQA(@RequestParam(required=true)final int rendezvousId) {
+		ModelAndView result = new ModelAndView("rendezvous/qa/edit");
+		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		result.addObject("questions",r.getQuestions());
+		result.addObject("rendezvous", r);
+		return result;
+	}
+	
+	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.POST)
+	public String editQASave(@RequestParam(required=true)final int rendezvousId, @RequestParam(required=true) final List<String> questions) {
+		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		try{
+			r.setQuestions(questions);
+			Rendezvous res = rendezvousService.save(r);
+			return String.valueOf(res.getId());
+		} catch(Throwable oops){
+			return "0";
+		}
 	}
 	
 	@RequestMapping(value="admin/rendezvous/delete", method=RequestMethod.POST)

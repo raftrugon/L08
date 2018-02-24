@@ -42,5 +42,7 @@
 	</definition>
 	
 	<definition name="rendezvous/buttonsalerts" template="/views/rendezvous/buttonsalerts.jsp"/>
+	<definition name="rendezvous/qa/edit" template="/views/rendezvous/editQuestions.jsp"/>
+	
 	
 </tiles-definitions>
