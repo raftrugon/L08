@@ -82,14 +82,7 @@
 		</li>
 		
 			<security:authorize access="isAuthenticated()">
-				<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <security:authentication property="principal.username"/>
-				<span class="caret"></span> </a>
-					<ul class="dropdown-menu">
-						<li><a href="profile/edit.do"><spring:message code="master.page.profile.edit" /></a></li>
-						<li><a href="profile/editUserAccount.do"><spring:message code="master.page.profile.editUserAccount" /></a></li>			
-					</ul>
-				</li>
+				<li><a href="#"><span class="glyphicon glyphicon-user"></span> <security:authentication property="principal.username"/></a></li>
 				<li><a href="j_spring_security_logout"><span class="glyphicon glyphicon-log-out"> </span><spring:message code="master.page.logout" /> &nbsp; </a></li>
 			</security:authorize>
 			

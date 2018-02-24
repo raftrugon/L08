@@ -141,8 +141,9 @@
 <div id="map" style="height:300px;width:100%"></div>
 <security:authorize access="hasRole('USER')">
 	<div class="dropdown" style="margin:20px 0 10px 0">
-    <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown"><spring:message code="rendezvous.linkTo"/>
-    <span class="caret"></span></button>
+    <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">
+    <span class="caret"></span> <spring:message code="rendezvous.linkTo"/>
+    </button>
     <ul class="dropdown-menu" style="width:100%">
       <input class="form-control" id="linkSearchInput" type="text" placeholder="Search..">
       <jstl:forEach items="${myRendezvouses}" var="myRendezvous">
@@ -307,36 +308,7 @@ $(function(){
 });
 
 </script>
-<script>
-$(function(){
-	$('.deleteAnnouncementButton').click(function(e){
-		e.preventDefault();
-		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
-			if(data==1){
-				notify('success','<spring:message code="rendezvous.announcement.delete.success"/>');
-				reloadAnnouncements();
-			}
-			else notify('danger','<spring:message code="rendezvous.announcement.delete.error"/>');
-			});
-	});
-});
 
-</script>
-<script>
-$(function deleteComment(){
-	$('.deleteCommentLink').click(function(e){
-		e.preventDefault();
-		$.post( "ajax/admin/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
-			if(data==1){
-				notify('success','<spring:message code="rendezvous.comment.delete.success"/>');
-				reloadComments();
-			}
-			else notify('danger','<spring:message code="rendezvous.comment.delete.error"/>');
-			});
-	});
-});
-
-</script>
 <script>
 	function saveCommentButton(obj){
 		var comment = {};

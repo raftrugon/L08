@@ -25,15 +25,12 @@
 			<!-- Shared Variables -->
 			<jstl:set var="model" value="user" scope="request"/>	
 			
-			<!-- Hidden Attributes -->
-			<lib:input name="userId" type="hidden" />
-			
 				
 			<!-- Attributes -->
 			<!-- ------------- ACCOUNT DATA -----------------  -->
 			<h1><spring:message code="accountData" /></h1>
-			<lib:input name="username" type="text" />
-			<lib:input name="password" type="text" />
+			<lib:input name="userAccount.username" type="text" />
+			<lib:input name="userAccount.password" type="text" />
 			
 			<!-- ------------- PERSONAL DATA -----------------  -->
 			<h1><spring:message code="personalData" /></h1>
@@ -46,7 +43,7 @@
 			
 			
 			
-			<lib:button model="user" id="${id}" cancelUri="/Acme-Rendezvous" noDelete="a" />
+			<lib:button model="user" id="${id}" cancelUri="/Acme-Rendezvous" noDelete="true" />
 		
 		</form:form>		
 	</div>

@@ -36,14 +36,19 @@
 				<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${comment.creationMoment}" /></i>
 				<jstl:if test="${comment.inappropriate eq false}">
 					<security:authorize access="hasRole('ADMIN')">
-						<a href="javascript:deleteComment();" style="color:red;padding:1em;" id="${comment.id}" class="deleteCommentLink">
+						<a href="#" style="color:red;padding:1em;" id="${comment.id}" class="deleteCommentLink">
 							<i class="fas fa-times"></i> 
 							<spring:message code="rendezvous.adminDelete"/>
 						</a>
 					</security:authorize>
 				</jstl:if>
 				</small></h4>
-				<p>${comment.text}</p>
+				<jstl:if test="${not comment.inappropriate}">
+					<p>${comment.text}</p>
+				</jstl:if>
+				<jstl:if test="${comment.inappropriate}">
+					<div class="alert alert-danger" style="margin-bottom: 0;text-align: center;"><i class="fas fa-ban"></i>&emsp;<spring:message code="comment.inappropriate"/></div>
+				</jstl:if>
 			</div>
 			<div class="media-right" style="text-align:right">
 				<img src="${comment.picture}" style="max-height:150px">
@@ -64,7 +69,12 @@
 						<div class="media-body">
 							<h4 class="media-heading">${reply.user.name} ${reply.user.surnames}<small><i>
 							<fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${reply.creationMoment}" /></i></small></h4>
-							<p>${reply.text}</p>
+							<jstl:if test="${not reply.inappropriate}">
+								<p>${reply.text}</p>
+							</jstl:if>
+							<jstl:if test="${reply.inappropriate}">
+								<div class="alert alert-danger" style="margin-bottom: 10px;text-align: center;"><i class="fas fa-ban"></i>&emsp;<spring:message code="comment.inappropriate"/></div>
+							</jstl:if>
 						</div>
 						<div class="media-right">
 							<img src="${reply.picture}" style="max-height:150px;margin-right:15px;margin-bottom:10px;">
@@ -73,21 +83,35 @@
 				</jstl:forEach>
 			</div>
 		</jstl:if>
-		<div class="panel-footer">
-			<jstl:if test="${rsvpd eq true}">
-				<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.reply'/>" />
-			</jstl:if>
-		</div>
+		<jstl:if test="${not comment.inappropriate}">
+			<div class="panel-footer">
+				<jstl:if test="${rsvpd eq true}">
+					<input id="${comment.id}" type="button" class="btn btn-block btn-success newReplyBtn" value="<spring:message code='rendezvous.comment.reply'/>" />
+				</jstl:if>
+			</div>
+		</jstl:if>
 	</div>
 	</jstl:forEach>
 	
 	<script>
-	$('.newReplyBtn').click(function(e){
-		e.preventDefault();
-		$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
-			$('#modalBody').html(data);
+	$(function(){
+		$('.newReplyBtn').click(function(e){
+			e.preventDefault();
+			$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
+				$('#modalBody').html(data);
+			});
+			$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+			$('#qaModal').modal('show');
+		});	
+		$('.deleteCommentLink').click(function(e){
+			e.preventDefault();
+			$.post( "ajax/admin/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
+				if(data==1){
+					notify('success','<spring:message code="rendezvous.comment.delete.success"/>');
+					reloadComments();
+				}
+				else notify('danger','<spring:message code="rendezvous.comment.delete.error"/>');
+				});
 		});
-		$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
-		$('#qaModal').modal('show');
-	});	
+	});
 	</script>

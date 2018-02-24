@@ -127,25 +127,18 @@ public class UserService {
 
 	//RegisterUserForm ----> User
 
-	public User reconstruct(final RegisterUserForm userForm, final BindingResult binding) {
-		Assert.isTrue(userForm.getUserId() == 0);
+	public User reconstruct(User user, final BindingResult binding) {
+		
+		user.setId(0);
+		user.setVersion(0);
+		
+		//Collections
+		user.setRsvps(new ArrayList<Rsvp>());
+		user.setRendezvouses(new ArrayList<Rendezvous>());
 
-		User res = this.create();
+		this.validator.validate(user, binding);
 
-
-		res.setName(userForm.getName());
-		res.setSurnames(userForm.getSurnames());
-		res.setAddress(userForm.getAddress());
-		res.setPhoneNumber(userForm.getPhoneNumber());
-		res.setBirthDate(userForm.getBirthDate());
-		res.setEmail(userForm.getEmail());
-
-		this.validator.validate(res, binding);
-
-		res.getUserAccount().setUsername(userForm.getUsername());//No validator for user account
-		res.getUserAccount().setPassword(userForm.getPassword());
-
-		return res;
+		return user;
 	}
 
 }

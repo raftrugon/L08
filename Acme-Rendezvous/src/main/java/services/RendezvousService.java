@@ -102,6 +102,7 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getId() != 0);
 		Assert.notNull(this.adminService.findByPrincipal());
 		rendezvous.setinappropriate(true);
+		rendezvous.setPicture(null);
 		return rendezvousRepository.save(rendezvous);
 	}
 
