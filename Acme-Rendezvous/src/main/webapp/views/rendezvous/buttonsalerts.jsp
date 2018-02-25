@@ -12,7 +12,7 @@
 	<jstl:if test="${rendezvous.organisationMoment lt now and not rendezvous.deleted}">
 		<div class="alert alert-warning" style="text-align:center"><strong><spring:message code="rendezvous.past"/></strong></div>
 	</jstl:if>
-	<jstl:if test="${not rendezvous.finalMode and rendezvous.organisationMoment gt now }">
+	<jstl:if test="${not rendezvous.finalMode and rendezvous.organisationMoment gt now and not rendezvous.deleted}">
 		<div class="alert alert-warning" style="text-align:center"><strong><spring:message code="rendezvous.notFinal"/></strong></div>
 	</jstl:if>
 	<security:authorize access="hasRole('USER')">

@@ -8,7 +8,13 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 
+
+	<jstl:if test="${empty announcements}">
+		<div class="alert alert-info" style="text-align:center;font-weight:bold"><spring:message code="announcement.none"/></div>
+	</jstl:if>
+	
 <div class="timeline">
+
 	<jstl:forEach items="${announcements}" var="announcementItem" varStatus="x">
 	<jstl:choose>
 	<jstl:when test="${x.count mod 2 eq 1}">

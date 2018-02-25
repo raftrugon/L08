@@ -79,7 +79,7 @@
 	<jstl:forEach items="${rendezvous.rsvps}" var="r">
 		<div class="chip">
 		<img src="images/kC1.png" width="96" height="96">
-		<small><jstl:out value="${r.user.name} ${r.user.surnames}"/></small>
+		<a href="user-display.do?userId=${r.user.id}"><small><jstl:out value="${r.user.name} ${r.user.surnames}"/></small></a> 
 		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
 		
 		</div>
@@ -92,6 +92,14 @@
 <div class="center-text col-md-8">
 <div class="well well-lg" style="text-align:center"><h1><strong><jstl:out value="${rendezvous.name}"/></strong> <small><fmt:formatDate type = "both" dateStyle = "long" timeStyle = "long" value = "${rendezvous.organisationMoment}" /></small></h1></div>
 <div class="col-md-7" style="text-align:right">
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${pageContext.request.userPrincipal.name eq rendezvous.user.userAccount.username and not rendezvous.deleted and rendezvous.organisationMoment gt now and not rendezvous.finalMode}">
+			<div class="btn-group btn-group-justified" style="margin-bottom:10px">
+			<a class="btn btn-warning" href="user/rendezvous/edit.do?rendezvousId=${rendezvous.id}"><spring:message code='rendezvous.edit'/></a>
+			<a class="btn btn-danger" href="user/rendezvous/cancel.do?rendezvousId=${rendezvous.id}"><spring:message code='rendezvous.cancel'/></a>
+			</div>
+		</jstl:if>
+	</security:authorize>
 	<blockquote class="blockquote-reverse">
 	    <p><jstl:out value="${rendezvous.description}"/></p>
 	    <footer><jstl:out value="${rendezvous.user.name} ${rendezvous.user.surnames}"/></footer>
@@ -105,10 +113,10 @@
 	</jstl:if>
 </div>
 <div class="col-md-5" style="text-align:center">
-	<jstl:if test="${rendezvous.picture ne null}">
+	<jstl:if test="${not empty rendezvous.picture}">
 		<img src="<jstl:out value='${rendezvous.picture}'/>" style="max-height:200px;width:100%;object-fit:cover"/>
 	</jstl:if>
-	<jstl:if test="${rendezvous.picture eq null}">
+	<jstl:if test="${empty rendezvous.picture}">
 		<div class="nopicContainer">
 			<img src="images/nopic.jpg" style="max-height:200px;width:100%;object-fit:cover" class="nopic"/>
 			<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>

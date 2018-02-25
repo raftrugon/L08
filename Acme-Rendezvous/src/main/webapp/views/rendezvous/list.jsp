@@ -9,21 +9,6 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
-<%-- <div class=center-text>
-<display:table pagesize="5" class= "displaytag" keepStatus="true" name="rendezvouss" requestURI="${requestUri}" id="row">
-	<!-- Shared Variables -->
-	<jstl:set var="model" value="rendezvous" scope="request"/>
-	<!-- Attributes -->
-  	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row.id}" linkName="${row.name}"/>
-	<lib:column name="description"/>
-	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="picture" photoUrl="${row.picture}"/>
-	<lib:column name="coordinates" value="[${row.longitude},${row.latitude}]"/>
-	<lib:column name="user" link="user-display.do?userId=${row.user.id}" linkName="${row.user.name} ${row.user.surnames}"/>
-	
-</display:table> --%>
-
 <security:authorize access="hasRole('USER')"> 
 <div style="padding-right:15px;padding-left:15px;margin-bottom:10px">
 <ul class="nav nav-pills nav-justified">
@@ -68,13 +53,13 @@
 			</jstl:if>
 	<div class="card" style="${inappropriateStyle}">
 		<div onclick="${rendClick}" style="height:100%;${rendStyle}">
-			<jstl:if test="${rendezvous.picture eq null}">
+			<jstl:if test="${empty rendezvous.picture}">
 				<div class="nopicContainer">
 					<img src="images/nopic.jpg" style="object-fit:cover;height:200px;width:100%" class="nopic"/>
 					<div class="nopicCaption alert alert-warning"><spring:message code="master.page.nopic"/></div>
 				</div>
 			</jstl:if>
-			<jstl:if test="${rendezvous.picture ne null}">
+			<jstl:if test="${not empty rendezvous.picture}">
 				<img src="${rendezvous.picture}" style="object-fit:cover;height:200px;width:100%">
 			</jstl:if>
 	        <h1>

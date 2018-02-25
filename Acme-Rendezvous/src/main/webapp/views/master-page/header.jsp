@@ -12,12 +12,14 @@
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- Modal to display the notifications from an ajax method -->
    		<div id="notificationDiv">
    			<div id="notificationAlert" class=""></div>
    		</div>
-   		<script>
+<!-- Function to receive parameters and message for modal ajax notifications -->
+		<script>
    			function notify(i,msg){
    				if(!(typeof notificationTimeout ==="undefined"))clearTimeout(notificationTimeout);
    				$('#notificationAlert').html(''); 
@@ -30,10 +32,13 @@
 			        }, 7000);
    			}
    		</script>
-<!-- Function to receive parameters and message for modal ajax notifications -->
-
-
-
+<jstl:if test="${message ne null}">
+	<script>
+	$(function(){
+		notify('danger',"<spring:message code="${message}"/>");
+	});
+	</script>
+</jstl:if>
 <nav class="navbar navbar-inverse navbar-fixed-top" style="z-index:1500">
 	<div class="containter-fluid">
 		<div class="navbar-header">

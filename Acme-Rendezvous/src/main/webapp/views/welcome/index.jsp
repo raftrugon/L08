@@ -18,6 +18,7 @@
 
 <div id="map" style="height:85vh;width:100%"></div>
 
+
 <script defer>
 function initMap() {
 	var labels = 'ABCDEFGHIJ';
@@ -37,11 +38,11 @@ function initMap() {
 
   }
 </script>
-<script>
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
+</script>
+<script defer>
 	$(document).ready(function(){
 		initMap();
 	});
-</script>
-<script async defer
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
 </script>

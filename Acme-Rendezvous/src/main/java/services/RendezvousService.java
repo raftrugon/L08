@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,6 +112,7 @@ public class RendezvousService {
 		Assert.notNull(rendezvous);
 		Assert.isTrue(rendezvous.getUser().equals(this.userService.findByPrincipal()));
 		Assert.isTrue(!rendezvous.getFinalMode());
+		Assert.isTrue(rendezvous.getOrganisationMoment().after(new Date()));
 		rendezvous.setDeleted(true);
 		return this.rendezvousRepository.save(rendezvous);
 	}
@@ -175,67 +177,87 @@ public class RendezvousService {
 		Rendezvous r = findOne(rendezvousId);
 		return rendezvousRepository.getRendezvousesToLink(u,r);
 	}
-
-	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
-
-		Rendezvous res;
-
-		res = this.create();
-
-		//Reconstruct
-		res.setName(rendezvousForm.getName());
-		res.setDescription(rendezvousForm.getDescription());
-		res.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
-		res.setPicture(rendezvousForm.getPicture());
-		res.setLatitude(rendezvousForm.getLatitude());
-		res.setLongitude(rendezvousForm.getLongitude());
-		res.setFinalMode(rendezvousForm.isFinalMode());
-		res.setAdultOnly(rendezvousForm.isAdultOnly());
-
+	
+	public Collection<Rendezvous> getRendezvousesToLink() {
+		return rendezvousRepository.getRendezvousesToLink();
+	}
+	
+	public Rendezvous reconstructNew(Rendezvous res, BindingResult binding){
+		res.setId(0);
+		res.setVersion(0);
+		res.setDeleted(false);
+		res.setQuestions(new ArrayList<String>());
+		res.setAnnouncements(new ArrayList<Announcement>());
+		res.setComments(new ArrayList<Comment>());
+		res.setRsvps(new ArrayList<Rsvp>());
+		res.setinappropriate(false);
+		res.setUser(userService.findByPrincipal());
 		this.validator.validate(res, binding);
-
+		
 		return res;
 	}
 
-	public Rendezvous reconstructAndSave(final UserRendezvousCreateForm rendezvousForm) {
+//	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
+//
+//		Rendezvous res;
+//
+//		res = this.create();
+//
+//		//Reconstruct
+//		res.setName(rendezvousForm.getName());
+//		res.setDescription(rendezvousForm.getDescription());
+//		res.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
+//		res.setPicture(rendezvousForm.getPicture());
+//		res.setLatitude(rendezvousForm.getLatitude());
+//		res.setLongitude(rendezvousForm.getLongitude());
+//		res.setFinalMode(rendezvousForm.isFinalMode());
+//		res.setAdultOnly(rendezvousForm.isAdultOnly());
+//
+//		this.validator.validate(res, binding);
+//
+//		return res;
+//	}
+//
+//	public Rendezvous reconstructAndSave(final UserRendezvousCreateForm rendezvousForm) {
+//
+//		//Checkeos contra base de datos
+//		Rendezvous bd = this.findOne(rendezvousForm.getRendezvousId());
+//		Assert.notNull(rendezvousForm);
+//		Assert.isTrue(!bd.getFinalMode() && !bd.getDeleted());
+//		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
+//
+//		//Reconstruct
+//		bd.setName(rendezvousForm.getName());
+//		bd.setDescription(rendezvousForm.getDescription());
+//		bd.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
+//		bd.setPicture(rendezvousForm.getPicture());
+//		bd.setLatitude(rendezvousForm.getLatitude());
+//		bd.setLongitude(rendezvousForm.getLongitude());
+//		bd.setFinalMode(rendezvousForm.isFinalMode());
+//		bd.setAdultOnly(rendezvousForm.isAdultOnly());
+//
+//		//Save
+//		Rendezvous saved = this.rendezvousRepository.save(bd);
+//
+//		return saved;
+//	}
+//	
+//	public Rendezvous reconstructQuestionsAndSave(final UserQuestionsRendezvousCreateForm questionsForm, int rendezvousId) {
+//
+//		//Checkeos contra base de datos
+//		Rendezvous bd = this.findOne(rendezvousId);
+//		Assert.notNull(questionsForm);
+//		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
+//
+//		//Reconstruct
+//		bd.setQuestions(questionsForm.getQuestions());
+//
+//		//Save
+//		Rendezvous saved = this.rendezvousRepository.save(bd);
+//
+//		return saved;
+//	}
 
-		//Checkeos contra base de datos
-		Rendezvous bd = this.findOne(rendezvousForm.getRendezvousId());
-		Assert.notNull(rendezvousForm);
-		Assert.isTrue(!bd.getFinalMode() && !bd.getDeleted());
-		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
-
-		//Reconstruct
-		bd.setName(rendezvousForm.getName());
-		bd.setDescription(rendezvousForm.getDescription());
-		bd.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
-		bd.setPicture(rendezvousForm.getPicture());
-		bd.setLatitude(rendezvousForm.getLatitude());
-		bd.setLongitude(rendezvousForm.getLongitude());
-		bd.setFinalMode(rendezvousForm.isFinalMode());
-		bd.setAdultOnly(rendezvousForm.isAdultOnly());
-
-		//Save
-		Rendezvous saved = this.rendezvousRepository.save(bd);
-
-		return saved;
-	}
-	
-	public Rendezvous reconstructQuestionsAndSave(final UserQuestionsRendezvousCreateForm questionsForm, int rendezvousId) {
-
-		//Checkeos contra base de datos
-		Rendezvous bd = this.findOne(rendezvousId);
-		Assert.notNull(questionsForm);
-		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
-
-		//Reconstruct
-		bd.setQuestions(questionsForm.getQuestions());
-
-		//Save
-		Rendezvous saved = this.rendezvousRepository.save(bd);
-
-		return saved;
-	}
 
 
 

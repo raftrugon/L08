@@ -29,7 +29,9 @@
 			rsvp[$(this).attr('name')] = $(this).val();
 		});
 		$('#rsvpForm').find('.answerInput').each(function(){
-			questionsAndAnswers[$(this).prev().html()] = $(this).val();
+			if($(this).val() !== ""){
+				questionsAndAnswers[$(this).prev().html()] = $(this).val().trim();
+			}
 		});
 		rsvp['questionsAndAnswers'] = questionsAndAnswers;
 
