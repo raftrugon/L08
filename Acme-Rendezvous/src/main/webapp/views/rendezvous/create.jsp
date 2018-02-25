@@ -72,8 +72,8 @@
 </security:authorize>
 
 <script id="newQuestionRow" class="focus" type="text/plain">
-	<div class="form-group questionInput">
-		<input class="form-control" type="text" value="">
+	<div class="form-group">
+		<input class="form-control questionInput" type="text" value="">
 	</div>
 
 

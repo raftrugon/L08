@@ -187,7 +187,6 @@ public class RendezvousService {
 		res.setId(0);
 		res.setVersion(0);
 		res.setDeleted(false);
-		res.setQuestions(new ArrayList<String>());
 		res.setAnnouncements(new ArrayList<Announcement>());
 		res.setComments(new ArrayList<Comment>());
 		res.setRsvps(new ArrayList<Rsvp>());
