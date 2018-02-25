@@ -58,6 +58,7 @@
 		&emsp;<spring:message code="profile.action.1.5.4" /></br>
 		&emsp;<spring:message code="profile.action.1.5.5" /></br>
 		&emsp;<spring:message code="profile.action.1.5.6" /></br>
+		&emsp;<spring:message code="profile.action.1.5.7" /></br>
 	</div>
 	<div class="well">
 		<strong>
