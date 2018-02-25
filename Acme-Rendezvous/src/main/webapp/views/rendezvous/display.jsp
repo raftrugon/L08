@@ -147,7 +147,9 @@
 </div>
 <!--  RIGHT  -->
 <div class="col-md-2">
+<jstl:if test="${not empty rendezvous.latitude and not empty rendezvous.longitude}">
 <div id="map" style="height:300px;width:100%"></div>
+</jstl:if>
 <security:authorize access="hasRole('USER')">
 	<div class="dropdown" style="margin:20px 0 10px 0">
     <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">
@@ -207,6 +209,7 @@
 
   </div>
 </div>
+<jstl:if test="${not empty rendezvous.latitude and not empty rendezvous.longitude}">
 <script defer>
 function initMap() {
     var uluru = {lat: <jstl:out value="${rendezvous.latitude}"/>, lng: <jstl:out value="${rendezvous.longitude}"/>};
@@ -220,7 +223,10 @@ function initMap() {
     });
   }
 </script>
-
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
+</script>
+</jstl:if>
 <script>
 	function reloadComments(replyingTo){
 		$.get('ajax/showComments.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
@@ -284,9 +290,6 @@ function initMap() {
 		reloadButtons();
 	});
 </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">
-    </script>
 <script>
 	$('#saveButtonannouncement').click(function(e){
 		var announcement = {};

@@ -28,12 +28,14 @@ function initMap() {
         center: {lat:40.0,lng:-3.703790}
       });
     <jstl:forEach items="${rendezvouses}" var="rendezvous">
-	 var pos${rendezvous.id} = {lat: ${rendezvous.latitude}, lng: ${rendezvous.longitude}};
-	 var marker${rendezvous.id} = new google.maps.Marker({
-	      position: pos${rendezvous.id} ,
-          label: labels[labelIndex++],
-	      map: map
-	    });
+    <jstl:if test="${not empty rendezvous.latitude and not empty rendezvous.longitude}">
+		 var pos${rendezvous.id} = {lat: ${rendezvous.latitude}, lng: ${rendezvous.longitude}};
+		 var marker${rendezvous.id} = new google.maps.Marker({
+		      position: pos${rendezvous.id} ,
+	          label: labels[labelIndex++],
+		      map: map
+		    });
+	 </jstl:if>
 	</jstl:forEach>
 
   }
