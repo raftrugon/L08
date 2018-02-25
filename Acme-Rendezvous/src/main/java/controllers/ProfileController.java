@@ -28,6 +28,15 @@ public class ProfileController extends AbstractController {
 		
 		return result;
 	}
+	
+	@RequestMapping("/cookies")
+	public ModelAndView action2() {
+		ModelAndView result;
+				
+		result = new ModelAndView("cookies");
+		
+		return result;
+	}
 
 
 }
