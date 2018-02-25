@@ -2,9 +2,9 @@
  * action-1.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
+ *
+ * The use of this project is hereby constrained to the conditions of the
+ * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html
  --%>
 
@@ -19,32 +19,32 @@
 
 <security:authorize access="isAnonymous()">
 	<div class="well col-md-6 col-md-offset-3">
-		
-		<form:form action="register/user.do" modelAttribute="user">		
-				
+
+		<form:form action="register/user.do" modelAttribute="user">
+
 			<!-- Shared Variables -->
-			<jstl:set var="model" value="user" scope="request"/>	
-			
-				
+			<jstl:set var="model" value="user" scope="request"/>
+
+
 			<!-- Attributes -->
 			<!-- ------------- ACCOUNT DATA -----------------  -->
 			<h1><spring:message code="accountData" /></h1>
 			<lib:input name="userAccount.username" type="text" />
-			
+
 			<div class="form-group">
 				<form:label class="control-label" path="userAccount.password">
 					<spring:message code="user.userAccount.password" />:
 				</form:label>
 				<form:input type="password" class="form-control" path="userAccount.password" id="userAccountPassword"/>
-				<form:errors cssClass="error" path="userAccount.password" />	
+				<form:errors cssClass="error" path="userAccount.password" />
 			</div>
-			
+
 			<div class="form-group">
 				<label class="control-label"><spring:message code="user.repeatpassword" />:</label>
 				<input id="confirmPassword" type="password" class="form-control"/>
 				<p id="nomatch" style="display:none;color:red;font-weight:bold"><spring:message code="user.repeatpassword.nomatch"/></p>
-			</div>		
-	
+			</div>
+
 			<!-- ------------- PERSONAL DATA -----------------  -->
 			<h1><spring:message code="personalData" /></h1>
 			<lib:input name="name" type="text" />
@@ -53,12 +53,13 @@
 			<lib:input name="phoneNumber" type="text" />
 			<lib:input name="email" type="text" />
 			<lib:input name="birthDate" type="date" />
-			
-			
-			
+			<input type="checkbox" id="tyc" name="tyc" value="" required="true"/><a href="terms.do" ><spring:message code="accept.terms"/></a>
+	
+
+
 			<lib:button model="user" id="${id}" cancelUri="/Acme-Rendezvous" noDelete="true" />
-		
-		</form:form>		
+
+		</form:form>
 	</div>
 	<script>
 	$(function(){
