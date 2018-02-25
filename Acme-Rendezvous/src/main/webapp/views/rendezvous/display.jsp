@@ -70,8 +70,10 @@
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	
-	<div id="userCardDiv"></div>
-	
+		
+	<jstl:if test="${not rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+		<div id="userCardDiv"></div>
+	</jstl:if>
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
 		<a style="margin-bottom:10px" id="${rendezvous.id}" class="btn btn-block btn-primary editQAButton" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
 	</jstl:if>
