@@ -70,6 +70,14 @@ public class RsvpService {
 		Assert.isTrue(rsvp.getUser().equals(userService.findByPrincipal()));
 		if(rsvp.getId() == 0)
 			Assert.isTrue(!userService.isRsvpd(rsvp.getRendezvous().getId()));
+//		Map<String,String> auxMap = new HashMap<String,String>();
+//		//Encoding issue with Â character patch
+//		for(String s: rsvp.getQuestionsAndAnswers().keySet()){
+//				String ques = s;
+//				String ans = rsvp.getQuestionsAndAnswers().get(s);
+//				rsvp.getQuestionsAndAnswers().
+//			}
+//		}
 		return rsvpRepository.save(rsvp);
 	}
 

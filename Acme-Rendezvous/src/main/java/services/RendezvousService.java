@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,6 +112,7 @@ public class RendezvousService {
 		Assert.notNull(rendezvous);
 		Assert.isTrue(rendezvous.getUser().equals(this.userService.findByPrincipal()));
 		Assert.isTrue(!rendezvous.getFinalMode());
+		Assert.isTrue(rendezvous.getOrganisationMoment().after(new Date()));
 		rendezvous.setDeleted(true);
 		return this.rendezvousRepository.save(rendezvous);
 	}

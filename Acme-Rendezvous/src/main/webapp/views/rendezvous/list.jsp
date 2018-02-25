@@ -9,21 +9,6 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
-<%-- <div class=center-text>
-<display:table pagesize="5" class= "displaytag" keepStatus="true" name="rendezvouss" requestURI="${requestUri}" id="row">
-	<!-- Shared Variables -->
-	<jstl:set var="model" value="rendezvous" scope="request"/>
-	<!-- Attributes -->
-  	<lib:column name="name" link="rendezvous/display.do?rendezvousId=${row.id}" linkName="${row.name}"/>
-	<lib:column name="description"/>
-	<lib:column name="organisationMoment" format="{0,date,dd/MM/yy HH:mm}"/>
-	<lib:column name="picture" photoUrl="${row.picture}"/>
-	<lib:column name="coordinates" value="[${row.longitude},${row.latitude}]"/>
-	<lib:column name="user" link="user-display.do?userId=${row.user.id}" linkName="${row.user.name} ${row.user.surnames}"/>
-	
-</display:table> --%>
-
 <security:authorize access="hasRole('USER')"> 
 <div style="padding-right:15px;padding-left:15px;margin-bottom:10px">
 <ul class="nav nav-pills nav-justified">

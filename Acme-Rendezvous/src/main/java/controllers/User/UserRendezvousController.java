@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.RendezvousService;
 import services.RsvpService;
@@ -39,39 +40,6 @@ public class UserRendezvousController extends AbstractController {
 		super();
 	}
 
-	@RequestMapping("/created-list")
-	public ModelAndView listCreated() {
-		ModelAndView result;
-		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(this.userService.findByPrincipal().getRendezvouses());
-		result = new ModelAndView("rendezvous/list");
-		result.addObject("rendezvouss", rendezvouss);
-		result.addObject("requestUri", "user/rendezvous/created-list.do");
-		return result;
-	}
-
-	@RequestMapping("/rsvp-list")
-	public ModelAndView listRSVP() {
-		ModelAndView result;
-		final List<Rendezvous> rendezvouss = new ArrayList<Rendezvous>(this.rendezvousService.getRSVPRendezvousesForUser(this.userService.findByPrincipal()));
-		result = new ModelAndView("rendezvous/list");
-		result.addObject("rendezvouss", rendezvouss);
-		result.addObject("requestUri", "user/rendezvous/rsvp-list.do");
-		return result;
-	}
-
-	@RequestMapping("/questions-list")
-	public ModelAndView listQuestions(@RequestParam final int rendezvousId) {
-		ModelAndView result;
-
-		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-
-		result = new ModelAndView("rendezvous/listQuestions");
-		result.addObject("questions", rendezvous.getQuestions());
-		result.addObject("rendezvous", rendezvous);
-		result.addObject("requestUri", "user/rendezvous/questions-list.do?rendezvousId=" + rendezvousId);
-		return result;
-	}
-
 	@RequestMapping(value = "/answer", method = RequestMethod.POST)
 	public ModelAndView answer(@RequestParam final String question, @RequestParam final String rsvpId,
 		@RequestParam final String answer) {
@@ -94,6 +62,18 @@ public class UserRendezvousController extends AbstractController {
 			result.addObject("message", "rendezvous.commitError");
 		}
 
+		return result;
+	}
+	
+	
+	@RequestMapping(value="/cancel", method = RequestMethod.GET)
+	public ModelAndView cancelRendezvous(@RequestParam(required=true)final int rendezvousId, RedirectAttributes redir){
+		ModelAndView result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId="+rendezvousId);
+		try{
+			rendezvousService.deleteByUser(rendezvousId);
+		}catch(Throwable oops){
+			redir.addFlashAttribute("message","master.page.errors.cancelRendezvousError");
+		}
 		return result;
 	}
 
