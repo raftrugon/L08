@@ -56,6 +56,7 @@
 				notify('danger','<spring:message code="rsvp.cancel.error" />');
 			}
 			reloadButtons();
+			$('#chip${pageContext.request.userPrincipal.name}').remove();
 		});
 	});
 	

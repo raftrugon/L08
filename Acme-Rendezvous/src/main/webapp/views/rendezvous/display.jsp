@@ -77,7 +77,7 @@
 	</jstl:if>
 	
 	<jstl:forEach items="${rendezvous.rsvps}" var="r">
-		<div class="chip">
+		<div id="chip${r.user.userAccount.username}" class="chip">
 		<img src="images/kC1.png" width="96" height="96">
 		<a href="user-display.do?userId=${r.user.id}"><small><jstl:out value="${r.user.name} ${r.user.surnames}"/></small></a> 
 		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
@@ -254,6 +254,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 			}
 		});
 	}
+	function showQAModal(id){
+		$.get("ajax/qa.do?rsvpId=" + id, function(data){
+			$('#modalBody').html(data);
+			$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+			$('#qaModal').modal('show');
+		});
+	};
 	$(document).ready(function(){
 		$("#linkSearchInput").on("keyup", function() {
 		    var value = $(this).val().toLowerCase();
@@ -262,12 +269,8 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 		    });
 		  });
 		$('.chipQA').click(function(e){
-			e.preventDefault();
-			$.get("ajax/qa.do?rsvpId=" + $(this).attr('id'), function(data){
-				$('#modalBody').html(data);
-				$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
-				$('#qaModal').modal('show');
-			});
+				e.preventDefault();
+				showQAModal($(this).attr('id'));
 		});
 		$('.editQAButton').click(function(e){
 			e.preventDefault();

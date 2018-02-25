@@ -2,12 +2,15 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +43,8 @@ public class AjaxController {
 	private CommentService commentService;
 	@Autowired
 	private RendezvousService rendezvousService;
+	@Autowired
+	private Validator			validator;
 	 
 	
 	@RequestMapping(value = "/qa", method = RequestMethod.GET)
@@ -51,6 +56,20 @@ public class AjaxController {
 		result.addObject("rsvp", rsvp);
 		return result;
 	}	
+	
+	@RequestMapping(value="/newAnswer", method = RequestMethod.POST)
+	public String newAnser(int rsvpId, String question, String answer){
+		try{
+			Rsvp rsvp = rsvpService.findOne(rsvpId);
+			Map<String,String> newMap = rsvp.getQuestionsAndAnswers();
+			newMap.put(question, answer);
+			rsvp.setQuestionsAndAnswers(newMap);
+			rsvpService.save(rsvp);
+			return "1";
+		}catch(Throwable oops){
+			return "2";
+		}
+	}
 	
 	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.GET)
 	public ModelAndView editQA(@RequestParam(required=true)final int rendezvousId) {
@@ -140,7 +159,11 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value="rsvp/save", method = RequestMethod.POST)
-	public String saveRSVP(@Valid final Rsvp rsvp, final BindingResult binding){
+	public String saveRSVP(final Rsvp rsvp, final BindingResult binding){
+		if(rsvp.getQuestionsAndAnswers() == null){
+			rsvp.setQuestionsAndAnswers(new HashMap<String,String>());
+		}
+		validator.validate(rsvp,binding);
 		if(binding.hasErrors()){
 			return "0";
 		}

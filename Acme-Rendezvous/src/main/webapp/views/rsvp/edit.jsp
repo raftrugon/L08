@@ -29,12 +29,11 @@
 			rsvp[$(this).attr('name')] = $(this).val();
 		});
 		$('#rsvpForm').find('.answerInput').each(function(){
-			if($(this).val() !== ""){
+			if($(this).val().trim() !== ""){
 				questionsAndAnswers[$(this).prev().html()] = $(this).val().trim();
 			}
 		});
 		rsvp['questionsAndAnswers'] = questionsAndAnswers;
-
 		$.ajax({
 			type:'post',
 			url:"ajax/rsvp/save.do",
