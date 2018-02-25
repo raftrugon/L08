@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -60,13 +62,20 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.POST)
-	public String editQASave(@RequestParam(required=true)final int rendezvousId, @RequestParam(required=true) final List<String> questions) {
+	public String editQASave(int rendezvousId, String questions) {
+		System.out.println(rendezvousId);
+		System.out.println(questions);
+		String[] aux = questions.split(",,,");
+		List<String> questionList = new ArrayList<String>();
+		for(int i=0; i< aux.length; i++)
+			questionList.add(aux[i]);
 		Rendezvous r = rendezvousService.findOne(rendezvousId);
 		try{
-			r.setQuestions(questions);
+			r.setQuestions(questionList);
 			Rendezvous res = rendezvousService.save(r);
 			return String.valueOf(res.getId());
 		} catch(Throwable oops){
+			System.out.println(oops.getMessage());
 			return "0";
 		}
 	}
