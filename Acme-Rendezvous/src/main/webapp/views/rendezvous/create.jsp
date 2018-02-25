@@ -50,6 +50,16 @@
 			<span class="col-md-6 " style="padding:0; margin:0;"><lib:input name="adultOnly" type="checkBox" /></span>			
 			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>		
 			
+			</br>
+			<strong><spring:message code="rendezvous.questions"/>:</strong>
+			<div class="questionDiv" id="questionDiv">
+				<div class="form-group">
+					<input class="form-control questionInput" type="text" value="">
+				</div>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary addQuestion btn-block " style="margin-bottom:5px"><i class="fas fa-plus-square"></i></button>
+			</div>
 			<hr>		
 			<p><hr><spring:message code="termsTextHead" /><a href="terms.do"> <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
 			
@@ -60,3 +70,33 @@
 		</form:form>		
 	</div>
 </security:authorize>
+
+<script id="newQuestionRow" class="focus" type="text/plain">
+	<div class="form-group questionInput">
+		<input class="form-control" type="text" value="">
+	</div>
+
+
+</script>
+
+<script>
+$(function(){
+	$('.addQuestion').click(function(e){
+		e.preventDefault();
+		$('.questionDiv').append($('#newQuestionRow').html());
+	});
+});
+</script>
+<script>
+$('#rendezvous').submit(function(e){
+	var questions = [];
+	$('#rendezvous').find('.questionInput').each(function(){
+		questions.push($(this).val());
+	});
+	alert(questions);
+	$('#rendezvous').find('.questionInput').remove();
+	$('<input />').attr('type','hidden').attr('name','questions').attr('value',questions).appendTo('#rendezvous');
+	return true;
+});
+</script>
+
