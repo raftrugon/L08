@@ -70,8 +70,10 @@
 	<jstl:set var="model" value="rendezvous" scope="request"/>
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	
-	<div id="userCardDiv"></div>
-	
+		
+	<jstl:if test="${not rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+		<div id="userCardDiv"></div>
+	</jstl:if>
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
 		<a style="margin-bottom:10px" id="${rendezvous.id}" class="btn btn-block btn-primary editQAButton" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
 	</jstl:if>
@@ -165,8 +167,11 @@
 
 </security:authorize>
 <jstl:forEach items="${rendezvous.rendezvouses}" var="rend">
-	<div class="cardDisplay col-xs-12">
+	<div class="cardDisplay col-xs-12" id="cardLink${rend.id}">
 		<div onclick="location.href = 'rendezvous/display.do?rendezvousId=${rend.id}'" style="cursor:pointer;height:100%">
+			<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+				<button style="position:absolute;right:0;top:0;" class="btn btn-danger removeLinkButton" id="${rend.id}"><i class="far fa-trash-alt"></i></button>
+			</jstl:if>
 			<jstl:if test="${rend.picture eq null}">
 				<div class="nopicContainer">
 					<img src="images/nopic.jpg" style="object-fit:cover;width:100%;max-height:150px" class="nopic"/>
@@ -326,6 +331,23 @@ $(function(){
 		$.post( "ajax/admin/rendezvous/delete.do",{rendezvousId: $(this).attr('id') }, function( data ) {
 			if(data==1) notify('success','<spring:message code="rendezvous.delete.success"/>');
 			else notify('danger','<spring:message code="rendezvous.delete.error"/>');
+			});
+	});
+});
+
+</script>
+
+<script>
+$(function(){
+	$('.removeLinkButton').click(function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		var rendezvousId = ${rendezvous.id};
+		var linkId = $(this).attr('id');
+		$.post( "ajax/rendezvous/link/delete.do",{rendezvousId:rendezvousId ,linkId: linkId}, function( data ) {
+			if(data==="1"){
+				$('#cardLink'+linkId).remove();
+			}
 			});
 	});
 });

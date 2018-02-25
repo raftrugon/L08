@@ -290,4 +290,15 @@ public class AjaxController {
 			return "2";
 		}
 	}
+	
+	@RequestMapping(value="rendezvous/link/delete", method = RequestMethod.POST)
+	public String deleteLink(final int rendezvousId, final int linkId) {
+		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		try{
+			rendezvousService.deleteLink(rendezvousId, linkId);
+			return "1";
+		} catch (Throwable oops) {
+			return "2";
+		}
+	}
 }

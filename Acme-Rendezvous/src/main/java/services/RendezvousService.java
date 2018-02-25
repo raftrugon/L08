@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -195,6 +196,15 @@ public class RendezvousService {
 		this.validator.validate(res, binding);
 		
 		return res;
+	}
+	
+	public void deleteLink(int rendezvousId, int linkId) {
+		Rendezvous r = rendezvousRepository.findOne(rendezvousId);
+		Rendezvous link = rendezvousRepository.findOne(linkId);
+		List<Rendezvous> rendezvouses = new ArrayList<Rendezvous>(r.getRendezvouses());
+		rendezvouses.remove(link);
+		r.setRendezvouses(rendezvouses);
+		
 	}
 
 //	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
