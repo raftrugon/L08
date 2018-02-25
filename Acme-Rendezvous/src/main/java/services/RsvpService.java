@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,14 +71,12 @@ public class RsvpService {
 		Assert.isTrue(rsvp.getUser().equals(userService.findByPrincipal()));
 		if(rsvp.getId() == 0)
 			Assert.isTrue(!userService.isRsvpd(rsvp.getRendezvous().getId()));
-//		Map<String,String> auxMap = new HashMap<String,String>();
-//		//Encoding issue with Â character patch
-//		for(String s: rsvp.getQuestionsAndAnswers().keySet()){
-//				String ques = s;
-//				String ans = rsvp.getQuestionsAndAnswers().get(s);
-//				rsvp.getQuestionsAndAnswers().
-//			}
-//		}
+		Map<String,String> auxMap = new HashMap<String,String>();
+		//Encoding issue with Â character patch
+		for(Entry<String,String> entry: rsvp.getQuestionsAndAnswers().entrySet()){
+			auxMap.put(entry.getKey().replace("Â", ""), entry.getValue());
+		}
+		rsvp.setQuestionsAndAnswers(auxMap);
 		return rsvpRepository.save(rsvp);
 	}
 
@@ -94,7 +93,6 @@ public class RsvpService {
 		Assert.notNull(rsvp);
 		Collection<String> res = new ArrayList<String>(rsvp.getRendezvous().getQuestions());
 		res.removeAll(rsvp.getQuestionsAndAnswers().keySet());	
-		
 		return res;
 	}
 	
