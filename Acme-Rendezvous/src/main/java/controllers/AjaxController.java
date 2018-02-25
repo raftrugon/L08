@@ -1,5 +1,9 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,34 @@ public class AjaxController {
 		result.addObject("pendingQuestions", rsvpService.getPendingQuestions(rsvp));
 		result.addObject("rsvp", rsvp);
 		return result;
+	}	
+	
+	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.GET)
+	public ModelAndView editQA(@RequestParam(required=true)final int rendezvousId) {
+		ModelAndView result = new ModelAndView("rendezvous/qa/edit");
+		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		result.addObject("questions",r.getQuestions());
+		result.addObject("rendezvous", r);
+		return result;
+	}
+	
+	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.POST)
+	public String editQASave(int rendezvousId, String questions) {
+		System.out.println(rendezvousId);
+		System.out.println(questions);
+		String[] aux = questions.split(",,,");
+		List<String> questionList = new ArrayList<String>();
+		for(int i=0; i< aux.length; i++)
+			questionList.add(aux[i]);
+		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		try{
+			r.setQuestions(questionList);
+			Rendezvous res = rendezvousService.save(r);
+			return String.valueOf(res.getId());
+		} catch(Throwable oops){
+			System.out.println(oops.getMessage());
+			return "0";
+		}
 	}
 	
 	@RequestMapping(value="admin/rendezvous/delete", method=RequestMethod.POST)

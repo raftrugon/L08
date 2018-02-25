@@ -26,15 +26,59 @@
 			
 			<!-- Hidden Attributes -->
 			
+			<div class="questionDiv" id="questionDiv">
+				<jstl:forEach items="${questions}" var="q">
+					<div class="form-group">
+						<input class="form-control focus" type="text" value="${q}">
+					</div>
+				</jstl:forEach>
 				
-			<!-- Attributes -->
-			<!-- ------------- ACCOUNT DATA -----------------  -->
-			<!--  <h1><spring:message code="accountData" /></h1> -->
-			
-			<lib:input name="questions" type="text" />		
-			
-			<lib:button model="rendezvous" id="${rendezvousId}" cancelUri="/Acme-Rendezvous/display.do?rendezvousId=${rendezvousId}" />
+			</div>
+			<div class="form-group">
+				<input type="button" class="btn btn-primary addQuestion btn-block " style="margin-bottom:5px" value='<spring:message code="rendezvous.newQuestion"/>'/>
+			</div>
+			<div class="form-group">
+				<input type="button"  id="${rendezvous.id}" class="btn btn-success saveQuestions btn-block " style="margin-bottom:5px" value='<spring:message code="rendezvous.save"/>'/>
+			</div>
 		
 		</form:form>		
 	</div>
 </security:authorize>
+
+<script id="newQuestionRow" class="focus" type="text/plain">
+	<div class="form-group">
+		<input class="form-control" type="text" value="">
+	</div>
+</script>
+
+<script>
+$(function(){
+	$('.addQuestion').click(function(e){
+		e.preventDefault();
+		$('.questionDiv').append($('#newQuestionRow').html());
+	});
+});
+$(function(){
+	$('.saveQuestions').click(function(e){
+		e.preventDefault();
+		var inputs = $("#questionDiv input");
+		var questions ="";
+		for(var i=0; i<inputs.length;i++){
+			if(i==0){
+				questions += inputs[i].value;
+			}else
+				questions  += ",,,"+inputs[i].value;	
+		}	
+		$.post( "ajax/rendezvous/qa/edit.do",{rendezvousId: $(this).attr('id'), questions:questions}, function( data ) {
+			if(data==0) {
+				notify('success','<spring:message code="questions.edit.success"/>');
+				$('#qaModal').modal('hide');
+			}
+			else{
+				notify('danger','<spring:message code="questions.edit.error"/>');
+				$('#qaModal').modal('hide');
+			S}
+		});
+	});
+});
+</script>
