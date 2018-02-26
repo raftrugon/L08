@@ -31,9 +31,9 @@
 				      		</jstl:if>
 				    	</div>
 				    	<div class="media-body">
-				      		<h3 class="media-heading"><jstl:out value="${announcement.title}"/></h3>
+				      		<h3 class="media-heading"><jstl:out value="${announcement.title}"/>
+				      		</h3>
 				      		<p><jstl:out value="${announcement.description}"/></p>
-				      		
 				      		<h5 style="text-align:right;"><a href="user-display.do?userId=${announcement.rendezvous.user.id}" ><jstl:out value="${announcement.rendezvous.user.name} ${announcement.rendezvous.user.surnames}"/></a>
 				      			<small><i>
 				      				<spring:message code='announcements.postedOn' /> <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${announcement.creationMoment}"/>
@@ -41,6 +41,11 @@
 				      			</i></small>
 				      		</h5>
 				    	</div>
+				    	<security:authorize access="hasRole('ADMIN')">
+							  <button id="${announcement.id}" class="btn btn-danger deleteAnnouncementButton" style="margin-top:5px">
+							  	<spring:message code="rendezvous.adminDelete"/>
+							  </button>
+				 		</security:authorize>
 					</div>
 				</jstl:when>
 				
@@ -50,7 +55,8 @@
 					<div class="media" >
 				  		
 				    	<div class="media-body">
-				      		<h3 class="media-heading" style="text-align:right;"><jstl:out value="${announcement.title}"/></h3>
+				      		<h3 class="media-heading" style="text-align:right;">
+				 			 <jstl:out value="${announcement.title}"/></h3>
 				      		<p style="text-align:right;"><jstl:out value="${announcement.description}"/></p>
 				      		
 				      		 <h5 style="text-align:left;">
@@ -73,9 +79,31 @@
 				      			<img src="${announcement.rendezvous.picture}" class="media-object" style="width:120px;height:85px;">
 				      		</jstl:if>
 				    	</div>
+				    	<div class="buttonDiv" style="text-align:right;">
+				      		<security:authorize access="hasRole('ADMIN')">
+							  <button id="${announcement.id}" class="btn btn-danger deleteAnnouncementButton" style="right:0; margin-top:5px;">
+							  	<spring:message code="rendezvous.adminDelete"/>
+							  </button>
+							</security:authorize>
+						</div>
 					</div>
 				</jstl:otherwise>
 			</jstl:choose>
 			
 		</jstl:forEach>
 	</div>
+	
+<script>
+$(function(){
+	$('.deleteAnnouncementButton').click(function(e){
+		e.preventDefault();
+		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
+			if(data==1){
+				notify('success','<spring:message code="rendezvous.announcement.delete.success"/>');
+				reloadAnnouncements();
+			}
+			else notify('danger','<spring:message code="rendezvous.announcement.delete.error"/>');
+			});
+	});
+});
+</script>
