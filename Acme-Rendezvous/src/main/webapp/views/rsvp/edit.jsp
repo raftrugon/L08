@@ -36,7 +36,7 @@
 		rsvp['questionsAndAnswers'] = questionsAndAnswers;
 		$.ajax({
 			type:'post',
-			url:"ajax/rsvp/save.do",
+			url:"user/ajax/rsvp/save.do",
 			data: rsvp,
 			processData: 'false',
 			contentType: 'application/x-www-form-urlencoded',

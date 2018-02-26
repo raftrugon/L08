@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ModelAndView;
 
 import repositories.AnnouncementRepository;
@@ -30,6 +32,8 @@ public class AnnouncementService {
 	private RendezvousService			rendezvousService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private Validator	validator;
 	
 	
 
@@ -79,6 +83,14 @@ public class AnnouncementService {
 
 	}
 	
+	public Announcement reconstructNew(final Announcement announcement, final BindingResult binding){
+		announcement.setId(0);
+		announcement.setVersion(0);
+		announcement.setCreationMoment(new Date(System.currentTimeMillis()-1000));
+		announcement.setinappropriate(false);
+		validator.validate(announcement,binding);
+		return announcement;
+	}
 	//Other Business Methods --------------------------------
 	
 

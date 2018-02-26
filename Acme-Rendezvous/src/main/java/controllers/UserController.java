@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +17,6 @@ import services.RendezvousService;
 import services.UserService;
 import domain.Rendezvous;
 import domain.User;
-import forms.RegisterUserForm;
 
 @Controller
 @RequestMapping("")
@@ -95,24 +91,6 @@ public class UserController extends AbstractController {
 			}
 		return result;
 	}
-
-	/*
-	 * @RequestMapping(value = "/save", method = RequestMethod.POST, params = "delete")
-	 * public ModelAndView delete(@Valid final User user, final BindingResult binding) {
-	 * ModelAndView result;
-	 * if (binding.hasErrors())
-	 * result = this.newEditModelAndView(user);
-	 * else
-	 * try {
-	 * this.userService.delete(user);
-	 * result = new ModelAndView("redirect:list.do");
-	 * } catch (Throwable oops) {
-	 * result = this.newEditModelAndView(user);
-	 * result.addObject("message", "user.commitError");
-	 * }
-	 * return result;
-	 * }
-	 */
 
 	//EditModelAndView
 	protected ModelAndView newEditModelAndView(final User user) {

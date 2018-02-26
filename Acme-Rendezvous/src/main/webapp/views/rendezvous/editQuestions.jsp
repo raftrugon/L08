@@ -65,7 +65,7 @@ $(function(){
 		$("#questionDiv").find('input').each(function(e){
 			questions.push($(this).val());
 		});
-		$.post( "ajax/rendezvous/qa/edit.do",{rendezvousId: $(this).attr('id'), questions:questions}, function( data ) {
+		$.post( "user/ajax/rendezvous/qa/edit.do",{rendezvousId: $(this).attr('id'), questions:questions}, function( data ) {
 			if(data==1) {
 				notify('success','<spring:message code="questions.edit.success"/>');
 				$('#qaModal').modal('hide');

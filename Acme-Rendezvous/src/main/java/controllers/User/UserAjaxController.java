@@ -2,7 +2,6 @@ package controllers.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -10,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +21,10 @@ import services.CommentService;
 import services.RendezvousService;
 import services.RsvpService;
 import services.UserService;
+import utilities.internal.SchemaPrinter;
 import domain.Announcement;
-import domain.Comment;
 import domain.Rendezvous;
 import domain.Rsvp;
-import domain.User;
 
 @RestController
 @RequestMapping("/user/ajax")
@@ -35,10 +34,6 @@ public class UserAjaxController {
 	private RsvpService 				rsvpService;
 	@Autowired
 	private AnnouncementService 				announcementService;
-	@Autowired
-	private UserService					userService;
-	@Autowired
-	private CommentService commentService;
 	@Autowired
 	private RendezvousService rendezvousService;
 	@Autowired
@@ -59,7 +54,7 @@ public class UserAjaxController {
 		}
 	}
 	
-	@RequestMapping(value = "	", method = RequestMethod.GET)
+	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.GET)
 	public ModelAndView editQA(@RequestParam(required=true)final int rendezvousId) {
 		ModelAndView result = new ModelAndView("rendezvous/qa/edit");
 		Rendezvous r = rendezvousService.findOne(rendezvousId);
@@ -69,31 +64,27 @@ public class UserAjaxController {
 	}
 	
 	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.POST)
-	public String editQASave(int rendezvousId, String questions) {
-		System.out.println(rendezvousId);
-		System.out.println(questions);
-		String[] aux = questions.split(",,,");
-		List<String> questionList = new ArrayList<String>();
-		for(int i=0; i< aux.length; i++)
-			questionList.add(aux[i]);
+	public String editQASave(int rendezvousId, @RequestParam(value="questions[]")ArrayList<String> questions) {
 		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		SchemaPrinter.print(questions);
 		try{
-			r.setQuestions(questionList);
-			Rendezvous res = rendezvousService.save(r);
-			return String.valueOf(res.getId());
+			r.setQuestions(questions);
+			rendezvousService.save(r);
+			return "1";
 		} catch(Throwable oops){
 			System.out.println(oops.getMessage());
-			return "0";
+			return "2";
 		}
 	}
 	
 	@RequestMapping(value = "announcement/save", method = RequestMethod.POST)
-	public String save(@Valid final Announcement announcement, final BindingResult binding) {
-		if (binding.hasErrors())
+	public String save(final Announcement announcement, final BindingResult binding) {
+		Announcement res = announcementService.reconstructNew(announcement, binding);
+		if (binding.hasErrors()){
 			return "0";
-		else
+		}else
 			try {
-				announcementService.save(announcement);
+				announcementService.save(res);
 				return "1";
 			} catch (Throwable oops) {
 				return "2";

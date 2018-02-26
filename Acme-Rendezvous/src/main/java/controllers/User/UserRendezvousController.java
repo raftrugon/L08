@@ -21,8 +21,6 @@ import services.UserService;
 import controllers.AbstractController;
 import domain.Rendezvous;
 import domain.Rsvp;
-import forms.UserQuestionsRendezvousCreateForm;
-import forms.UserRendezvousCreateForm;
 
 @Controller
 @RequestMapping("/user/rendezvous")
@@ -104,25 +102,6 @@ public class UserRendezvousController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/editQuestions", method = RequestMethod.GET)
-	public ModelAndView editQuestions(@RequestParam(required = true) final Integer rendezvousId) {
-		ModelAndView result;
-
-		try {
-			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-			UserQuestionsRendezvousCreateForm questionsRendezvousForm = new UserQuestionsRendezvousCreateForm(rendezvous);
-			Assert.isTrue(rendezvous.getUser().equals(this.userService.findByPrincipal()));
-			result = new ModelAndView("rendezvous/editQuestions");
-			result.addObject("rendezvousId", rendezvousId);
-			result.addObject("rendezvous", questionsRendezvousForm);
-			result.addObject("actionUri", "user/rendezvous/saveQuestions.do");
-			return result;
-		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:display.do?rendezvousId="+rendezvousId);
-		}
-		return result;
-	}
-	
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(final Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
@@ -173,85 +152,4 @@ public class UserRendezvousController extends AbstractController {
 		result.addObject("actionUri", "user/rendezvous/save.do");
 		return result;
 	}
-	
-
-	//---------------------- POST ----------------------
-
-//	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-//	public ModelAndView save(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
-//		ModelAndView result;
-//		Rendezvous saved;
-//
-//		Rendezvous validatedObject = this.rendezvousService.reconstruct(rendezvousForm, binding);
-//
-//		if (binding.hasErrors()) {
-//			System.out.println(binding.toString());
-//			result = this.newEditModelAndView(rendezvousForm);
-//		} else
-//			try {
-//				if(rendezvousForm.getRendezvousId() == 0)								//Si es un objeto nuevo
-//					saved = this.rendezvousService.save(validatedObject);
-//				else																	//Si es un objecto existente en base de datos
-//					saved = this.rendezvousService.reconstructAndSave(rendezvousForm);
-//
-//				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
-//			} catch (Throwable oops) {
-//				result = this.newEditModelAndView(rendezvousForm);
-//				result.addObject("message", "rendezvous.commitError");
-//			}
-//		return result;
-//	}
-//	
-//	@RequestMapping(value = "/saveQuestions", method = RequestMethod.POST, params = "save")
-//	public ModelAndView saveQuestions(final UserQuestionsRendezvousCreateForm questionsForm, final BindingResult binding, Integer rendezvousId) {
-//		ModelAndView result;
-//		Rendezvous saved;
-//		
-//		if (binding.hasErrors()) {
-//			System.out.println(binding.toString());
-//			result = new ModelAndView("rendezvous/editQuestions");
-//			result.addObject("rendezvousId", rendezvousId);
-//			result.addObject("rendezvous", questionsForm);
-//			result.addObject("actionUri", "user/rendezvous/saveQuestions.do");
-//		} else
-//			try {
-//				saved = this.rendezvousService.reconstructQuestionsAndSave(questionsForm, rendezvousId);
-//
-//				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
-//			} catch (Throwable oops) {
-//				System.out.println(oops.getLocalizedMessage());
-//				System.out.println(oops.getMessage());
-//				result = new ModelAndView("rendezvous/editQuestions");
-//				result.addObject("rendezvousId", rendezvousId);
-//				result.addObject("rendezvous", questionsForm);
-//				result.addObject("actionUri", "user/rendezvous/saveQuestions.do");
-//				result.addObject("message", "rendezvous.commitError");
-//			}
-//		return result;
-//	}
-//
-//	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "delete")
-//	public ModelAndView delete(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
-//		ModelAndView result;
-//		if (binding.hasErrors())
-//			result = this.newEditModelAndView(rendezvousForm);
-//		else
-//			try {
-//				this.rendezvousService.deleteByUser(rendezvousForm.getRendezvousId());
-//				result = new ModelAndView("redirect:../../rendezvous/list.do");
-//			} catch (Throwable oops) {
-//				result = this.newEditModelAndView(rendezvousForm);
-//				result.addObject("message", "rendezvous.commitError");
-//			}
-//		return result;
-//	}
-//
-//	protected ModelAndView newEditModelAndView(final UserRendezvousCreateForm rendezvousForm) {
-//		ModelAndView result;
-//		result = new ModelAndView("user/rendezvous/edit");
-//		result.addObject("rendezvous", rendezvousForm);
-//		result.addObject("rendezvouses", rendezvousService.getRendezvousesToLink());
-//		result.addObject("actionUri", "user/rendezvous/save.do");
-//		return result;
-//	}
 }

@@ -36,7 +36,7 @@
 			$('.sendAnswer').click(function(e){
 				e.preventDefault();
 				var id = $(this).parent().parent().parent().find('input[name=rsvpId]').val();
-				$.post('ajax/newAnswer.do',$(this).parent().parent().parent().serialize(),function(data){
+				$.post('user/ajax/newAnswer.do',$(this).parent().parent().parent().serialize(),function(data){
 					if(data==1){
 						showQAModal(id);
 						notify('success','<spring:message code="rsvp.sendAnswer.success" />');

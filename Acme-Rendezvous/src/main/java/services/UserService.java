@@ -22,7 +22,6 @@ import security.UserAccountService;
 import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
-import forms.RegisterUserForm;
 
 @Service
 @Transactional

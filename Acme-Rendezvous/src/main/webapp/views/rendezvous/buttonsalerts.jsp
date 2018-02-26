@@ -32,7 +32,7 @@
 		e.preventDefault();
 		var questionss = '<jstl:out value="${rendezvous.questions}"/>';
 		if(questionss.length <= 2){
-			$.post("ajax/rsvp/createWithoutQuestions.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
+			$.post("user/ajax/rsvp/createWithoutQuestions.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
 				if(data==1){
 					notify('success','<spring:message code="rsvp.save.success" />');
 				}else{
@@ -41,7 +41,7 @@
 				reloadButtons();
 		});
 		}else{
-		$.get("ajax/rsvp/create.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
+		$.get("user/ajax/rsvp/create.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){
 			$('#modalBody').html(data);
 			$('#qaModal').modal('show');
 		});
@@ -49,7 +49,7 @@
 	});
 	$('#cancelRSVPbtn').click(function(e){
 		e.preventDefault();
-		$.post("ajax/rsvp/cancelRSVP.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
+		$.post("user/ajax/rsvp/cancelRSVP.do",{rendezvousId:"<jstl:out value='${rendezvous.id}'/>"}, function(data){
 			if(data==1){
 				notify('success','<spring:message code="rsvp.cancel.success" />');
 			}else{

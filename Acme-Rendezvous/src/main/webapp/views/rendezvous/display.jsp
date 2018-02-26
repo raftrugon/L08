@@ -56,12 +56,12 @@
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
 	<div class="panel panel-default">
 		<div class="well" style="margin-bottom:10px;text-align:center"><strong><i class="fas fa-bullhorn"></i> <spring:message code="rendezvous.announcement.new"/></strong></div>
-		<form:form action="ajax/user/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px !important;width:95%;margin:auto">		
+		<form:form action="user/ajax/announcement/save.do" modelAttribute="announcement" style="margin-bottom:10px !important;width:95%;margin:auto">		
 			<jstl:set var="model" value="announcement" scope="request"/>
-			<lib:input type="hidden" name="id,version,creationMoment,rendezvous,inappropriate"/>
+			<lib:input type="hidden" name="rendezvous"/>
 			<spring:message code='announcement.title' var="titlePlaceholder"/>
-			<lib:input type="text" name="title" placeholder="${titlePlaceholder}" noLabel="true"/>
-			<lib:input type="textarea" name="description" rows="4"/>
+			<lib:input type="text" name="title" placeholder="${titlePlaceholder}" noLabel="true" required="true"/>
+			<lib:input type="textarea" name="description" rows="4" required="true"/>
 			<lib:button id="0" noDelete="true" />
 		</form:form>
 	</div>
@@ -250,7 +250,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 		});
 	}
 	function link(sourceIdval,targetIdval){
-		$.post('ajax/user/linkRendezvous.do',{sourceId:sourceIdval,targetId:targetIdval},function(data){
+		$.post('user/ajax/rendezvous/link.do',{sourceId:sourceIdval,targetId:targetIdval},function(data){
 			if(data==1){
 				notify('success','<spring:message code="rendezvous.link.success"/>');
 				$('#linkli'+sourceIdval).remove();
@@ -279,7 +279,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 		});
 		$('.editQAButton').click(function(e){
 			e.preventDefault();
-			$.get("ajax/rendezvous/qa/edit.do?rendezvousId=" + $(this).attr('id'), function(data){
+			$.get("user/ajax/rendezvous/qa/edit.do?rendezvousId=" + $(this).attr('id'), function(data){
 				$('#modalBody').html(data);
 				$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
 				$('#qaModal').modal('show');
@@ -300,15 +300,11 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 </script>
 <script>
 	$('#saveButtonannouncement').click(function(e){
-		var announcement = {};
-		$('#announcement').find('input[type=text],input[type=hidden],textarea').each(function(){
-			announcement[$(this).attr('name')] = $(this).val();
-		});	
 		e.preventDefault();
 		$.ajax({
 			type:'post',
-			url:"ajax/user/announcement/save.do",
-			data: announcement,
+			url:"user/ajax/announcement/save.do",
+			data: $('#announcement').serialize(),
 			processData: 'false',
 			contentType: 'application/x-www-form-urlencoded',
 			dataType: 'json',
@@ -328,7 +324,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 $(function(){
 	$('.deleteRendezvousButton').click(function(e){
 		e.preventDefault();
-		$.post( "ajax/admin/rendezvous/delete.do",{rendezvousId: $(this).attr('id') }, function( data ) {
+		$.post( "admin/ajax/rendezvous/delete.do",{rendezvousId: $(this).attr('id') }, function( data ) {
 			if(data==1) notify('success','<spring:message code="rendezvous.delete.success"/>');
 			else notify('danger','<spring:message code="rendezvous.delete.error"/>');
 			});
@@ -344,7 +340,7 @@ $(function(){
 		e.stopPropagation();
 		var rendezvousId = ${rendezvous.id};
 		var linkId = $(this).attr('id');
-		$.post( "ajax/rendezvous/link/delete.do",{rendezvousId:rendezvousId ,linkId: linkId}, function( data ) {
+		$.post( "user/ajax/rendezvous/link/delete.do",{rendezvousId:rendezvousId ,linkId: linkId}, function( data ) {
 			if(data==="1"){
 				$('#cardLink'+linkId).remove();
 				notify('success','<spring:message code="rendezvous.link.delete.success"/>');

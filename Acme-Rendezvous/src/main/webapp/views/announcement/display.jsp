@@ -62,7 +62,7 @@
 $(function(){
 	$('.deleteAnnouncementButton').click(function(e){
 		e.preventDefault();
-		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
+		$.post( "admin/ajax/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
 			if(data==1){
 				notify('success','<spring:message code="rendezvous.announcement.delete.success"/>');
 				reloadAnnouncements();

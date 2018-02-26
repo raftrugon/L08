@@ -108,7 +108,7 @@
 		});	
 		$('.deleteCommentLink').click(function(e){
 			e.preventDefault();
-			$.post( "ajax/admin/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
+			$.post( "admin/ajax/comment/delete.do",{commentId: $(this).attr('id') }, function( data ) {
 				if(data==1){
 					notify('success','<spring:message code="rendezvous.comment.delete.success"/>');
 					reloadComments();

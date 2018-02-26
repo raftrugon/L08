@@ -19,8 +19,6 @@ import domain.Comment;
 import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
-import forms.UserQuestionsRendezvousCreateForm;
-import forms.UserRendezvousCreateForm;
 
 @Service
 @Transactional
@@ -225,71 +223,4 @@ public class RendezvousService {
 		r.setRendezvouses(rendezvouses);
 		
 	}
-
-	
-
-//	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
-//
-//		Rendezvous res;
-//
-//		res = this.create();
-//
-//		//Reconstruct
-//		res.setName(rendezvousForm.getName());
-//		res.setDescription(rendezvousForm.getDescription());
-//		res.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
-//		res.setPicture(rendezvousForm.getPicture());
-//		res.setLatitude(rendezvousForm.getLatitude());
-//		res.setLongitude(rendezvousForm.getLongitude());
-//		res.setFinalMode(rendezvousForm.isFinalMode());
-//		res.setAdultOnly(rendezvousForm.isAdultOnly());
-//
-//		this.validator.validate(res, binding);
-//
-//		return res;
-//	}
-//
-//	public Rendezvous reconstructAndSave(final UserRendezvousCreateForm rendezvousForm) {
-//
-//		//Checkeos contra base de datos
-//		Rendezvous bd = this.findOne(rendezvousForm.getRendezvousId());
-//		Assert.notNull(rendezvousForm);
-//		Assert.isTrue(!bd.getFinalMode() && !bd.getDeleted());
-//		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
-//
-//		//Reconstruct
-//		bd.setName(rendezvousForm.getName());
-//		bd.setDescription(rendezvousForm.getDescription());
-//		bd.setOrganisationMoment(rendezvousForm.getOrganisationMoment());
-//		bd.setPicture(rendezvousForm.getPicture());
-//		bd.setLatitude(rendezvousForm.getLatitude());
-//		bd.setLongitude(rendezvousForm.getLongitude());
-//		bd.setFinalMode(rendezvousForm.isFinalMode());
-//		bd.setAdultOnly(rendezvousForm.isAdultOnly());
-//
-//		//Save
-//		Rendezvous saved = this.rendezvousRepository.save(bd);
-//
-//		return saved;
-//	}
-//	
-//	public Rendezvous reconstructQuestionsAndSave(final UserQuestionsRendezvousCreateForm questionsForm, int rendezvousId) {
-//
-//		//Checkeos contra base de datos
-//		Rendezvous bd = this.findOne(rendezvousId);
-//		Assert.notNull(questionsForm);
-//		Assert.isTrue(bd.getUser().equals(this.userService.findByPrincipal()));
-//
-//		//Reconstruct
-//		bd.setQuestions(questionsForm.getQuestions());
-//
-//		//Save
-//		Rendezvous saved = this.rendezvousRepository.save(bd);
-//
-//		return saved;
-//	}
-
-
-
-
 }

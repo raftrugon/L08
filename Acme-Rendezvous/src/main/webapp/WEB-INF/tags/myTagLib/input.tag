@@ -13,6 +13,7 @@
 <%@ attribute name="type"  rtexprvalue="true"  required="true" type="java.lang.String"  description="Type" %> 
 <%@ attribute name="placeholder"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Placeholder" %> 
 <%@ attribute name="readonly"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Readonly" %> 
+<%@ attribute name="required"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Required" %> 
 <%@ attribute name="min"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Min number" %> 
 <%@ attribute name="max"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Max number" %> 
 <%@ attribute name="step"  rtexprvalue="true"  required="false" type="java.lang.String"  description="Steps" %> 
@@ -27,7 +28,7 @@
 	<div class="form-group">
 		<div class="input-group">
 			<span class="input-group-addon">${addon}</span>
-			<form:input type="${type}" class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
+			<form:input type="${type}" class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}" required="${required}"/>
 		</div>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
@@ -39,7 +40,7 @@
 			<spring:message code="${model}.${name}" />:
 		</form:label>
 	</jstl:if>
-	<form:input type="${type}" class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}"/>
+	<form:input type="${type}" class="form-control" placeholder="${placeholder}" path="${name}" readonly="${readonly}" required="${required}"/>
 	<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>
@@ -114,7 +115,7 @@
 <jstl:when test="${type eq 'textarea'}">
 	<div class="form-group">
 			<spring:message code='${model}.${name}' var="placeholder"/>
-			<form:textarea readonly="${readonly}" path="${name}" style="resize:none" class="form-control" rows="${rows}" placeholder="${placeholder}" ></form:textarea>
+			<form:textarea required="${required}" readonly="${readonly}" path="${name}" style="resize:none" class="form-control" rows="${rows}" placeholder="${placeholder}" ></form:textarea>
 			<form:errors cssClass="error" path="${name}" />	
 	</div>
 </jstl:when>

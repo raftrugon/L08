@@ -19,15 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProfileController extends AbstractController {
 
 	// Action-1 ---------------------------------------------------------------		
-
-	@RequestMapping("/terms")
-	public ModelAndView action1() {
-		ModelAndView result;
-				
-		result = new ModelAndView("terms");
-		
-		return result;
-	}
 	
 	@RequestMapping("/cookies")
 	public ModelAndView action2() {
