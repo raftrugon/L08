@@ -114,7 +114,7 @@ public class AjaxController {
 		} catch(Throwable oops) {
 			return "2";
 		}
-	}	
+	}		
 	
 	@RequestMapping(value="admin/comment/delete", method=RequestMethod.POST)
 	public String deleteComment(@RequestParam(required = true) int commentId) {
@@ -174,7 +174,7 @@ public class AjaxController {
 	public String createWithoutQuestions(final int rendezvousId){
 		try{
 			rsvpService.save(rsvpService.create(rendezvousId));
-			return "1";
+			return "1";	
 		}catch(Throwable oops){
 			oops.printStackTrace();
 			return "2";
