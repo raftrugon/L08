@@ -53,8 +53,9 @@
 			<lib:input name="phoneNumber" type="text" />
 			<lib:input name="email" type="text" />
 			<lib:input name="birthDate" type="date" />
-			<input type="checkbox" id="tyc" name="tyc" value="" required="true"/><a href="terms.do" target="_blank" ><spring:message code="accept.terms"/></a>
-	
+			<div class="form-group">
+				<input type="checkbox" id="tyc" name="tyc" value="" required="true"/>&emsp;<a data-toggle="modal" data-target="#tycModal" style="cursor:pointer" class="form-label"><spring:message code="accept.terms"/></a>
+			</div>
 
 
 			<lib:button model="user" id="${id}" cancelUri="/Acme-Rendezvous" noDelete="true" />
