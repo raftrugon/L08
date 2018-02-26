@@ -97,7 +97,7 @@ public class UserRendezvousController extends AbstractController {
 				throw new Throwable();
 			result = this.newEditModelAndView(rendezvous);
 		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:/rendezvous/list.do");
 		}
 		return result;
 	}
