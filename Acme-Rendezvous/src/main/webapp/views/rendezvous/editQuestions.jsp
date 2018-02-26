@@ -61,24 +61,19 @@ $(function(){
 $(function(){
 	$('.saveQuestions').click(function(e){
 		e.preventDefault();
-		var inputs = $("#questionDiv input");
-		var questions ="";
-		for(var i=0; i<inputs.length;i++){
-			if(i==0){
-				questions += inputs[i].value;
-			}else
-				questions  += ",,,"+inputs[i].value;	
-		}	
-		alert(questions);
+		questions = [];
+		$("#questionDiv").find('input').each(function(e){
+			questions.push($(this).val());
+		});
 		$.post( "ajax/rendezvous/qa/edit.do",{rendezvousId: $(this).attr('id'), questions:questions}, function( data ) {
-			if(data==0) {
+			if(data==1) {
 				notify('success','<spring:message code="questions.edit.success"/>');
 				$('#qaModal').modal('hide');
 			}
 			else{
 				notify('danger','<spring:message code="questions.edit.error"/>');
 				$('#qaModal').modal('hide');
-			S}
+			}
 		});
 	});
 });

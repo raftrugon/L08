@@ -200,6 +200,23 @@ public class RendezvousService {
 		return res;
 	}
 	
+	public Rendezvous reconstruct(Rendezvous res, BindingResult binding) {
+		Rendezvous rendezvous = findOne(res.getId());
+		res.setVersion(rendezvous.getVersion());
+		res.setDeleted(false);
+		res.setAnnouncements(rendezvous.getAnnouncements());
+		res.setComments(rendezvous.getComments());
+		res.setRsvps(rendezvous.getRsvps());
+		res.setinappropriate(false);
+		res.setUser(rendezvous.getUser());
+		if(!userService.isAdult()){
+			res.setAdultOnly(false);
+		}
+		this.validator.validate(res, binding);
+		return res;
+	}
+	
+	
 	public void deleteLink(int rendezvousId, int linkId) {
 		Rendezvous r = rendezvousRepository.findOne(rendezvousId);
 		Rendezvous link = rendezvousRepository.findOne(linkId);
@@ -208,6 +225,8 @@ public class RendezvousService {
 		r.setRendezvouses(rendezvouses);
 		
 	}
+
+	
 
 //	public Rendezvous reconstruct(final UserRendezvousCreateForm rendezvousForm, final BindingResult binding) {
 //

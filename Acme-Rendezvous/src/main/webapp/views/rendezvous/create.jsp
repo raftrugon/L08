@@ -25,8 +25,7 @@
 			<jstl:set var="model" value="rendezvous" scope="request"/>	
 			
 			<!-- Hidden Attributes -->
-			<lib:input name="id" type="hidden" />
-			
+			<lib:input name="id,questions" type="hidden" />
 				
 			<!-- Attributes -->
 			<h1><spring:message code="rendezvous.new" /></h1>
@@ -46,24 +45,47 @@
 	   			<form:options items="${rendezvouses}" itemValue="id" itemLabel="name"/>
 			</form:select>
 			</div>
+			<div class="form-group">
 			<jstl:if test="${isAdult}">
 				<span class="col-md-6 " style="padding:0; margin:0;"><lib:input name="adultOnly" type="checkBox" /></span>		
 			</jstl:if>
 			
 			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>			
+
+			</div>
+			<div class="form-group">
+			<label class="form-label"><strong><spring:message code="rendezvous.questions"/>:</strong></label>
 			
-			</br>
-			<strong><spring:message code="rendezvous.questions"/>:</strong>
 			<div class="questionDiv" id="questionDiv">
-				<div class="form-group">
+			<jstl:if test="${rendezvous.id eq 0}">
+				<div class="form-group input-group">
 					<input class="form-control questionInput" type="text" value="">
+					<div class="input-group-btn">
+						<button class="btn btn-danger delQuestion">
+							<i class="fas fa-minus-circle"></i>
+						</button>
+					</div>
 				</div>
+			</jstl:if>
+			<jstl:if test="${rendezvous.id ne 0}">
+				<jstl:forEach items="${rendezvous.questions}" var="question">
+					<div class="form-group input-group">
+					<input class="form-control questionInput" type="text" value="${question}">
+					<div class="input-group-btn">
+						<button class="btn btn-danger delQuestion">
+							<i class="fas fa-minus-circle"></i>
+						</button>
+					</div>
+				</div>
+				</jstl:forEach>
+			</jstl:if>
+			</div>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-primary addQuestion btn-block " style="margin-bottom:5px"><i class="fas fa-plus-square"></i></button>
 			</div>
 			<hr>		
-			<p><hr><spring:message code="termsTextHead" /><a href="terms.do"> <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
+			<p><hr><spring:message code="termsTextHead" /><a data-toggle="modal" data-target="#tycModal" style="cursor:pointer" > <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
 			
 			<lib:button model="rendezvous" id="${rendezvous.id}" cancelUri="/Acme-Rendezvous" />
 	
@@ -74,8 +96,13 @@
 </security:authorize>
 
 <script id="newQuestionRow" class="focus" type="text/plain">
-	<div class="form-group">
+	<div class="form-group input-group">
 		<input class="form-control questionInput" type="text" value="">
+		<div class="input-group-btn">
+			<button class="btn btn-danger delQuestion">
+				<i class="fas fa-minus-circle"></i>
+			</button>
+		</div>
 	</div>
 
 
@@ -86,7 +113,15 @@ $(function(){
 	$('.addQuestion').click(function(e){
 		e.preventDefault();
 		$('.questionDiv').append($('#newQuestionRow').html());
+		addListener();
 	});
+	function addListener(){
+		$('.delQuestion').click(function(e){
+			e.preventDefault();
+			$(this).parent().parent().remove();
+		});
+	}
+	addListener();
 });
 </script>
 <script>
@@ -95,9 +130,7 @@ $('#rendezvous').submit(function(e){
 	$('#rendezvous').find('.questionInput').each(function(){
 		questions.push($(this).val());
 	});
-	alert(questions);
-	$('#rendezvous').find('.questionInput').remove();
-	$('<input />').attr('type','hidden').attr('name','questions').attr('value',questions).appendTo('#rendezvous');
+	$('#questions').val(questions);
 	return true;
 });
 </script>

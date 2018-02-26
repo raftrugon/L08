@@ -2,6 +2,7 @@
 package controllers.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,8 +95,8 @@ public class UserRendezvousController extends AbstractController {
 		ModelAndView result;
 		try {
 			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-			//UserRendezvousCreateForm rendezvousForm = new UserRendezvousCreateForm(rendezvous);
-			Assert.isTrue(rendezvous.getUser().equals(this.userService.findByPrincipal()));
+			if(rendezvous.getDeleted() || rendezvous.getinappropriate() || rendezvous.getOrganisationMoment().before(new Date()) || rendezvous.getUser() != userService.findByPrincipal() || rendezvous.getFinalMode())
+				throw new Throwable();
 			result = this.newEditModelAndView(rendezvous);
 		} catch (Throwable oops) {
 			result = new ModelAndView("redirect:list.do");
@@ -126,7 +127,11 @@ public class UserRendezvousController extends AbstractController {
 	public ModelAndView save(final Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
 		Rendezvous saved;
-		Rendezvous validatedObject = this.rendezvousService.reconstructNew(rendezvous, binding);
+		Rendezvous validatedObject;
+		
+		if(rendezvous.getId()==0) validatedObject = this.rendezvousService.reconstructNew(rendezvous, binding);
+		else validatedObject = this.rendezvousService.reconstruct(rendezvous, binding);
+		
 		if (binding.hasErrors()) {
 			result = newEditModelAndView(rendezvous);
 		} else
@@ -134,7 +139,26 @@ public class UserRendezvousController extends AbstractController {
 				saved = rendezvousService.save(validatedObject);
 				result = new ModelAndView("redirect:../../rendezvous/display.do?rendezvousId=" + saved.getId());
 			} catch (Throwable oops) {
+				oops.printStackTrace();
 				result = newEditModelAndView(rendezvous);
+				result.addObject("message", "rendezvous.commitError");
+			}
+		return result;
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final Rendezvous rendezvous, final BindingResult binding) {
+		ModelAndView result;
+		if (binding.hasErrors())
+			result = this.newEditModelAndView(rendezvous);
+		else
+			try {
+				if(rendezvous.getOrganisationMoment().before(new Date()) || rendezvous.getUser() != userService.findByPrincipal() || rendezvous.getFinalMode())
+					throw new Throwable();
+				this.rendezvousService.deleteByUser(rendezvous.getId());
+				result = new ModelAndView("redirect:../../rendezvous/list.do");
+			} catch (Throwable oops) {
+				result = this.newEditModelAndView(rendezvous);
 				result.addObject("message", "rendezvous.commitError");
 			}
 		return result;
