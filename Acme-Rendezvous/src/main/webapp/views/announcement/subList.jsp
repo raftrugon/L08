@@ -100,7 +100,9 @@ $(function(){
 		$.post( "ajax/admin/announcement/delete.do",{announcementId: $(this).attr('id') }, function( data ) {
 			if(data==1){
 				notify('success','<spring:message code="rendezvous.announcement.delete.success"/>');
-				reloadAnnouncements();
+				$.get('ajax/loadAnnouncements.do?type=0',function(data){
+					$('#announcementContainer').html(data);
+				});
 			}
 			else notify('danger','<spring:message code="rendezvous.announcement.delete.error"/>');
 			});
