@@ -53,7 +53,7 @@
 			<lib:input name="phoneNumber" type="text" />
 			<lib:input name="email" type="text" />
 			<lib:input name="birthDate" type="date" />
-			<input type="checkbox" id="tyc" name="tyc" value="" required="true"/><a href="terms.do" ><spring:message code="accept.terms"/></a>
+			<input type="checkbox" id="tyc" name="tyc" value="" required="true"/><a href="terms.do" target="_blank" ><spring:message code="accept.terms"/></a>
 	
 
 
