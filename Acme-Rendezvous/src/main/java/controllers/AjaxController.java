@@ -81,18 +81,13 @@ public class AjaxController {
 	}
 	
 	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.POST)
-	public String editQASave(int rendezvousId, String questions) {
-		System.out.println(rendezvousId);
-		System.out.println(questions);
-		String[] aux = questions.split(",,,");
-		List<String> questionList = new ArrayList<String>();
-		for(int i=0; i< aux.length; i++)
-			questionList.add(aux[i]);
+	public String editQASave(int rendezvousId, @RequestParam(value="questions[]")ArrayList<String> questions) {
 		Rendezvous r = rendezvousService.findOne(rendezvousId);
+		SchemaPrinter.print(questions);
 		try{
-			r.setQuestions(questionList);
-			Rendezvous res = rendezvousService.save(r);
-			return String.valueOf(res.getId());
+			r.setQuestions(questions);
+			rendezvousService.save(r);
+			return "1";
 		} catch(Throwable oops){
 			System.out.println(oops.getMessage());
 			return "0";
@@ -119,7 +114,7 @@ public class AjaxController {
 		} catch(Throwable oops) {
 			return "2";
 		}
-	}	
+	}		
 	
 	@RequestMapping(value="admin/comment/delete", method=RequestMethod.POST)
 	public String deleteComment(@RequestParam(required = true) int commentId) {
@@ -179,7 +174,7 @@ public class AjaxController {
 	public String createWithoutQuestions(final int rendezvousId){
 		try{
 			rsvpService.save(rsvpService.create(rendezvousId));
-			return "1";
+			return "1";	
 		}catch(Throwable oops){
 			oops.printStackTrace();
 			return "2";
