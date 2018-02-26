@@ -325,8 +325,10 @@ $(function(){
 	$('.deleteRendezvousButton').click(function(e){
 		e.preventDefault();
 		$.post( "admin/ajax/rendezvous/delete.do",{rendezvousId: $(this).attr('id') }, function( data ) {
-			if(data==1) notify('success','<spring:message code="rendezvous.delete.success"/>');
-			else notify('danger','<spring:message code="rendezvous.delete.error"/>');
+			if(data==1){ 
+				notify('success','<spring:message code="rendezvous.delete.success"/>');
+				location.reload();
+			}else notify('danger','<spring:message code="rendezvous.delete.error"/>');
 			});
 	});
 });
