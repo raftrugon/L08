@@ -69,6 +69,7 @@ $(function(){
 			}else
 				questions  += ",,,"+inputs[i].value;	
 		}	
+		alert(questions);
 		$.post( "ajax/rendezvous/qa/edit.do",{rendezvousId: $(this).attr('id'), questions:questions}, function( data ) {
 			if(data==0) {
 				notify('success','<spring:message code="questions.edit.success"/>');

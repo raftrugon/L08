@@ -192,6 +192,9 @@ public class RendezvousService {
 		res.setRsvps(new ArrayList<Rsvp>());
 		res.setinappropriate(false);
 		res.setUser(userService.findByPrincipal());
+		if(!userService.isAdult()){
+			res.setAdultOnly(false);
+		}
 		this.validator.validate(res, binding);
 		
 		return res;

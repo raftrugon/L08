@@ -71,7 +71,7 @@
 	<fmt:formatDate var="formatedBirthDate" value="${rendezvous.user.birthDate}" pattern="dd/MM/yyyy"/>
 	
 		
-	<jstl:if test="${not rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
+	<jstl:if test="${rendezvous.user.userAccount.username ne pageContext.request.userPrincipal.name }">
 		<div id="userCardDiv"></div>
 	</jstl:if>
 	<jstl:if test="${rendezvous.user.userAccount.username eq pageContext.request.userPrincipal.name }">
