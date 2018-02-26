@@ -144,6 +144,7 @@ public class UserRendezvousController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("user/rendezvous/edit");
 		result.addObject("rendezvous", rendezvous);
+		result.addObject("isAdult", userService.isAdult());
 		result.addObject("rendezvouses", rendezvousService.getRendezvousesToLink());
 		result.addObject("actionUri", "user/rendezvous/save.do");
 		return result;

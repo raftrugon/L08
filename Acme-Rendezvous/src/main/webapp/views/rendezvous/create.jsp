@@ -46,9 +46,11 @@
 	   			<form:options items="${rendezvouses}" itemValue="id" itemLabel="name"/>
 			</form:select>
 			</div>
+			<jstl:if test="${isAdult}">
+				<span class="col-md-6 " style="padding:0; margin:0;"><lib:input name="adultOnly" type="checkBox" /></span>		
+			</jstl:if>
 			
-			<span class="col-md-6 " style="padding:0; margin:0;"><lib:input name="adultOnly" type="checkBox" /></span>			
-			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>		
+			<span class="col-md-6"><lib:input name="finalMode" type="checkBox" /></span>			
 			
 			</br>
 			<strong><spring:message code="rendezvous.questions"/>:</strong>
