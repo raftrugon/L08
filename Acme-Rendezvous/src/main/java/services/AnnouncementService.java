@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -108,6 +109,22 @@ public class AnnouncementService {
 	
 	public Collection<Announcement> getRendezvousAnnouncementsSorted(int rendezvousId){
 		return announcementRepository.getRendezvousAnnouncementsSorted(rendezvousId);
+	}
+	
+	public Collection<Announcement> findAllOrderedNotInappropriate(){
+		return announcementRepository.findAllOrderedNotInappropriate();
+	}
+
+	public Collection<Announcement> getRSVPAnnouncementsForUserNotInappropriate(User user){
+		return announcementRepository.getRSVPAnnouncementsForUserNotInappropriate(user);
+	}
+
+	public Collection<Announcement> getMyAnnouncementsNotInappropriate(User user){
+		return announcementRepository.getMyAnnouncementsNotInappropriate(user);
+	}
+
+	public Collection<Announcement> getRendezvousAnnouncementsSortedNotInappropriate(int rendezvousId){
+		return announcementRepository.getRendezvousAnnouncementsSortedNotInappropriate(rendezvousId);
 	}
 
 	

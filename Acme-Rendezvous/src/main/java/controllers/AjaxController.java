@@ -59,19 +59,19 @@ public class AjaxController {
 	public ModelAndView loadAnnouncements(@RequestParam(required=true) final int type){
 		ModelAndView result = new ModelAndView("announcement/subList");
 		if(type==0){
-			result.addObject("announcements",announcementService.findAllOrdered());
+			result.addObject("announcements",announcementService.findAllOrderedNotInappropriate());
 		}else{
 			try{
 				User u = userService.findByPrincipal();
 				if(type==1){
-					result.addObject("announcements",announcementService.getMyAnnouncements(u));
+					result.addObject("announcements",announcementService.getMyAnnouncementsNotInappropriate(u));
 				}else if(type==2){
-					result.addObject("announcements",announcementService.getRSVPAnnouncementsForUser(u));
+					result.addObject("announcements",announcementService.getRSVPAnnouncementsForUserNotInappropriate(u));
 				}else{
-					result.addObject("announcements",announcementService.findAllOrdered());
+					result.addObject("announcements",announcementService.findAllOrderedNotInappropriate());
 				}
 			}catch(Throwable oops){
-				result.addObject("announcements",announcementService.findAllOrdered());
+				result.addObject("announcements",announcementService.findAllOrderedNotInappropriate());
 			}
 		}
 		return result;
