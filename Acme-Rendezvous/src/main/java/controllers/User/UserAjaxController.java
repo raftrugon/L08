@@ -43,17 +43,7 @@ public class UserAjaxController {
 	private RendezvousService rendezvousService;
 	@Autowired
 	private Validator			validator;
-	 
-	
-	@RequestMapping(value = "/qa", method = RequestMethod.GET)
-	public ModelAndView qa(@RequestParam(required=true)final int rsvpId) {
-		ModelAndView result = new ModelAndView("rsvp/qa");
-		Rsvp rsvp = rsvpService.findOne(rsvpId);
-		result.addObject("qa",rsvp.getQuestionsAndAnswers());
-		result.addObject("pendingQuestions", rsvpService.getPendingQuestions(rsvp));
-		result.addObject("rsvp", rsvp);
-		return result;
-	}	
+
 	
 	@RequestMapping(value="/newAnswer", method = RequestMethod.POST)
 	public String newAnser(int rsvpId, String question, String answer){
@@ -69,7 +59,7 @@ public class UserAjaxController {
 		}
 	}
 	
-	@RequestMapping(value = "rendezvous/qa/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "	", method = RequestMethod.GET)
 	public ModelAndView editQA(@RequestParam(required=true)final int rendezvousId) {
 		ModelAndView result = new ModelAndView("rendezvous/qa/edit");
 		Rendezvous r = rendezvousService.findOne(rendezvousId);
@@ -97,40 +87,7 @@ public class UserAjaxController {
 		}
 	}
 	
-	@RequestMapping(value="admin/rendezvous/delete", method=RequestMethod.POST)
-	public String deleteRendezvous(@RequestParam(required = true) int rendezvousId) {
-		Rendezvous r = rendezvousService.findOne(rendezvousId);
-		try{
-			rendezvousService.deleteByAdmin(r);
-			return "1";
-		} catch(Throwable oops) {
-			return "2";
-		}
-	}	
-	
-	@RequestMapping(value="admin/announcement/delete", method=RequestMethod.POST)
-	public String deleteAnnouncement(@RequestParam(required = true) int announcementId) {
-		Announcement a = announcementService.findOne(announcementId);
-		try{
-			announcementService.deleteByAdmin(a);
-			return "1";
-		} catch(Throwable oops) {
-			return "2";
-		}
-	}	
-	
-	@RequestMapping(value="admin/comment/delete", method=RequestMethod.POST)
-	public String deleteComment(@RequestParam(required = true) int commentId) {
-		Comment c = commentService.findOne(commentId);
-		try{
-			commentService.deleteByAdmin(c);
-			return "1";
-		} catch(Throwable oops) {
-			return "2";
-		}
-	}
-	
-	@RequestMapping(value = "user/announcement/save", method = RequestMethod.POST)
+	@RequestMapping(value = "announcement/save", method = RequestMethod.POST)
 	public String save(@Valid final Announcement announcement, final BindingResult binding) {
 		if (binding.hasErrors())
 			return "0";
@@ -195,91 +152,7 @@ public class UserAjaxController {
 		}
 	}
 	
-	@RequestMapping(value="user-card", method = RequestMethod.GET)
-	public ModelAndView userCard(@RequestParam(required=true) final int userId){
-		ModelAndView result;
-		try{
-			User u = userService.findOne(userId);
-			result = new ModelAndView("user/card");
-			result.addObject("user",u);
-		}catch(Throwable oops){
-			result = null;
-		}
-		return result;
-	}
-	
-	@RequestMapping(value="loadAnnouncements", method = RequestMethod.GET)
-	public ModelAndView loadAnnouncements(@RequestParam(required=true) final int type){
-		ModelAndView result = new ModelAndView("announcement/subList");
-		if(type==0){
-			result.addObject("announcements",announcementService.findAllOrdered());
-		}else{
-			try{
-				User u = userService.findByPrincipal();
-				if(type==1){
-					result.addObject("announcements",announcementService.getMyAnnouncements(u));
-				}else if(type==2){
-					result.addObject("announcements",announcementService.getRSVPAnnouncementsForUser(u));
-				}else{
-					result.addObject("announcements",announcementService.findAllOrdered());
-				}
-			}catch(Throwable oops){
-				result.addObject("announcements",announcementService.findAllOrdered());
-			}
-		}
-		return result;
-	}
-	
-	@RequestMapping(value="showComments", method = RequestMethod.GET)
-	public ModelAndView showComments(@RequestParam(required=true) final int rendezvousId){
-		ModelAndView result = new ModelAndView("comment/display");
-		Boolean rsvpd = false;
-		try{
-			rsvpd = userService.isRsvpd(rendezvousId);
-			if(rsvpd) result.addObject("newComment",commentService.createComment(rendezvousId));
-		}catch(Throwable oops){}
-		try{
-			Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
-			result.addObject("rendezvous",rendezvous);
-			result.addObject("rsvpd",rsvpd);
-			result.addObject("comments",commentService.getRendezvousCommentsSorted(rendezvousId));
-		}catch(Throwable oops){
-			result = new ModelAndView("ajaxException");
-		}
-		return result;
-	}
-	
-	@RequestMapping(value="showAnnouncements", method = RequestMethod.GET)
-	public ModelAndView showAnnouncements(@RequestParam(required=true) final int rendezvousId){
-		ModelAndView result = new ModelAndView("announcement/display");
-		try{
-			result.addObject("announcements",announcementService.getRendezvousAnnouncementsSorted(rendezvousId));
-		}catch(Throwable oops){
-			result = new ModelAndView("ajaxException");
-		}
-		return result;
-	}
-	
-	@RequestMapping(value="showButtons", method = RequestMethod.GET)
-	public ModelAndView showButtons(@RequestParam(required=true) final int rendezvousId){
-		ModelAndView result = new ModelAndView("rendezvous/buttonsalerts");
-		Boolean rsvpd = false;
-		Boolean isAdult = false;
-		try{
-			rsvpd = userService.isRsvpd(rendezvousId);
-			isAdult = userService.isAdult();
-		}catch(Throwable oops){}
-		try{
-			result.addObject("rendezvous",rendezvousService.findOne(rendezvousId));
-			result.addObject("rsvpd",rsvpd);
-			result.addObject("isAdult",isAdult);
-		}catch(Throwable oops){
-			result = new ModelAndView("ajaxException");
-		}
-		return result;
-	}
-	
-	@RequestMapping(value="user/linkRendezvous", method = RequestMethod.POST)
+	@RequestMapping(value="rendezvous/link", method = RequestMethod.POST)
 	public String linkRendezvous(final int sourceId, final int targetId){
 		try{
 			rendezvousService.link(sourceId, targetId);
@@ -291,7 +164,6 @@ public class UserAjaxController {
 	
 	@RequestMapping(value="rendezvous/link/delete", method = RequestMethod.POST)
 	public String deleteLink(final int rendezvousId, final int linkId) {
-		Rendezvous r = rendezvousService.findOne(rendezvousId);
 		try{
 			rendezvousService.deleteLink(rendezvousId, linkId);
 			return "1";
