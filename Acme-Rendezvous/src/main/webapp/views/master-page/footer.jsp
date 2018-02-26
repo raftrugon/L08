@@ -19,6 +19,6 @@
 <div class="footer" >
 	<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Rendezvous Co., Inc.</b>
 	
-	<a href="terms.do" ><spring:message code="masterpage.terms"/></a>.
+	<a data-toggle="modal" data-target="#tycModal" style="cursor:pointer"><spring:message code="masterpage.terms"/></a>.
 	<a href="cookies.do" ><spring:message code="masterpage.cookies"/></a>.
 </div>

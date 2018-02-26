@@ -11,7 +11,7 @@
 	">
 	
 	
-	<!-- Useraccount 5 -->
+	<!-- Useraccount 10 -->
 	
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
@@ -168,12 +168,13 @@
 				<ref bean="rsvp6" />
 				<ref bean="rsvp10"/>
 				<ref bean="rsvp11"/>
+				<ref bean="rsvp24"/>
 			</list>
 		</property>
 		<property name="rendezvouses">
 			<list>
 				<ref bean="rendezvous1" />
-				<ref bean="rendezvous8"/>
+				<ref bean="rendezvous7" />
 				<ref bean="rendezvous9"/>
 			</list>
 		</property>
@@ -193,12 +194,14 @@
 				<ref bean="rsvp5" />
 				<ref bean="rsvp9"/>
 				<ref bean="rsvp12"/>
+				<ref bean="rsvp21"/>
+				<ref bean="rsvp22"/>
 			</list>
 		</property>
 		<property name="rendezvouses">
 			<list>
-				<ref bean="rendezvous3" />
-				<ref bean="rendezvous7" />
+				<ref bean="rendezvous3" />				
+				<ref bean="rendezvous8" />				
 			</list>
 		</property>		
 	</bean>
@@ -214,12 +217,12 @@
 			<list>
 				<ref bean="rsvp7" />
 				<ref bean="rsvp8"/>
+				<ref bean="rsvp23"/>
 			</list>
 		</property>
 		<property name="rendezvouses">
 			<list>
 				<ref bean="rendezvous6"/>
-				<ref bean="rendezvous12"/>
 			</list>
 		</property>			
 	</bean>
@@ -240,8 +243,6 @@
 		<property name="rendezvouses">
 			<list>
 				<ref bean="rendezvous2" />
-				<ref bean="rendezvous11"/>
-				<ref bean="rendezvous10"/>
 			</list>
 		</property>			
 	</bean>
@@ -261,6 +262,7 @@
 		</property>
 		<property name="rendezvouses">
 			<list>
+				<ref bean="rendezvous11"/>
 			</list>
 		</property>			
 	</bean>
@@ -316,6 +318,7 @@
 		</property>
 		<property name="rendezvouses">
 			<list>
+				<ref bean="rendezvous12"/>
 			</list>
 		</property>			
 	</bean>
@@ -333,6 +336,7 @@
 		</property>
 		<property name="rendezvouses">
 			<list>
+				<ref bean="rendezvous10"/>
 			</list>
 		</property>			
 	</bean>
@@ -559,7 +563,7 @@
 	</bean>  
 	
 	<bean id="comment8" class="domain.Comment">
-		<property name="text" value="Esta excursión es una puta mierda." />
+		<property name="text" value="Esta excursión es malísima." />
 		<property name="creationMoment" value="12/25/2016 14:31" />
 		<property name="inappropriate" value="true" />
 		
@@ -572,7 +576,7 @@
 	</bean>	
 	
 	<bean id="comment9" class="domain.Comment">
-		<property name="text" value="Todo el que vaya a la Alameda es un gilipollas xd." />
+		<property name="text" value="Todo el que vaya a la Alameda es un tonto." />
 		<property name="creationMoment" value="01/18/2017 12:37" />
 		<property name="inappropriate" value="true" />
 		
@@ -580,19 +584,20 @@
 		<property name="user" ref="user4" />
 		<property name="replies">
 			<list>
+				<ref bean="comment10" />
 			</list>
 		</property>
 	</bean>	
 	
 	<bean id="comment10" class="domain.Comment">
-		<property name="text" value="Y tu un niño rata de mierda." />
+		<property name="text" value="Por que tú lo digas." />
 		<property name="creationMoment" value="01/18/2017 14:18" />
 		<property name="inappropriate" value="true" />
 		
+		<property name="replyingTo" ref="comment9" />
 		<property name="user" ref="user2" />
 		<property name="replies">
-			<list>		
-				<ref bean="comment9" />
+			<list>
 			</list>
 		</property>
 	</bean>
@@ -602,10 +607,12 @@
 		<property name="creationMoment" value="01/11/2017 12:37" />
 		<property name="inappropriate" value="true" />
 		
+		<property name="rendezvous" ref="rendezvous3" />
 		<property name="user" ref="user4" />
 		<property name="replies">
 			<list>
 				<ref bean="comment12" />
+				<ref bean="comment14" />
 			</list>
 		</property>
 	</bean>	
@@ -618,8 +625,7 @@
 		<property name="replyingTo" ref="comment11" />
 		<property name="user" ref="user3" />
 		<property name="replies">
-			<list>		
-					<ref bean="comment14" />		
+			<list>	
 			</list>
 		</property>
 	</bean>
@@ -627,12 +633,12 @@
 	<bean id="comment13" class="domain.Comment">
 		<property name="text" value="De verdad? Me encanta" />
 		<property name="creationMoment" value="03/25/2017 12:37" />
-		<property name="inappropriate" value="true" />
+		<property name="inappropriate" value="false" />
 		
 		<property name="rendezvous" ref="rendezvous1" />
 		<property name="user" ref="user2" />
 		<property name="replies">
-			<list>
+			<list>				
 			</list>
 		</property>
 	</bean>	
@@ -640,9 +646,9 @@
 	<bean id="comment14" class="domain.Comment">
 		<property name="text" value="Te estas equivocando conmigo" />
 		<property name="creationMoment" value="1/11/2016 17:25" />
-		<property name="inappropriate" value="false" />
+		<property name="inappropriate" value="true" />
 		
-		<property name="replyingTo" ref="comment12" />
+		<property name="replyingTo" ref="comment11" />
 		<property name="user" ref="user4" />
 		<property name="replies">
 			<list>				
@@ -883,6 +889,7 @@
 		<property name="comments">
 			<list>
 				<ref bean="comment4" />
+				<ref bean="comment8" />
 				<ref bean="comment15"/>
 				<ref bean="comment17"/>
 			</list>
@@ -932,7 +939,8 @@
 			  <list>
 					<ref bean="comment6" />
 					<ref bean="comment7" />
-								
+					<ref bean="comment9" />
+					<ref bean="comment11" />					
 			  </list>
 		</property>
 		<property name="rsvps">
@@ -976,10 +984,10 @@
 			  </list>
 		</property>
 		<property name="rsvps">
-			  <list>
-			  		
-			  		<ref bean="rsvp10" />
-			  </list>
+				<list>
+					<ref bean="rsvp21"/>
+					<ref bean="rsvp10" />
+				</list>
 		</property>
 		<property name="announcements">
 			  <list>
@@ -1013,9 +1021,10 @@
 			  </list>
 		</property>
 		<property name="rsvps">
-			  <list>
+				<list>
+					<ref bean="rsvp22"/>
 			  		<ref bean="rsvp8" />
-			  </list>
+				</list>
 		</property>
 		<property name="announcements">
 			  <list>
@@ -1051,8 +1060,9 @@
 			  </list>
 		</property>
 		<property name="rsvps">
-			  <list>
-			  </list>
+			<list>
+				<ref bean="rsvp23"/>
+			</list>
 		</property>
 		<property name="announcements">
 			  <list>
@@ -1075,7 +1085,7 @@
 			  <list>
 			  </list>
 		</property>
-		<property name="user" ref="user2" />
+		<property name="user" ref="user1" />
 		<property name="rendezvouses">
 			  <list>
 			  </list>
@@ -1113,7 +1123,7 @@
 			  <list>
 			  </list>
 		</property>
-		<property name="user" ref="user1" />
+		<property name="user" ref="user2" />
 		<property name="rendezvouses">
 			  <list>
 			  </list>
@@ -1131,7 +1141,7 @@
 		<property name="announcements">
 			  <list>
 			  		<ref bean="announcement14" />
-			  	<ref bean="announcement15" />
+					<ref bean="announcement15" />
 			  </list>
 		</property>    
 	</bean>	
@@ -1162,8 +1172,9 @@
 			  </list>
 		</property>
 		<property name="rsvps">
-			  <list>
-			  </list>
+			<list>
+				<ref bean="rsvp24"/>
+			</list>
 		</property>
 		<property name="announcements">
 			  <list>
@@ -1186,7 +1197,7 @@
 			  <list>
 			  </list>
 		</property>
-		<property name="user" ref="user4" />
+		<property name="user" ref="user9" />
 		<property name="rendezvouses">
 			  <list>
 			  </list>
@@ -1221,7 +1232,7 @@
 			  <list>
 			  </list>
 		</property>
-		<property name="user" ref="user4" />
+		<property name="user" ref="user5" />
 		<property name="rendezvouses">
 			  <list>
 			  </list>
@@ -1257,7 +1268,7 @@
 			  <list>
 			  </list>
 		</property>
-		<property name="user" ref="user3" />
+		<property name="user" ref="user8" />
 		<property name="rendezvouses">
 			  <list>
 			  </list>
@@ -1579,6 +1590,48 @@
 		<property name="user" ref="user8" />
 	</bean>
 	
+	<bean id="rsvp21" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Trabajas?" value="Si, estoy en una empresa, bastante contento."/>       				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous4" />
+		<property name="user" ref="user2" />
+	</bean>
 	
+	<bean id="rsvp22" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Telegram o Whatsapp?" value="Me gusta más Telegram."/>       				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous5" />
+		<property name="user" ref="user2" />
+	</bean>
+	
+	<bean id="rsvp23" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Te gustan los idiomas?" value="Solo se español y algo de inglés, pero me gustaría aprender otros idiomas."/>     				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous6" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="rsvp24" class="domain.Rsvp">
+		<property name="questionsAndAnswers">
+			<map>    
+				<entry key="¿Que animales te gustan?" value="Me encantan los perros."/>         				
+			</map>
+		</property>
+		
+		<property name="rendezvous" ref="rendezvous9" />
+		<property name="user" ref="user1" />
+	</bean>
 
 </beans>
