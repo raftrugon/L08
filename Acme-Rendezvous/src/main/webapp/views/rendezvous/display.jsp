@@ -347,6 +347,10 @@ $(function(){
 		$.post( "ajax/rendezvous/link/delete.do",{rendezvousId:rendezvousId ,linkId: linkId}, function( data ) {
 			if(data==="1"){
 				$('#cardLink'+linkId).remove();
+				notify('success','<spring:message code="rendezvous.link.delete.success"/>');
+			} else {
+
+				notify('danger','<spring:message code="rendezvous.link.delete.error"/>');
 			}
 			});
 	});
