@@ -19,16 +19,27 @@
 	<jstl:choose>
 	<jstl:when test="${x.count mod 2 eq 1}">
 		<div class="timelinecontainer timelineleft ">
-		    <div class="timelinecontent ">
+		    <div class="timelinecontent" style="padding:0;">
 		    <jstl:if test="${not announcementItem.inappropriate}">
-		      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong><br/><small class="text-primary"><i><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></i></small></h2>
-		      <p style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></p>
-			      <security:authorize access="hasRole('ADMIN')">
-					  <button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" style="position:absolute; right:20px; bottom:10px;">
-					  	<spring:message code="rendezvous.adminDelete"/>
-					  </button>
-				  </security:authorize>
-			  </jstl:if>
+		    <div class="panel panel-default" style="padding:0;margin:0;">
+		    	<div class="panel-heading">
+			      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong></h2>
+			    </div>
+				<div class="panel-body">
+		     		<h4 style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></h4>
+				</div>
+				<div class="panel-footer">
+					<div class="col-md-7" style="padding:0">
+						<small class="text-primary"><h5><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></h5></small>
+					</div>
+					<security:authorize access="hasRole('ADMIN')">
+					 	<button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" >
+					  		<spring:message code="rendezvous.adminDelete"/>
+					 	</button>
+				 	</security:authorize>
+ 				</div>
+			</div>
+			</jstl:if>
 			   <jstl:if test="${announcementItem.inappropriate}">
 			   		<div class="alert alert-danger" style="margin-bottom: 0;text-align: center;"><i class="fas fa-ban"></i>&emsp;<spring:message code="announcement.inappropriate"/></div>
 			   </jstl:if>
@@ -37,21 +48,31 @@
 	</jstl:when>
 	<jstl:otherwise>
 		<div class="timelinecontainer timelineright ">
-		    <div class="timelinecontent ">
-	    	<jstl:if test="${announcementItem.inappropriate eq false }">
-		      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong><br/><small class="text-primary"><i><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></i></small></h2>
-		      <p style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></p>
-		     
-			      <security:authorize access="hasRole('ADMIN')">
-					  <button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" style="position:absolute; right:20px; bottom:10px;">
-					  	<spring:message code="rendezvous.adminDelete"/>
-					  </button>
-				  </security:authorize>
-			  </jstl:if>
+		    <div class="timelinecontent" style="padding:0;">
+		    <jstl:if test="${not announcementItem.inappropriate}">
+		    <div class="panel panel-default" style="padding:0;margin:0;">
+		    	<div class="panel-heading">
+			      <h2 style="text-align:center"><strong><jstl:out value="${announcementItem.title}"/></strong></h2>
+			    </div>
+				<div class="panel-body">
+		     		<h4 style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></h4>
+				</div>
+				<div class="panel-footer">
+					<div class="col-md-7" style="padding:0">
+						<small class="text-primary"><h5><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></h5></small>
+					</div>
+					<security:authorize access="hasRole('ADMIN')">
+					 	<button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" >
+					  		<spring:message code="rendezvous.adminDelete"/>
+					 	</button>
+				 	</security:authorize>
+ 				</div>
+			</div>
+			</jstl:if>
 			   <jstl:if test="${announcementItem.inappropriate}">
 			   		<div class="alert alert-danger" style="margin-bottom: 0;text-align: center;"><i class="fas fa-ban"></i>&emsp;<spring:message code="announcement.inappropriate"/></div>
 			   </jstl:if>
-		     </div>
+		    </div>
 		 </div>
 	</jstl:otherwise>
 	</jstl:choose>
