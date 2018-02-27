@@ -10,7 +10,6 @@ import repositories.AdminRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Admin;
-import domain.User;
 
 @Service
 @Transactional

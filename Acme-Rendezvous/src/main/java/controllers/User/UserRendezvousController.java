@@ -1,9 +1,7 @@
 
 package controllers.User;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -97,7 +95,7 @@ public class UserRendezvousController extends AbstractController {
 				throw new Throwable();
 			result = this.newEditModelAndView(rendezvous);
 		} catch (Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:/rendezvous/list.do");
 		}
 		return result;
 	}

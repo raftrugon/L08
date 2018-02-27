@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RsvpRepository;
-import utilities.internal.SchemaPrinter;
 import domain.Rendezvous;
 import domain.Rsvp;
 import domain.User;
