@@ -87,7 +87,7 @@
 			<hr>		
 			<p><hr><spring:message code="termsTextHead" /><a data-toggle="modal" data-target="#tycModal" style="cursor:pointer" > <spring:message code="termsAndConditions" /></a> <spring:message code="termsTextTail" />.</p>
 			
-			<lib:button model="rendezvous" id="${rendezvous.id}" cancelUri="/Acme-Rendezvous" />
+			<lib:button noDelete="true" model="rendezvous" id="${rendezvous.id}" cancelUri="/Acme-Rendezvous" />
 	
 			
 			
