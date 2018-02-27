@@ -91,6 +91,7 @@ CREATE TABLE `announcement` (
 
 LOCK TABLES `announcement` WRITE;
 /*!40000 ALTER TABLE `announcement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `announcement` ENABLE KEYS */;
 
 UNLOCK TABLES;
 

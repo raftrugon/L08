@@ -10,7 +10,7 @@
 <jsp:useBean id="now" class="java.util.Date" />
 
 	<div id="loaderWrapper">
-		<div id="loader"></div>
+		<div id="loaderDiv"><img id="loaderGif" src="images/loadergif.gif"/></div>
 	</div>
 	
 	<div id="callbackModal" class="modal fade" role="dialog">
