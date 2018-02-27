@@ -16,9 +16,9 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<div id="map" style="height:85vh;width:100%"></div>
+<h2 class="well" style="margin:0 0 10px 0;text-align:center;"><spring:message code="welcome.greeting.message"/></h2>
 
-
+<div id="map" style="height:75vh;width:100%"></div>
 <script defer>
 function initMap() {
 	var labels = 'ABCDEFGHIJ';
@@ -31,14 +31,21 @@ function initMap() {
     <jstl:if test="${not empty rendezvous.latitude and not empty rendezvous.longitude}">
 		 var pos${rendezvous.id} = {lat: ${rendezvous.latitude}, lng: ${rendezvous.longitude}};
 		 var marker${rendezvous.id} = new google.maps.Marker({
-		      position: pos${rendezvous.id} ,
-	          label: labels[labelIndex++],
-		      map: map
+			 map: map,
+			 position: pos${rendezvous.id},
+	         label: labels[labelIndex++],
+		     animation: google.maps.Animation.DROP,
+		     //title: 'Hola!'
 		    });
+		 
+		 google.maps.event.addListener(marker${rendezvous.id}, 'click', function(){
+				window.location.href = "rendezvous/display.do?rendezvousId="+${rendezvous.id};
+				marker${rendezvous.id}.setAnimation(google.maps.Animation.BOUNCE);
+			});
+		 
 	 </jstl:if>
 	</jstl:forEach>
-
-  }
+}
 </script>
 <script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzBWU8YBUwI&callback=initMap">

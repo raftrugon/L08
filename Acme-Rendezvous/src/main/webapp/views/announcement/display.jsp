@@ -28,14 +28,16 @@
 				<div class="panel-body">
 		     		<h4 style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></h4>
 				</div>
-				<div class="panel-footer">
+				<div class="panel-footer" style="padding: 5px 15px 35px 15px;">
 					<div class="col-md-7" style="padding:0">
 						<small class="text-primary"><h5><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></h5></small>
 					</div>
 					<security:authorize access="hasRole('ADMIN')">
-					 	<button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" >
-					  		<spring:message code="rendezvous.adminDelete"/>
-					 	</button>
+						<div class="col-xl-5" style="padding:0">
+					 		<button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" >
+					  			<spring:message code="rendezvous.adminDelete"/>
+					 		</button>
+					 	</div>
 				 	</security:authorize>
  				</div>
 			</div>
@@ -57,14 +59,16 @@
 				<div class="panel-body">
 		     		<h4 style="margin-bottom:25px"><jstl:out value="${announcementItem.description}"/></h4>
 				</div>
-				<div class="panel-footer">
+				<div class="panel-footer" style="padding: 5px 15px 35px 15px;">
 					<div class="col-md-7" style="padding:0">
 						<small class="text-primary"><h5><fmt:formatDate value="${announcementItem.creationMoment}" type="both" dateStyle="long" timeStyle="long"/></h5></small>
 					</div>
 					<security:authorize access="hasRole('ADMIN')">
-					 	<button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" >
-					  		<spring:message code="rendezvous.adminDelete"/>
-					 	</button>
+						<div class="col-xl-5" style="padding:0">
+					 		<button id="${announcementItem.id}" class="btn btn-danger deleteAnnouncementButton" >
+					  			<spring:message code="rendezvous.adminDelete"/>
+					 		</button>
+					 	</div>
 				 	</security:authorize>
  				</div>
 			</div>
