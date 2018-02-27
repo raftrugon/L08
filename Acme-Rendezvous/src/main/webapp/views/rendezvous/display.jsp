@@ -9,6 +9,10 @@
 <%@taglib prefix="lib" tagdir="/WEB-INF/tags/myTagLib" %>
 <jsp:useBean id="now" class="java.util.Date" />
 
+	<div id="loaderWrapper">
+		<div id="loader"></div>
+	</div>
+	
 	<div id="callbackModal" class="modal fade" role="dialog">
   		<div class="modal-dialog" style="margin-top:45vh">
 		    <div class="modal-content">
@@ -78,14 +82,7 @@
 		<a style="margin-bottom:10px" id="${rendezvous.id}" class="btn btn-block btn-primary editQAButton" id="${rendezvous.id}" ><spring:message code="rendezvous.questions.edit" /></a>
 	</jstl:if>
 	
-	<jstl:forEach items="${rendezvous.rsvps}" var="r">
-		<div id="chip${r.user.userAccount.username}" class="chip">
-		<img src="images/kC1.png" width="96" height="96">
-		<a href="user-display.do?userId=${r.user.id}"><small><jstl:out value="${r.user.name} ${r.user.surnames}"/></small></a> 
-		<button class="btn btn-info chipQA" id="${r.id}"><small>Q&#38;A</small></button>
-		
-		</div>
-	</jstl:forEach>
+	<div id="chipsDiv"></div>
 	
 </div>
 
@@ -234,19 +231,24 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 </jstl:if>
 <script>
 	function reloadComments(replyingTo){
-		$.get('ajax/showComments.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
+		return $.get('ajax/showComments.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
 			$('#accordion').html(data);
 			if(typeof replyingTo !== "undefined") $('#collapse'+replyingTo).collapse("show");
 		});
 	}
 	function reloadAnnouncements(){
-		$.get('ajax/showAnnouncements.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
+		return $.get('ajax/showAnnouncements.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
 			$('#announcementTab').html(data);
 		});
 	}
 	function reloadButtons(){
-		$.get('ajax/showButtons.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
+		return $.get('ajax/showButtons.do?rendezvousId=<jstl:out value="${rendezvous.id}"/>',function(data){
 			$('#buttonsAlertsDiv').html(data);
+		});
+	}
+	function reloadChips(){
+		return $.get("ajax/rsvp/showChips.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>",function(data){
+			$('#chipsDiv').html(data);
 		});
 	}
 	function link(sourceIdval,targetIdval){
@@ -270,13 +272,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 		$("#linkSearchInput").on("keyup", function() {
 		    var value = $(this).val().toLowerCase();
 		    $(".dropdown-menu li").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
 		    });
 		  });
-		$('.chipQA').click(function(e){
-				e.preventDefault();
-				showQAModal($(this).attr('id'));
-		});
 		$('.editQAButton').click(function(e){
 			e.preventDefault();
 			$.get("user/ajax/rendezvous/qa/edit.do?rendezvousId=" + $(this).attr('id'), function(data){
@@ -296,6 +294,10 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0VftX0iPRA4ASNgBh4qcjuzB
 		reloadComments();
 		reloadAnnouncements();
 		reloadButtons();
+		reloadChips();
+		$.when(reloadAnnouncements(), reloadComments(), reloadChips(), reloadButtons()).done(function(){
+			$('#loaderWrapper').fadeOut();
+		});
 	});
 </script>
 <script>

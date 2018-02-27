@@ -15,12 +15,7 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
       
 <tiles-definitions>
-
-	<definition name="rsvp/users-who-have-rsvp" extends="master.page">	
-		<put-attribute name="title" value="Usuarios que han RSVP esta reunión." />
-		<put-attribute name="body" value="/views/rsvp/list.jsp" />
-	</definition>
-	
 	<definition name="rsvp/qa" template="/views/rsvp/qa.jsp"/>
 	<definition name="rsvp/edit" template="/views/rsvp/edit.jsp"/>
+	<definition name="rsvp/chips" template="/views/rsvp/chips.jsp"/>
 </tiles-definitions>
