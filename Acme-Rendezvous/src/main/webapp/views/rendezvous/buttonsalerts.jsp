@@ -39,6 +39,7 @@
 					notify('danger','<spring:message code="rsvp.save.error" />');
 				}
 				reloadButtons();
+				reloadChips();
 		});
 		}else{
 		$.get("user/ajax/rsvp/create.do?rendezvousId=<jstl:out value='${rendezvous.id}'/>", function(data){

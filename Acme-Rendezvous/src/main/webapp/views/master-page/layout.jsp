@@ -72,7 +72,6 @@
 </head>
 
 <body>
-
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>

@@ -45,6 +45,7 @@
 				$('#qaModal').modal('hide');
 				if(data==1){
 					notify('success','<spring:message code="rsvp.save.success" />');
+					reloadChips();
 				}else{
 					notify('danger','<spring:message code="rsvp.save.error" />');
 				}

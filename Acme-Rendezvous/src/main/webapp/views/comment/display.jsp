@@ -103,7 +103,7 @@
 			$.get("user/comment/replyComment.do?commentId="+$(this).attr('id'), function(data){
 				$('#modalBody').html(data);
 			});
-			$('#modalTitle').html('<spring:message code="rendezvous.qaHeader"/>');
+			$('#modalTitle').html('<spring:message code="comment.reply.header"/>');
 			$('#qaModal').modal('show');
 		});	
 		$('.deleteCommentLink').click(function(e){
