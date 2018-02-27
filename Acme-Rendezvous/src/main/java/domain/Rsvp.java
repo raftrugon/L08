@@ -10,9 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {@Index(columnList = "user_id, rendezvous_id")})
 public class Rsvp extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
