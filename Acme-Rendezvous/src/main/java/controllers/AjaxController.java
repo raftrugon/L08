@@ -125,4 +125,15 @@ public class AjaxController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="rsvp/showChips.do", method = RequestMethod.GET)
+	public ModelAndView showCHips(@RequestParam(required=true) final int rendezvousId){
+		ModelAndView result = new ModelAndView("rsvp/chips");
+		try{
+			result.addObject("rsvps",rendezvousService.findOne(rendezvousId).getRsvps());
+		}catch(Throwable oops){
+			result = new ModelAndView("ajaxException");
+		}
+		return result;
+	}
 }
