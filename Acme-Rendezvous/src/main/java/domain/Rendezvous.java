@@ -9,10 +9,12 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -20,11 +22,14 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {@Index(columnList = "user_id, adultOnly, deleted, inappropriate")})
 public class Rendezvous extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
@@ -40,7 +45,7 @@ public class Rendezvous extends DomainEntity {
 	private Collection<String>	questions;
 	private Boolean				inappropriate;
 
-
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	@NotBlank
 	public String getName() {
 		return this.name;
@@ -50,6 +55,7 @@ public class Rendezvous extends DomainEntity {
 		this.name = name;
 	}
 
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	@NotBlank
 	public String getDescription() {
 		return this.description;
@@ -71,6 +77,7 @@ public class Rendezvous extends DomainEntity {
 		this.organisationMoment = organisationMoment;
 	}
 
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	@URL
 	public String getPicture() {
 		return this.picture;

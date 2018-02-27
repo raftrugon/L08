@@ -16,7 +16,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -41,6 +43,7 @@ public class Comment extends DomainEntity {
 		this.creationMoment = creationMoment;
 	}
 
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	@NotBlank
 	public String getText() {
 		return text;
@@ -50,6 +53,7 @@ public class Comment extends DomainEntity {
 		this.text = text;
 	}
 
+	@SafeHtml(whitelistType=WhiteListType.NONE)
 	@URL
 	public String getPicture() {
 		return picture;
